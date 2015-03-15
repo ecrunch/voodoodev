@@ -69,6 +69,15 @@ router.get('/breathers', function(req, res, next) {
   });
 });
 
+var Task = mongoose.model('Task');
+
+
+router.get('/tasks', function(req, res, next) {
+	Task.find(function(err, tasks) {
+		if (err) { return next(err); }
+		res.json(tasks);
+	});
+});
 
 router.get('/courses', function(req, res, next) {
   Course.find(function(err, courses){

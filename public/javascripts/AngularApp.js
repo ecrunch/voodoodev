@@ -1,6 +1,5 @@
 var app = angular.module('courseInput', ['ui.router','courseServices','courseRouting']);
 
-
 app.controller('MainCtrl', [
 	'$scope',
 	'$stateParams',
@@ -196,10 +195,15 @@ app.controller('ScheduleCtrl', [
 	}
 ]);
 
-app.controller('TestCtrl', [
-        '$scope',
-        '$stateParams',
-        function($scope, $stateParams) {
-                $scope.message = "Test";
-        }
+app.controller('TaskCtrl', [
+	'$scope',
+	'$stateParams',
+	'Task',
+	function($scope, $stateParams, Task) {
+	
+		$scope.message = "Tasks";
+	}
 ]);
+
+
+

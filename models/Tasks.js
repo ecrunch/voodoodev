@@ -14,4 +14,3 @@ TaskSchema.methods.upvote = function(cb) {
 };
 
 mongoose.model('Task', TaskSchema);
-

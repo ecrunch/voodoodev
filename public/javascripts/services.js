@@ -173,7 +173,7 @@ app.factory('courses',['$http', 'auth', function($http, auth){
 
  return o;
 
-}])
+}]);
 
 app.factory('breathers',['$http', 'auth', function($http, auth){
  var b = {
@@ -212,5 +212,4 @@ app.factory('breathers',['$http', 'auth', function($http, auth){
                 };
 
  return b;
-}])
-
+}]);
