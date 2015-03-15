@@ -1,4 +1,6 @@
 var app = angular.module('courseInput', ['ui.router']);
+
+
 app.config([
 '$stateProvider',
 '$urlRouterProvider',
@@ -28,6 +30,8 @@ function($stateProvider, $urlRouterProvider) {
  });
   $urlRouterProvider.otherwise('home');
 }]);
+
+
 app.factory('courses',['$http',function($http){
  var o = {
 	courses:[]
@@ -55,6 +59,10 @@ app.factory('courses',['$http',function($http){
 	o.addComment = function(id, comment) {
  		 return $http.post('/courses/' + id + '/comments', comment);
 		};
+
+	o.addCourseTask = function(id, courseTask) {
+                 return $http.post('/courses/' + id + '/courseTasks', courseTask);
+                };
 
 	o.upvote = function(course) {
   		return $http.put('/courses/' + course._id + '/upvote')
@@ -111,6 +119,21 @@ function($scope, $stateParams, courses, course){
  		 });
  		 	$scope.body = '';
 		};
+	
+	 $scope.addCourseTask = function(){
+                if($scope.bodu === '') { return; }
+                 courses.addCourseTask(course._id, {
+                        body: $scope.body,
+			dueDate: $scope.dueDate,
+                        author: 'user',
+                }).success(function(courseTask) {
+                        $scope.course.courseTasks.push(courseTask);
+                 });
+                        $scope.body = '';
+			$scope.dueDate = '';
+                };
+	
+
 	$scope.incrementUpvotes = function(comment){
   		courses.upvoteComment(course, comment);
 	};	

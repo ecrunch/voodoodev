@@ -1,16 +1,16 @@
 var mongoose = require('mongoose');
 
-var CommentSchema = new mongoose.Schema({
+var CourseTasksSchema = new mongoose.Schema({
   body: String,
+  dueDate: Date,
   author: String,
   upvotes: {type: Number, default: 0},
-  post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' }
+  course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' }
 });
 
-CommentSchema.methods.upvote = function(cb) {
+CourseTasksSchema.methods.upvote = function(cb) {
   this.upvotes += 1;
   this.save(cb);
 };
 
-mongoose.model('Comment', CommentSchema);
-~                                        
+mongoose.model('CourseTask', CourseTasksSchema);
