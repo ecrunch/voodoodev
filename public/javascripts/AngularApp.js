@@ -6,28 +6,35 @@ app.config([
 '$urlRouterProvider',
 function($stateProvider, $urlRouterProvider) {
 
-  $stateProvider
-    .state('home', {
-      url: '/home',
-      templateUrl: '/home.html',
-      controller: 'MainCtrl',
-      resolve: { 
-		coursePromise: ['courses', function(courses){
- 		  return courses.getAll();
-   		 }]	
+	$stateProvider
+    	.state('home', {
+      		url: '/home',
+      		templateUrl: '/home.html',
+      		controller: 'MainCtrl',
+      		resolve: { 
+			coursePromise: ['courses', function(courses){
+ 		  		return courses.getAll();
+   		 	}]	
 
-	}  
-    })
-  .state('courses', {
-      url: '/courses/{id}',
-      templateUrl: '/courses.html',
-      controller: 'CourseCtrl',
-	resolve: {
-   	 course: ['$stateParams', 'courses', function($stateParams, courses) {
-      		return courses.get($stateParams.id);
-    		}]   
-	}
- });
+		}  
+    	})
+ 	.state('courses', {
+      		url: '/courses/{id}',
+      		templateUrl: '/courses.html',
+      		controller: 'CourseCtrl',
+		resolve: {
+   	 		course: ['$stateParams', 'courses', function($stateParams, courses) {
+      				return courses.get($stateParams.id);
+    			}]   
+		}
+	})
+	.state('schedule', {
+		url: '/schedule',
+		templateUrl: '/schedule.html',
+		controller: 'ScheduleCtrl'
+	});
+
+
   $urlRouterProvider.otherwise('home');
 }]);
 
@@ -138,4 +145,15 @@ function($scope, $stateParams, courses, course){
   		courses.upvoteComment(course, comment);
 	};	
 }]);
+
+
+
+app.controller('ScheduleCtrl', [
+	'$scope',
+	'$stateParams',
+	function($scope, $stateParams) {
+		$scope.message = "Test";
+	}
+]);
+
 
