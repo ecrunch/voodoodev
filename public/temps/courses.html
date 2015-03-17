@@ -1,0 +1,57 @@
+ <div class="page-header">
+    <h3>
+      <a ng-show="course.link" href="{{course.link}}">
+        {{course.title}}
+      </a>
+      <span ng-hide="course.link">
+        {{course.title}}
+      </span>
+    </h3>
+  </div>
+
+ <div ng-repeat="courseTask in course.courseTasks | orderBy:'-upvotes'">
+    <span class="glyphicon glyphicon-thumbs-up"
+      ng-click="incrementUpvotes(courseTask)"></span>
+    {{courseTask.upvotes}} - by {{courseTask.author}}
+    <span style="font-size:20px; margin-left:10px;">
+      {{courseTask.body}} - Due {{courseTask.dueDate}}
+    </span>
+  </div>
+        <form ng-submit="addCourseTask()"
+         style="margin-top:30px;">
+         <h3>Add a new Task</h3>
+
+         <div class="form-group">
+                <input type="text"
+                 class="form-control"
+                 placeholder="Task"
+                 ng-model="body"></input>
+               <input type="date"
+                 class="form-control"
+                 placeholder="Date"
+                 ng-model="dueDate"></input>
+         </div>
+
+         <button type="submit" class="btn btn-primary">Post</button>
+         </form>
+
+  <div ng-repeat="comment in course.comments | orderBy:'-upvotes'">
+    <span class="glyphicon glyphicon-thumbs-up"
+      ng-click="incrementUpvotes(comment)"></span>
+    {{comment.upvotes}} - by {{comment.author}}
+    <span style="font-size:20px; margin-left:10px;">
+      {{comment.body}}
+    </span>
+  </div>
+        <form ng-submit="addComment()"
+         style="margin-top:30px;">
+         <h3>Add a new comment</h3>
+
+         <div class="form-group">
+                <input type="text"
+                 class="form-control"
+		placeholder="Comment"
+                 ng-model="body"></input>
+                </div>
+         <button type="submit" class="btn btn-primary">Post</button>
+         </form>
