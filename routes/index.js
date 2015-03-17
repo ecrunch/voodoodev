@@ -70,13 +70,21 @@ router.get('/breathers', function(req, res, next) {
 });
 
 var Task = mongoose.model('Task');
+//var Schedule = mongoose.model('Schedule');
 
-
-router.get('/tasks', function(req, res, next) {
-	Task.find(function(err, tasks) {
-		if (err) { return next(err); }
-		res.json(tasks);
-	});
+router.get('/schedule', function(req, res, next) {
+	res.json(
+		[
+			{
+				description: "fuck bitches",
+				minutes: 30
+			},
+			{
+				description: "get money",
+				minutes: 30
+			}
+		]
+	);
 });
 
 router.get('/courses', function(req, res, next) {

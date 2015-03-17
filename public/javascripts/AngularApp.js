@@ -6,7 +6,7 @@ app.controller('MainCtrl', [
 	function($scope, $stateParams) {
 		$scope.message = "Test";
 	}
-])
+]);
 
 
 app.controller('AuthCtrl', [
@@ -61,7 +61,9 @@ app.controller('CourseMainCtrl', [
   $scope.incrementUpvotes = function(course) {
 	courses.upvote(course);
 }	
-}])
+}]);
+
+
 app.controller('CourseCtrl', [
 '$scope',
 '$stateParams',
@@ -190,8 +192,12 @@ function($scope, breathers, auth){
 app.controller('ScheduleCtrl', [
 	'$scope',
 	'$stateParams',
-	function($scope, $stateParams) {
-		$scope.message = "Test";
+	'Schedule',
+	function($scope, $stateParams, Schedule) {
+
+		Schedule.createNewFromBackend();
+		$scope.items = Schedule.items;
+
 	}
 ]);
 

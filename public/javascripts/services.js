@@ -115,7 +115,58 @@ app.factory('tasks',['$http', 'auth', function($http, auth){
 }]) 
 
 
+app.factory('Schedule', ['$http', 'Task', function($http, Task){
+
+	var schedule = {
+
+		items: [
+
+
+		]
+
+	};
+
+	// could implement the schedule creation logic in the front end... or not
+	// need to discuss
+	schedule.createNew = function() {
+		
+		var tasks = Task.getAllTasks();
+
+		for (var i = 0; i < tasks.length; i++) {
+			schedule.items.push(tasks[i]);
+		}
+
+		return;	
+	};
+
+	schedule.createNewFromBackend = function() {
+		$http.get('/schedule').then(
+			function(data){
+				var items = data["data"];
+				for (var i = 0; i < items.length; i++) {
+					schedule.items.push(items[i]);
+				}
+			},
+			function(){
+				alert("Failure");
+			}
+		);
+	};
+
+	schedule.purge = function() {
+		schedule.items = [];
+	};
+
+	schedule.save = function() {
+		return;
+	};
+
+	return schedule;
+
+}]);
+
 app.factory('courses',['$http', 'auth', function($http, auth){
+
  var o = {
         courses:[]
         };
