@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var CourseTasksSchema = new mongoose.Schema({
-  body: String,
+  name: String,
   dueDate: Date,
   author: String,
   upvotes: {type: Number, default: 0},

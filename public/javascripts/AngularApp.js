@@ -40,9 +40,9 @@ function($scope, $stateParams, courses, course){
 		};
 	
 	 $scope.addCourseTask = function(){
-                if($scope.bodu === '') { return; }
+                if($scope.name=== '') { return; }
                  courses.addCourseTask(course._id, {
-                        body: $scope.body,
+                        name: $scope.name,
 			dueDate: $scope.dueDate,
                         author: 'user',
                 }).success(function(courseTask) {

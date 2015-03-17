@@ -14,7 +14,7 @@
       ng-click="incrementUpvotes(courseTask)"></span>
     {{courseTask.upvotes}} - by {{courseTask.author}}
     <span style="font-size:20px; margin-left:10px;">
-      {{courseTask.body}} - Due {{courseTask.dueDate}}
+      {{courseTask.name}} - Due {{courseTask.dueDate}}
     </span>
   </div>
         <form ng-submit="addCourseTask()"
@@ -25,7 +25,7 @@
                 <input type="text"
                  class="form-control"
                  placeholder="Task"
-                 ng-model="body"></input>
+                 ng-model="name"></input>
                <input type="date"
                  class="form-control"
                  placeholder="Date"
