@@ -8,7 +8,8 @@ var mongoose = require('mongoose');
 require('./models/Courses');
 require('./models/CourseTasks');
 require('./models/Comments');
-
+require('./models/Tasks');
+require('./models/SubTasks');
 
 mongoose.connect('mongodb://localhost/CourseInput');
 

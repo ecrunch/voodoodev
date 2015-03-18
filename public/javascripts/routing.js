@@ -39,6 +39,29 @@ function($stateProvider, $urlRouterProvider) {
                         }]
                 }
         })
+
+        .state('tasksHome', {
+                url: '/taskshome',
+                templateUrl: 'temps/tasksHome.html',
+                controller: 'TaskMainCtrl',
+                resolve: {
+                        taskPromise: ['tasks', function(tasks){
+                                return tasks.getAll();
+                        }]
+
+                }
+        })
+        .state('tasks', {
+                url: '/tasks/{id}',
+                templateUrl: 'temps/tasks.html',
+                controller: 'SubTaskCtrl',
+                resolve: {
+                        task: ['$stateParams', 'tasks', function($stateParams, tasks) {
+                                return tasks.get($stateParams.id);
+                        }]
+                }
+        })
+
         .state('schedule', {
                 url: '/schedule',
                 templateUrl: 'temps/schedule.html',
