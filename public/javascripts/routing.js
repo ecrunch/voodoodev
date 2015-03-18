@@ -17,6 +17,18 @@ function($stateProvider, $urlRouterProvider) {
 
                 }
         })
+
+        .state('coursesHome', {
+                url: '/courseshome',
+                templateUrl: 'temps/coursesHome.html',
+                controller: 'CourseMainCtrl',
+                resolve: {
+                        coursePromise: ['courses', function(courses){
+                                return courses.getAll();
+                        }]
+
+                }
+        })
         .state('courses', {
                 url: '/courses/{id}',
                 templateUrl: 'temps/courses.html',
@@ -31,7 +43,16 @@ function($stateProvider, $urlRouterProvider) {
                 url: '/schedule',
                 templateUrl: 'temps/schedule.html',
                 controller: 'ScheduleCtrl'
+        })
+
+	.state('test', {
+                url: '/test',
+                templateUrl: 'temps/test.html',
+                controller: 'TestCtrl'
         });
+
+	
+	
 
 
   $urlRouterProvider.otherwise('home');
