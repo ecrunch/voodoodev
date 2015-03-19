@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
+
 require('./models/Courses');
 require('./models/CourseTasks');
 require('./models/Comments');
@@ -14,6 +15,7 @@ require('./models/SubTasks');
 require('./models/Users');
 require('./models/Breathers');
 require('./config/passport');
+require('./models/Schedules');
 
 
 mongoose.connect('mongodb://localhost/CourseInput');

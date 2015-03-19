@@ -195,7 +195,7 @@ app.controller('ScheduleCtrl', [
 	'Schedule',
 	function($scope, $stateParams, Schedule) {
 
-		Schedule.createNewFromBackend();
+		Schedule.createNew();
 		$scope.items = Schedule.items;
 
 	}
@@ -204,7 +204,6 @@ app.controller('ScheduleCtrl', [
 app.controller('TaskCtrl', [
 	'$scope',
 	'$stateParams',
-	'Task',
 	function($scope, $stateParams, Task) {
 	
 		$scope.message = "Tasks";

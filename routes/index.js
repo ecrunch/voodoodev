@@ -52,6 +52,9 @@ router.post('/login', function(req, res, next){
     }
   })(req, res, next);
 });
+var Task =  mongoose.model('Task'); 
+var Schedule = mongoose.model('Schedule');
+
 
 router.get('/tasks', function(req, res, next) {
   Task.find(function(err, tasks){
@@ -72,20 +75,41 @@ router.get('/breathers', function(req, res, next) {
 var Task = mongoose.model('Task');
 //var Schedule = mongoose.model('Schedule');
 
-router.get('/schedule', function(req, res, next) {
-	res.json(
-		[
-			{
-				description: "fuck bitches",
-				minutes: 30
-			},
-			{
-				description: "get money",
-				minutes: 30
+
+function mockTasks() {
+	return [
+		{
+			description: "Fuck Bitches",
+			getScore: function(){
+				return 5;
 			}
-		]
+		}
+	];
+}
+
+
+
+
+router.get('/new_schedule', function(req, res, next) {
+
+	var userTasks = mockTasks();
+	var userWants = [];
+	var userBreaks = [];
+	var hours = 4;
+
+	var schedule = new Schedule();
+	schedule.createNew(
+		hours,
+		userTasks,
+		userWants,
+		userBreaks
+	);
+	console.log(schedule.items);
+	res.json(
+		schedule.items
 	);
 });
+
 
 router.get('/courses', function(req, res, next) {
   Course.find(function(err, courses){

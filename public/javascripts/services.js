@@ -115,7 +115,7 @@ app.factory('tasks',['$http', 'auth', function($http, auth){
 }]) 
 
 
-app.factory('Schedule', ['$http', 'Task', function($http, Task){
+app.factory('Schedule', ['$http',  function($http){
 
 	var schedule = {
 
@@ -126,21 +126,8 @@ app.factory('Schedule', ['$http', 'Task', function($http, Task){
 
 	};
 
-	// could implement the schedule creation logic in the front end... or not
-	// need to discuss
 	schedule.createNew = function() {
-		
-		var tasks = Task.getAllTasks();
-
-		for (var i = 0; i < tasks.length; i++) {
-			schedule.items.push(tasks[i]);
-		}
-
-		return;	
-	};
-
-	schedule.createNewFromBackend = function() {
-		$http.get('/schedule').then(
+		$http.get('/new_schedule').then(
 			function(data){
 				var items = data["data"];
 				for (var i = 0; i < items.length; i++) {
