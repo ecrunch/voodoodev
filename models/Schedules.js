@@ -13,15 +13,16 @@ var ScheduleSchema = new mongoose.Schema({
 
 });
 
+
 // maybe modulize this eventually
 function getScoreData(tasks) {
 
 	var scoreData = {
-		"totalScores":	0,
-		"scoreList":	[],
+		"total":	0,
+		"list":		[],
 		"mean":		0,
-		"stdDev": 	0,
-		"variance":	0
+		"stdDev": 	1,
+		"variance":	1
 	};
 	
 	var score;
@@ -30,9 +31,14 @@ function getScoreData(tasks) {
 		scoreData["total"] += score;
 		scoreData["list"].push(score);
 	}
+
+	//fill in the last 3 stats
+	scoreData["mean"] 	= scoreData["total"]/scoreData["list"].length;
+	//scoreData["variance"] 	= getVariance(scoreData["list"]); 
+	//scoreData["stdDev"] 	= Math.sqrt(scoreData["variance"]);
+
 	return scoreData;
 }
-
 
 function determineTaskPriorities(tasks, scoreData) {
 
@@ -42,29 +48,96 @@ function determineTaskPriorities(tasks, scoreData) {
 		"ntTasks": 	[]
 	};
 
-	var score;
+	var taskScore, zScore;
+	var mean 	= scoreData["mean"];
+	var stdDev 	= scoreData["stdDev"];
+	
 	for(var i = 0; i < tasks.length; i++) {
-		score = tasks[i].getScore();
+		
+		taskScore	= tasks[i].getScore();
+		zScore		= (taskScore - mean)/stdDev;
+
+		if (zScore >= 0.8416) {
+			taskPriorities["eTasks"].push(tasks[i]);
+		}
+
+		else if(zScore >= -0.2533) {
+			taskPriorities["nTasks"].push(tasks[i]);
+		}
+
+		else {
+			taskPriorities["ntTasks"].push(tasks[i]);	
+		}
+		 
 	}
 
 	return taskPriorities;
 }
 
 
-ScheduleSchema.methods.createNew = function(hours, tasks, wants, breaks) {
-	console.log("Creating Schedule");
+
+function generateTimeSlots(hours) {
+
+	var timeInMinutes 	= hours*60;
+	var total 		= 0;
+	var timeSlots		= [];
+	var comingOffBreak 	= false;
+	var timeWithoutBreak 	= 0;
+
+	var timeConversions = {
+		1: 15,
+		2: 30,
+		3: 45,
+		4: 60
+	};
+
+	var toAdd;
+	while (total <= timeInMinutes) {
 	
+		if(total == timeInMinutes) {
+			break;
+		}
+
+
+		if(comingOffBreak) {
+			//random int
+			//toAdd = random(2,4)
+		}
+
+
+		else if(timeWithoutBreak >= 90) {
+			toAdd 			= 1;
+			timeWithoutBreak 	= 0;
+		}
+
+		else {
+			//toAdd = random(1,4)
+		}
+
+
+	}
+
+
+}
+
+
+
+function generateSchedule() {
+
+
+}
+
+
+ScheduleSchema.methods.createNew = function(hours, tasks, wants, breaks) {
 	
 	var scoreData = getScoreData(tasks);
+	var taskPriorities = determineTaskPriorities(tasks, scoreData);
 
-	//score the tasks
-	var e_tasks, n_tasks, nt_tasks, all;
-	all 	= determineTaskPriorities(task, scoreData);
-	eTasks 	= all["eTasks"];
-	nTasks 	= all["nTasks"];
-	ntTasks = all["ntTasks"];
 	
-
+	var eIndex 	= 0;
+	var nIndex 	= 0;
+	var ntIndex 	= 0;
+	
 	for(var i = 0; i < tasks.length; i++) {
 		this.items.push(
 			{

@@ -83,6 +83,12 @@ function mockTasks() {
 			getScore: function(){
 				return 5;
 			}
+		},
+		{
+			description: "Get Money",
+			getScore: function(){
+				return 10;
+			}
 		}
 	];
 }
