@@ -1,5 +1,7 @@
 var express = require('express');
+var jwt = require('express-jwt');
 var router = express.Router();
+var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -7,11 +9,48 @@ router.get('/', function(req, res, next) {
 });
 
 var mongoose = require('mongoose');
+var passport = require('passport');
 var Course = mongoose.model('Course');
 var CourseTask =  mongoose.model('CourseTask');
 var Comment = mongoose.model('Comment');
 var SubTask =  mongoose.model('SubTask'); 
-var Task =  mongoose.model('Task'); 
+var Task =  mongoose.model('Task');
+var User = mongoose.model('User'); 
+
+
+router.post('/register', function(req, res, next){
+  if(!req.body.username || !req.body.password){
+    return res.status(400).json({message: 'Please fill out all fields'});
+  }
+
+  var user = new User();
+
+  user.username = req.body.username;
+
+  user.setPassword(req.body.password)
+
+  user.save(function (err){
+    if(err){ return next(err); }
+
+    return res.json({token: user.generateJWT()})
+  });
+});
+
+router.post('/login', function(req, res, next){
+  if(!req.body.username || !req.body.password){
+    return res.status(400).json({message: 'Please fill out all fields'});
+  }
+
+  passport.authenticate('local', function(err, user, info){
+    if(err){ return next(err); }
+
+    if(user){
+      return res.json({token: user.generateJWT()});
+    } else {
+      return res.status(401).json(info);
+    }
+  })(req, res, next);
+});
 
 router.get('/tasks', function(req, res, next) {
   Task.find(function(err, tasks){
@@ -29,7 +68,7 @@ router.get('/courses', function(req, res, next) {
   });
 });
 
-router.post('/tasks', function(req, res, next) {
+router.post('/tasks', auth, function(req, res, next) {
   var task = new Task(req.body);
 
   task.save(function(err, task){
@@ -39,7 +78,7 @@ router.post('/tasks', function(req, res, next) {
   });
 });
 
-router.post('/courses', function(req, res, next) {
+router.post('/courses', auth, function(req, res, next) {
   var course = new Course(req.body);
 
   course.save(function(err, course){
@@ -124,7 +163,7 @@ router.get('/courses/:course', function(req, res) {
 
 });
 
-router.put('/courses/:course/upvote', function(req, res, next) {
+router.put('/courses/:course/upvote', auth, function(req, res, next) {
   req.course.upvote(function(err, course){
     if (err) { return next(err); }
 
@@ -132,7 +171,7 @@ router.put('/courses/:course/upvote', function(req, res, next) {
   });
 });
 
-router.put('/tasks/:task/upvote', function(req, res, next) {
+router.put('/tasks/:task/upvote', auth, function(req, res, next) {
   req.task.upvote(function(err, task){
     if (err) { return next(err); }
 
@@ -140,7 +179,7 @@ router.put('/tasks/:task/upvote', function(req, res, next) {
   });
 });
 
-router.put('/courses/:course/comments/:comment/upvote', function(req, res, next) {
+router.put('/courses/:course/comments/:comment/upvote', auth, function(req, res, next) {
   req.comment.upvote(function(err, comment){
     if (err) { return next(err); }
 
@@ -148,7 +187,7 @@ router.put('/courses/:course/comments/:comment/upvote', function(req, res, next)
   });
 });
 
-router.put('/tasks/:task/comments/:comment/upvote', function(req, res, next) {
+router.put('/tasks/:task/comments/:comment/upvote', auth, function(req, res, next) {
   req.comment.upvote(function(err, comment){
     if (err) { return next(err); }
 
@@ -156,7 +195,7 @@ router.put('/tasks/:task/comments/:comment/upvote', function(req, res, next) {
   });
 });
 
-router.put('/courses/:course/courseTasks/:courseTask/upvote', function(req, res, next) {
+router.put('/courses/:course/courseTasks/:courseTask/upvote', auth, function(req, res, next) {
   req.courseTask.upvote(function(err, courseTask){
     if (err) { return next(err); }
 
@@ -164,7 +203,7 @@ router.put('/courses/:course/courseTasks/:courseTask/upvote', function(req, res,
   });
 });
 
-router.put('/tasks/:task/subTasks/:subTask/upvote', function(req, res, next) {
+router.put('/tasks/:task/subTasks/:subTask/upvote', auth, function(req, res, next) {
   req.subTask.upvote(function(err, subTask){
     if (err) { return next(err); }
 
@@ -172,9 +211,10 @@ router.put('/tasks/:task/subTasks/:subTask/upvote', function(req, res, next) {
   });
 });
 
-router.post('/tasks/:task/comments', function(req, res, next) {
+router.post('/tasks/:task/comments', auth, function(req, res, next) {
   var comment = new Comment(req.body);
   comment.task = req.task;
+  post.author = req.payload.username;
 
   comment.save(function(err, comment){
     if(err){ return next(err); }
@@ -188,9 +228,10 @@ router.post('/tasks/:task/comments', function(req, res, next) {
   });
 });
 
-router.post('/courses/:course/comments', function(req, res, next) {
+router.post('/courses/:course/comments', auth, function(req, res, next) {
   var comment = new Comment(req.body);
   comment.course = req.course;
+  post.author = req.payload.username;
 
   comment.save(function(err, comment){
     if(err){ return next(err); }
@@ -204,9 +245,10 @@ router.post('/courses/:course/comments', function(req, res, next) {
   });
 });
 
-router.post('/tasks/:task/subTasks', function(req, res, next) {
+router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
   var subTask = new SubTask(req.body);
   subTask.task = req.task;
+  post.author = req.payload.username;
 
   subTask.save(function(err, subTask){
     if(err){ return next(err); }
@@ -220,9 +262,10 @@ router.post('/tasks/:task/subTasks', function(req, res, next) {
   });
 });
 
-router.post('/courses/:course/courseTasks', function(req, res, next) {
+router.post('/courses/:course/courseTasks', auth, function(req, res, next) {
   var courseTask = new CourseTask(req.body);
   courseTask.course = req.course;
+  post.author = req.payload.username;
 
   courseTask.save(function(err, courseTask){
     if(err){ return next(err); }

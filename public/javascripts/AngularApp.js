@@ -9,20 +9,54 @@ app.controller('MainCtrl', [
 	}
 ])
 
+
+app.controller('AuthCtrl', [
+'$scope',
+'$state',
+'auth',
+function($scope, $state, auth){
+  $scope.user = {};
+
+  $scope.register = function(){
+    auth.register($scope.user).error(function(error){
+      $scope.error = error;
+    }).then(function(){
+      $state.go('home');
+    });
+  };
+
+  $scope.logIn = function(){
+    auth.logIn($scope.user).error(function(error){
+      $scope.error = error;
+    }).then(function(){
+      $state.go('home');
+    });
+  };
+}])
+
+app.controller('NavCtrl', [
+	'$scope',
+	'auth',
+	function($scope, auth){
+ 	 $scope.isLoggedIn = auth.isLoggedIn;
+ 	 $scope.currentUser = auth.currentUser;
+ 	 $scope.logOut = auth.logOut;
+	}]);
  
 app.controller('CourseMainCtrl', [
-'$scope', 'courses', 
-function($scope, courses ){
-  $scope.courses = courses.courses ;
+	'$scope', 'courses','auth', 
+	function($scope, courses, auth ){
+	$scope.isLoggedIn = auth.isLoggedIn;
+  	$scope.courses = courses.courses ;
 
-  $scope.addCourse = function() {
-	if ($scope.title === '') {return;} 
-	courses.create({
-	title: $scope.title,
-	link: $scope.link,
+  	$scope.addCourse = function() {
+		if ($scope.title === '') {return;} 
+		courses.create({
+		title: $scope.title,
+		link: $scope.link,
 	});
-	$scope.title = '';
-	$scope.link = '';
+		$scope.title = '';
+		$scope.link = '';
 }
 
   $scope.incrementUpvotes = function(course) {
@@ -34,7 +68,9 @@ app.controller('CourseCtrl', [
 '$stateParams',
 'courses',
 'course',
-function($scope, $stateParams, courses, course){
+'auth',
+function($scope, $stateParams, courses, course, auth ){
+	$scope.isLoggedIn = auth.isLoggedIn;
 	$scope.course = course;
 
 	$scope.addComment = function(){
@@ -68,8 +104,9 @@ function($scope, $stateParams, courses, course){
 }]);
 
 app.controller('TaskMainCtrl', [
-'$scope', 'tasks', 
-function($scope, tasks ){
+'$scope', 'tasks','auth', 
+function($scope, tasks, auth){
+  $scope.isLoggedIn = auth.isLoggedIn;	
   $scope.tasks = tasks.tasks ;
 
   $scope.addTask = function() {
@@ -92,8 +129,10 @@ app.controller('SubTaskCtrl', [
 '$stateParams',
 'tasks',
 'task',
-function($scope, $stateParams, tasks, task){
-        $scope.task = task;
+'auth',
+function($scope, $stateParams, tasks, task, auth){
+        $scope.isLoggedIn = auth.isLoggedIn;
+	$scope.task = task;
           
         $scope.addComment = function(){
                 if($scope.body === '') { return; }

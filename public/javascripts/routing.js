@@ -17,6 +17,29 @@ function($stateProvider, $urlRouterProvider) {
 
                 }
         })
+	
+	.state('login', {
+		url: '/login',
+		templateUrl: 'temps/login.html',
+		controller: 'AuthCtrl',
+		onEnter: ['$state', 'auth', function($state, auth){
+			if(auth.isLoggedIn()){
+     			  $state.go('home');
+   			 }
+		  }]
+		})
+
+	.state('register', {
+  		url: '/register',
+ 		templateUrl: 'temps/register.html',
+		controller: 'AuthCtrl',
+		onEnter: ['$state', 'auth', function($state, auth){
+    			if(auth.isLoggedIn()){
+      			  $state.go('home');
+   			 }
+ 		    }]
+		})
+	
 
         .state('coursesHome', {
                 url: '/courseshome',
