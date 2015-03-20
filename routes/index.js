@@ -214,7 +214,7 @@ router.put('/tasks/:task/subTasks/:subTask/upvote', auth, function(req, res, nex
 router.post('/tasks/:task/comments', auth, function(req, res, next) {
   var comment = new Comment(req.body);
   comment.task = req.task;
-  post.author = req.payload.username;
+  comment.author = req.payload.username;
 
   comment.save(function(err, comment){
     if(err){ return next(err); }
@@ -231,7 +231,7 @@ router.post('/tasks/:task/comments', auth, function(req, res, next) {
 router.post('/courses/:course/comments', auth, function(req, res, next) {
   var comment = new Comment(req.body);
   comment.course = req.course;
-  post.author = req.payload.username;
+  comment.author = req.payload.username;
 
   comment.save(function(err, comment){
     if(err){ return next(err); }
@@ -248,7 +248,7 @@ router.post('/courses/:course/comments', auth, function(req, res, next) {
 router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
   var subTask = new SubTask(req.body);
   subTask.task = req.task;
-  post.author = req.payload.username;
+  subTask.author = req.payload.username;
 
   subTask.save(function(err, subTask){
     if(err){ return next(err); }
@@ -265,7 +265,7 @@ router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
 router.post('/courses/:course/courseTasks', auth, function(req, res, next) {
   var courseTask = new CourseTask(req.body);
   courseTask.course = req.course;
-  post.author = req.payload.username;
+  courseTask.author = req.payload.username;
 
   courseTask.save(function(err, courseTask){
     if(err){ return next(err); }
