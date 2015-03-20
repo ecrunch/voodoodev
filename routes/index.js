@@ -15,6 +15,7 @@ var CourseTask =  mongoose.model('CourseTask');
 var Comment = mongoose.model('Comment');
 var SubTask =  mongoose.model('SubTask'); 
 var Task =  mongoose.model('Task');
+var Breather = mongoose.model('Breather');	
 var User = mongoose.model('User'); 
 
 
@@ -60,6 +61,15 @@ router.get('/tasks', function(req, res, next) {
   });
 });
 
+router.get('/breathers', function(req, res, next) {
+  Breather.find(function(err, breathers){
+    if(err){ return next(err); }
+
+    res.json(breathers);
+  });
+});
+
+
 router.get('/courses', function(req, res, next) {
   Course.find(function(err, courses){
     if(err){ return next(err); }
@@ -77,6 +87,17 @@ router.post('/tasks', auth, function(req, res, next) {
     res.json(task);
   });
 });
+
+router.post('/breathers', auth, function(req, res, next) {
+  var breather = new Breather(req.body);
+
+  breather.save(function(err, task){
+    if(err){ return next(err); }
+
+    res.json(breather);
+  });
+});
+
 
 router.post('/courses', auth, function(req, res, next) {
   var course = new Course(req.body);
@@ -99,6 +120,19 @@ router.param('task', function(req, res, next, id) {
     return next();
   });
 });
+
+router.param('breather', function(req, res, next, id) {
+  var query = Breather.findById(id);
+
+  query.exec(function (err, breather){
+    if (err) { return next(err); }
+    if (!breather) { return next(new Error('can\'t find breather')); }
+
+    req.breather = breather;
+    return next();
+  });
+});
+
 
 router.param('course', function(req, res, next, id) {
   var query = Course.findById(id);
@@ -178,6 +212,15 @@ router.put('/tasks/:task/upvote', auth, function(req, res, next) {
     res.json(task);
   });
 });
+
+router.put('/breathers/:breather/upvote', auth, function(req, res, next) {
+  req.breather.upvote(function(err, breather){
+    if (err) { return next(err); }
+
+    res.json(breather);
+  });
+});
+
 
 router.put('/courses/:course/comments/:comment/upvote', auth, function(req, res, next) {
   req.comment.upvote(function(err, comment){

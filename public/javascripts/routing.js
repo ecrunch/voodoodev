@@ -84,7 +84,20 @@ function($stateProvider, $urlRouterProvider) {
                         }]
                 }
         })
+	
+	.state('breathersHome', {
+                url: '/breathershome',
+                templateUrl: 'temps/breathersHome.html',
+                controller: 'BreatherMainCtrl',
+                resolve: {
+                        breatherPromise: ['breathers', function(breathers){
+                                return breathers.getAll();
+                        }]
 
+                }
+        })
+
+	
         .state('schedule', {
                 url: '/schedule',
                 templateUrl: 'temps/schedule.html',

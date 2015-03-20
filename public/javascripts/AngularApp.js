@@ -165,6 +165,29 @@ function($scope, $stateParams, tasks, task, auth){
 }]);
 
 
+app.controller('BreatherMainCtrl', [
+'$scope', 'breathers','auth',
+function($scope, breathers, auth){
+  $scope.isLoggedIn = auth.isLoggedIn;
+  $scope.breathers = breathers.breathers ;
+
+  $scope.addBreather = function() {
+        if ($scope.title === '') {return;}
+        breathers.create({
+        title: $scope.title,
+        link: $scope.link,
+        });
+        $scope.title = '';
+        $scope.link = '';
+}
+
+  $scope.incrementUpvotes = function(breather) {
+        breathers.upvote(breather);
+}
+}])
+
+
+
 app.controller('ScheduleCtrl', [
 	'$scope',
 	'$stateParams',

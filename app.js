@@ -12,7 +12,9 @@ require('./models/Comments');
 require('./models/Tasks');
 require('./models/SubTasks');
 require('./models/Users');
+require('./models/Breathers');
 require('./config/passport');
+
 
 mongoose.connect('mongodb://localhost/CourseInput');
 
