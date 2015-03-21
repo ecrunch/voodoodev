@@ -31,7 +31,7 @@ function($scope, $state, auth){
       $state.go('home');
     });
   };
-}])
+}]);
 
 app.controller('NavCtrl', [
 	'$scope',
@@ -56,7 +56,7 @@ app.controller('CourseMainCtrl', [
 	});
 		$scope.title = '';
 		$scope.link = '';
-}
+};
 
   $scope.incrementUpvotes = function(course) {
 	courses.upvote(course);
