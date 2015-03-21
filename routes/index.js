@@ -110,7 +110,6 @@ router.get('/new_schedule', function(req, res, next) {
 		userWants,
 		userBreaks
 	);
-	console.log(schedule.items);
 	res.json(
 		schedule.items
 	);

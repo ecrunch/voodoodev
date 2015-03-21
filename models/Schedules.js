@@ -14,6 +14,18 @@ var ScheduleSchema = new mongoose.Schema({
 });
 
 
+
+
+//implement or get from somewhere 
+function getMean() {
+	return 0;
+}
+
+function getStd() {
+	return 0;
+}
+
+
 // maybe modulize this eventually
 function getScoreData(tasks) {
 
@@ -75,6 +87,10 @@ function determineTaskPriorities(tasks, scoreData) {
 }
 
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 
 function generateTimeSlots(hours) {
 
@@ -91,7 +107,7 @@ function generateTimeSlots(hours) {
 		4: 60
 	};
 
-	var toAdd;
+	var toAdd, minuteSection;
 	while (total <= timeInMinutes) {
 	
 		if(total == timeInMinutes) {
@@ -101,7 +117,7 @@ function generateTimeSlots(hours) {
 
 		if(comingOffBreak) {
 			//random int
-			//toAdd = random(2,4)
+			toAdd = getRandomInt(2,4)
 		}
 
 
@@ -111,18 +127,52 @@ function generateTimeSlots(hours) {
 		}
 
 		else {
-			//toAdd = random(1,4)
+			toAdd = getRandomInt(1,4)
 		}
 
+		minuteSection = timeConversions[toAdd];
+
+		if(minuteSection == 15) {
+			comingOffBreak = true;
+		}
+		else{
+			comingOffBreak = false;
+		}
+	
+		timeSlots.push(minuteSection);
+
+		total += minuteSection;
+	
+	}
+
+	// we went over a bit
+	if (total > timeInMinutes) {
+
+
+		var lastIndex = timeSlots.length - 1;
+
+		// the time that took us over the mark
+		var lastTime = timeSlots[lastIndex]; 
+		
+		//bring total back to before lastTime was added
+		total = total - lastTime;
+
+		//see how much is left to go
+		var leftToGo = timeInMinutes - total;
+
+		//add leftToGo as the last slot
+		if (leftToGo != 0) {
+			timeSlots[lastIndex] = leftToGo;
+		}
+		//remove the last number entirely
+		else{
+			timeSlots.pop();
+		}
 
 	}
 
 
-}
-
-
-
-function generateSchedule() {
+	return timeSlots;
 
 
 }
@@ -137,6 +187,27 @@ ScheduleSchema.methods.createNew = function(hours, tasks, wants, breaks) {
 	var eIndex 	= 0;
 	var nIndex 	= 0;
 	var ntIndex 	= 0;
+
+	var timeSlots = generateTimeSlots(hours);
+	var schedule = [];
+
+
+	var chosenList = taskPriorities["eTasks"];
+	var chosenIndex = eIndex;
+
+	var minutesToAdd;
+	for(var i = 0; i < timeSlots.length; i++) {
+		
+
+		if (minutesToAdd == 15) { 
+			
+		}
+
+
+	}
+
+
+
 	
 	for(var i = 0; i < tasks.length; i++) {
 		this.items.push(
