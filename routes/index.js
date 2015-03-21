@@ -94,13 +94,37 @@ function mockTasks() {
 }
 
 
+function mockWants() {
+	return [
+		{
+			description: "Gym"
+		},
+		{
+			description: "Read"
+		}
+	];
+}
+
+
+function mockBreaks() {
+	return [
+		{
+			description: "Youtube"
+		},
+		{
+			description: "Reddit"
+		}
+	];
+}
+
+
 
 
 router.get('/new_schedule', function(req, res, next) {
 
 	var userTasks = mockTasks();
-	var userWants = [];
-	var userBreaks = [];
+	var userWants = mockWants();
+	var userBreaks = mockBreaks();
 	var hours = 4;
 
 	var schedule = new Schedule();
@@ -110,6 +134,7 @@ router.get('/new_schedule', function(req, res, next) {
 		userWants,
 		userBreaks
 	);
+
 	res.json(
 		schedule.items
 	);

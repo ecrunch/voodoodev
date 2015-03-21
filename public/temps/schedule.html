@@ -1,13 +1,12 @@
 <div class= "page-header">
 	<h1> Schedule Test Page </h1>
 
-
 	<!-- we should make the individual parts
 		into angular directives when we get
 		the chance -->
 	<ul>
 		<li ng-repeat="item in items">
-			{{item.description}} -- {{item.score}}
+			{{item.number}} -- {{item.minutes}} -- {{item.details.description}}
 		</li>
 	</ul>
 

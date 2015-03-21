@@ -7,17 +7,15 @@ var ScheduleSchema = new mongoose.Schema({
 
 	hours: Number,
 
-	items: [{description: String, score: Number}],
+	items: [{number: Number, minutes: Number, details: {description: String}}],
 
 	userId: Number
 
 });
 
 
-
-
 //implement or get from somewhere 
-function getMean() {
+function getMean(){
 	return 0;
 }
 
@@ -179,44 +177,108 @@ function generateTimeSlots(hours) {
 
 
 ScheduleSchema.methods.createNew = function(hours, tasks, wants, breaks) {
-	
-	var scoreData = getScoreData(tasks);
-	var taskPriorities = determineTaskPriorities(tasks, scoreData);
 
+	var repeatItems = true;
+	
+	var scoreData 		= getScoreData(tasks);
+	var taskPriorities 	= determineTaskPriorities(tasks, scoreData);
+	var timeSlots 		= generateTimeSlots(hours);
 	
 	var eIndex 	= 0;
 	var nIndex 	= 0;
 	var ntIndex 	= 0;
 
-	var timeSlots = generateTimeSlots(hours);
-	var schedule = [];
+	var schedule 	= [];
 
+	var chosenList, chosenIndex;
 
-	var chosenList = taskPriorities["eTasks"];
-	var chosenIndex = eIndex;
+	var minutesToAdd, numberOfItems, addIndex, itemToAdd, randomInt;
+	var number = 1;
 
-	var minutesToAdd;
 	for(var i = 0; i < timeSlots.length; i++) {
 		
+		minutesToAdd = timeSlots[i];
 
+		// break
 		if (minutesToAdd == 15) { 
-			
+
+			numberOfItems 	= breaks.length;
+			addIndex 	= getRandomInt(0, numberOfItems -1);
+			itemToAdd 	= breaks[addIndex];
+			this.items.push(
+				{
+					"number": 	number,
+					"minutes": 	minutesToAdd,
+					"details":	{"description": itemToAdd["description"]}
+				}
+			);			
 		}
+		// task or want
+		else {
+			randomInt = getRandomInt(1, 2);
 
+			// wants
+			if (randomInt == 1) {
+			
+				numberOfItems 	= wants.length;
+				addIndex 	= getRandomInt(0, numberOfItems -1);
+				itemToAdd 	= breaks[addIndex];
+				this.items.push(
+					{
+						"number":	number,
+						"minutes":	minutesToAdd,
+						"details":	{
+							"description": itemToAdd["description"]
+						}
+					}
+				);
+			}
 
-	}
+			// tasks
+			else {
+				if (eIndex < taskPriorities["eTasks"].length) {
+					chosenList = taskPriorities["eTasks"];
+					chosenIndex = eIndex;
+					eIndex += 1;
+				}
+				else if(nIndex < taskPriorities["nTasks"].length) {
+					chosenList = taskPriorities["nTasks"];
+					chosenIndex = nIndex;
+					nIndex += 1;	
+				}
+				else if(ntIndex < taskPriorities["ntTasks"].length) {
+					chosenList = taskPriorities["ntTasks"];
+					chosenIndex = ntIndex;
+					ntIndex += 1;
+				}
+				else if(repeatItems) {
+					eIndex 	= 0;
+					nIndex 	= 0;
+					ntIndex = 0;
+					chosenIndex = 0;
+				}
+				else {
+					// do nothing
+				}
+				itemToAdd = chosenList[chosenIndex];
 
+				this.items.push(
+					{
+						"number":	number,
+						"minutes":	minutesToAdd,
+						"details":	{
+							"description":	itemToAdd["description"]
+						}
+					}
+				);
 
+			}
 
-	
-	for(var i = 0; i < tasks.length; i++) {
-		this.items.push(
-			{
-				description: 	tasks[i].description,
-				score:		tasks[i].getScore()
-			}	
-		);
-	}
+		}  //end of task or want block
+
+		number += 1;
+
+	} //end of time slot for loop	
 
 };
 
