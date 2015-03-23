@@ -42,6 +42,7 @@ app.controller('NavCtrl', [
  	 $scope.logOut = auth.logOut;
 	}]);
  
+
 app.controller('CourseMainCtrl', [
 	'$scope', 'courses','auth', 
 	function($scope, courses, auth ){
@@ -56,11 +57,11 @@ app.controller('CourseMainCtrl', [
 	});
 		$scope.title = '';
 		$scope.link = '';
-};
+	};
 
-  $scope.incrementUpvotes = function(course) {
-	courses.upvote(course);
-}	
+	$scope.incrementUpvotes = function(course) {
+		courses.upvote(course);
+	};	
 }]);
 
 
@@ -107,23 +108,26 @@ function($scope, $stateParams, courses, course, auth ){
 app.controller('TaskMainCtrl', [
 '$scope', 'tasks','auth', 
 function($scope, tasks, auth){
-  $scope.isLoggedIn = auth.isLoggedIn;	
-  $scope.tasks = tasks.tasks ;
+  	
+	$scope.isLoggedIn = auth.isLoggedIn;	
+  	$scope.tasks = tasks.tasks ;
 
-  $scope.addTask = function() {
-        if ($scope.title === '') {return;} 
-        tasks.create({
-        title: $scope.title,
-        link: $scope.link,
-        });
-        $scope.title = '';
-        $scope.link = '';
-}
+  	$scope.addTask = function() {
+        	if ($scope.title === '') {
+			return;
+		} 
+        	tasks.create({
+        		title: $scope.title,
+        		link: $scope.link,
+        	});
+        	$scope.title = '';
+        	$scope.link = '';
+	};
 
-  $scope.incrementUpvotes = function(task) {
-        tasks.upvote(task);
-}       
-}])
+  	$scope.incrementUpvotes = function(task) {
+        	tasks.upvote(task);
+	};       
+}]);
 
 app.controller('SubTaskCtrl', [
 '$scope',
@@ -169,23 +173,26 @@ function($scope, $stateParams, tasks, task, auth){
 app.controller('BreatherMainCtrl', [
 '$scope', 'breathers','auth',
 function($scope, breathers, auth){
-  $scope.isLoggedIn = auth.isLoggedIn;
-  $scope.breathers = breathers.breathers ;
+  	
+	$scope.isLoggedIn = auth.isLoggedIn;
+  	$scope.breathers = breathers.breathers ;
 
-  $scope.addBreather = function() {
-        if ($scope.title === '') {return;}
-        breathers.create({
-        title: $scope.title,
-        link: $scope.link,
-        });
-        $scope.title = '';
-        $scope.link = '';
-}
+  	$scope.addBreather = function() {
+        	if ($scope.title === '') {
+			return;
+		}
+        	breathers.create({
+        		title: $scope.title,
+        		link: $scope.link,
+        	});
+        	$scope.title = '';
+        	$scope.link = '';
+	};
 
-  $scope.incrementUpvotes = function(breather) {
-        breathers.upvote(breather);
-}
-}])
+  	$scope.incrementUpvotes = function(breather) {
+        	breathers.upvote(breather);
+	};
+}]);
 
 
 
