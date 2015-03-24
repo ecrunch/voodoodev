@@ -113,15 +113,15 @@ function generateTimeSlots(hours) {
 		}
 
 
+		// we do not get a break next round 
 		if(comingOffBreak) {
-			//random int
-			toAdd = getRandomInt(2,4)
+			toAdd = getRandomInt(2,4);
+			timeWithoutBreak = 0;
 		}
 
-
+		// we must get a break next round
 		else if(timeWithoutBreak >= 90) {
-			toAdd 			= 1;
-			timeWithoutBreak 	= 0;
+			toAdd = 1;
 		}
 
 		else {
@@ -139,7 +139,8 @@ function generateTimeSlots(hours) {
 	
 		timeSlots.push(minuteSection);
 
-		total += minuteSection;
+		total += minuteSection;	
+		timeWithoutBreak += minuteSection;
 	
 	}
 
@@ -281,6 +282,8 @@ function makeSchedule(timeSlots, taskPriorities, wants, breaks, repeatItems) {
 //export the functions for testing
 module.exports = function() {
 	return {
+		getMean:			getMean,
+		getStd:				getStd,
 		getScoreData: 			getScoreData,
 		determineTaskPriorities:	determineTaskPriorities,
 		getRandomInt:			getRandomInt,
