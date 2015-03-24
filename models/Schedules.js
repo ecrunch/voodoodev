@@ -172,18 +172,11 @@ function generateTimeSlots(hours) {
 
 	return timeSlots;
 
-
 }
 
 
-ScheduleSchema.methods.createNew = function(hours, tasks, wants, breaks) {
+function makeSchedule(timeSlots, taskPriorities, wants, breaks, repeatItems) {
 
-	var repeatItems = true;
-	
-	var scoreData 		= getScoreData(tasks);
-	var taskPriorities 	= determineTaskPriorities(tasks, scoreData);
-	var timeSlots 		= generateTimeSlots(hours);
-	
 	var eIndex 	= 0;
 	var nIndex 	= 0;
 	var ntIndex 	= 0;
@@ -205,7 +198,7 @@ ScheduleSchema.methods.createNew = function(hours, tasks, wants, breaks) {
 			numberOfItems 	= breaks.length;
 			addIndex 	= getRandomInt(0, numberOfItems -1);
 			itemToAdd 	= breaks[addIndex];
-			this.items.push(
+			schedule.push(
 				{
 					"number": 	number,
 					"minutes": 	minutesToAdd,
@@ -223,7 +216,7 @@ ScheduleSchema.methods.createNew = function(hours, tasks, wants, breaks) {
 				numberOfItems 	= wants.length;
 				addIndex 	= getRandomInt(0, numberOfItems -1);
 				itemToAdd 	= breaks[addIndex];
-				this.items.push(
+				schedule.push(
 					{
 						"number":	number,
 						"minutes":	minutesToAdd,
@@ -262,7 +255,7 @@ ScheduleSchema.methods.createNew = function(hours, tasks, wants, breaks) {
 				}
 				itemToAdd = chosenList[chosenIndex];
 
-				this.items.push(
+				schedule.push(
 					{
 						"number":	number,
 						"minutes":	minutesToAdd,
@@ -279,6 +272,34 @@ ScheduleSchema.methods.createNew = function(hours, tasks, wants, breaks) {
 		number += 1;
 
 	} //end of time slot for loop	
+
+
+	return schedule;
+}
+
+
+//export the functions for testing
+module.exports = function() {
+	return {
+		getScoreData: 			getScoreData,
+		determineTaskPriorities:	determineTaskPriorities,
+		getRandomInt:			getRandomInt,
+		generateTimeSlots:		generateTimeSlots,
+		makeSchedule:			makeSchedule 
+	};
+}();
+
+ScheduleSchema.methods.createNew = function(hours, tasks, wants, breaks) {
+
+	var repeatItems = true;
+	
+	var scoreData 		= getScoreData(tasks);
+	var taskPriorities 	= determineTaskPriorities(tasks, scoreData);
+	var timeSlots 		= generateTimeSlots(hours);
+
+	var schedule = makeSchedule(timeSlots, taskPriorities, wants, breaks, repeatItems);
+	console.log(schedule);
+	this.items = schedule;
 
 };
 
