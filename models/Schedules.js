@@ -7,11 +7,9 @@ var ScheduleSchema = new mongoose.Schema({
 
 	hours: Number,
 
-	items: [{number: Number, minutes: Number, details: {description: String}}],
+	items: [{number: Number, minutes: Number, details: {description: String}, type: String}],
 
-	userId: Number,
-
-	type: String
+	userId: Number
 
 });
 
