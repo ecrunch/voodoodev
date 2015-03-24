@@ -1,12 +1,36 @@
-
-
-
 var assert = require("assert");
 var scheduleFuncs = require("../models/Schedules.js");
 
 
 
-describe('TimeSlot Generator', function() {
+describe('Score data tests', function() {
+
+
+});
+
+
+function generateMockTasks() {
+	return [
+		{
+
+		},
+		{
+
+		},
+		{
+
+		}
+	];
+}
+
+
+describe('Task priority decider tests', function() {
+
+
+});
+
+
+describe('Timeslot generator tests', function() {
 
 	var numHours = 4;
 	var timeSlots, total;
@@ -29,4 +53,98 @@ describe('TimeSlot Generator', function() {
 
 
 });
+
+
+function generateMockTimeSlots() {
+	return [30, 60, 15, 60, 60, 15];
+}
+
+
+function generateMockPrioritizedTasks() {
+	return {
+		"eTasks": [
+			{
+				description: "Task A"
+			},
+			{
+				description: "Task B"
+			}
+		],
+		"nTasks": [
+			{
+				description: "Task C"
+			},
+			{
+				description: "Task D"
+			}
+		],
+		"ntTasks": [
+			{
+				description: "Task E"
+			},
+			{
+				description: "Task F"
+			}
+		]
+	};
+}
+
+
+function generateMockWants() {
+	return [
+		{
+			description: "Fuck Bitches"
+		},
+		{
+			description: "Get Money"
+		},
+		{
+			description: "Live Life"
+		}
+	];
+}
+
+function generateMockBreaks() {
+	return [
+		{
+			description: "reddit"
+		},
+		{
+			description: "youtube"
+		},
+		{
+			description: "theonion"
+		}
+	];
+}
+
+
+describe('Schedule maker tests', function() {
+
+
+	var timeSlots = generateMockTimeSlots();
+	var taskPriorities = generateMockPrioritizedTasks();
+	var wants = generateMockWants();
+	var breaks = generateMockBreaks();
+
+	var schedule;
+	it('Should have only breaks in the 15 min slots', function() {
+		schedule = scheduleFuncs.makeSchedule(
+			timeSlots, taskPriorities, wants, breaks, true
+		);
+
+		for(var i = 0; i < schedule.length; i++) {
+			if(schedule[i].minutes == 15) {
+				assert.notEqual(schedule[i].description, "task");
+				assert.notEqual(schedule[i].description, "want");
+			}
+			else {
+				assert.notEqual(schedule[i].description, "break");
+			}
+		}
+
+	});
+});
+
+
 

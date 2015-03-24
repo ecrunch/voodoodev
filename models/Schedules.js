@@ -9,7 +9,9 @@ var ScheduleSchema = new mongoose.Schema({
 
 	items: [{number: Number, minutes: Number, details: {description: String}}],
 
-	userId: Number
+	userId: Number,
+
+	type: String
 
 });
 
@@ -203,7 +205,8 @@ function makeSchedule(timeSlots, taskPriorities, wants, breaks, repeatItems) {
 				{
 					"number": 	number,
 					"minutes": 	minutesToAdd,
-					"details":	{"description": itemToAdd["description"]}
+					"details":	{"description": itemToAdd["description"]},
+					"type":		"break"
 				}
 			);			
 		}
@@ -216,14 +219,15 @@ function makeSchedule(timeSlots, taskPriorities, wants, breaks, repeatItems) {
 			
 				numberOfItems 	= wants.length;
 				addIndex 	= getRandomInt(0, numberOfItems -1);
-				itemToAdd 	= breaks[addIndex];
+				itemToAdd 	= wants[addIndex];
 				schedule.push(
 					{
 						"number":	number,
 						"minutes":	minutesToAdd,
 						"details":	{
 							"description": itemToAdd["description"]
-						}
+						},
+						"type":		"want"
 					}
 				);
 			}
@@ -262,7 +266,8 @@ function makeSchedule(timeSlots, taskPriorities, wants, breaks, repeatItems) {
 						"minutes":	minutesToAdd,
 						"details":	{
 							"description":	itemToAdd["description"]
-						}
+						},
+						"type":		"task"
 					}
 				);
 
@@ -301,7 +306,6 @@ ScheduleSchema.methods.createNew = function(hours, tasks, wants, breaks) {
 	var timeSlots 		= generateTimeSlots(hours);
 
 	var schedule = makeSchedule(timeSlots, taskPriorities, wants, breaks, repeatItems);
-	console.log(schedule);
 	this.items = schedule;
 
 };
