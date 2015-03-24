@@ -254,7 +254,8 @@ function makeSchedule(timeSlots, taskPriorities, wants, breaks, repeatItems) {
 					chosenIndex = 0;
 				}
 				else {
-					// do nothing
+					// die
+					return [];
 				}
 				itemToAdd = chosenList[chosenIndex];
 

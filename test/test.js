@@ -1,7 +1,30 @@
-var assert = require("assert");
-var scheduleFuncs = require("../models/Schedules.js");
+var assert 		= require("assert");
+var taskFuncs 		= require('../models/Tasks.js');
+var scheduleFuncs 	= require('../models/Schedules.js');
 
 
+
+/*
+	Task Tests
+*/
+
+
+describe('Initial task tests', function() {
+	it('Should set up the base scores', function() {
+		assert.equal(taskFuncs.getScore("Exam"), 5);
+		assert.equal(taskFuncs.getScore("Project"), 4);
+		assert.equal(taskFuncs.getScore("Paper"), 4);
+		assert.equal(taskFuncs.getScore("Homework"), 3);
+	});
+});
+
+
+
+
+
+/*
+	Schedule Tests
+*/
 
 describe('Score data tests', function() {
 
