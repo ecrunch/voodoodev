@@ -24,7 +24,6 @@ function getStd() {
 }
 
 
-// maybe modulize this eventually
 function getScoreData(tasks) {
 
 	var scoreData = {
@@ -176,7 +175,7 @@ function generateTimeSlots(hours) {
 }
 
 
-function makeSchedule(timeSlots, taskPriorities, wants, breaks, repeatItems) {
+function makeSchedule(timeSlots, scoredTasks, breathers, repeatItems) {
 
 	var eIndex 	= 0;
 	var nIndex 	= 0;
@@ -196,88 +195,62 @@ function makeSchedule(timeSlots, taskPriorities, wants, breaks, repeatItems) {
 		// break
 		if (minutesToAdd == 15) { 
 
-			numberOfItems 	= breaks.length;
+			numberOfItems 	= breathers.length;
 			addIndex 	= getRandomInt(0, numberOfItems -1);
-			itemToAdd 	= breaks[addIndex];
+			itemToAdd 	= breathers[addIndex];
 			schedule.push(
 				{
 					"number": 	number,
 					"minutes": 	minutesToAdd,
 					"details":	{"description": itemToAdd["description"]},
-					"type":		"break"
+					"type":		"breather"
 				}
 			);			
 		}
-		// task or want
-		else {
-			randomInt = getRandomInt(1, 2);
-
-			// wants
-			if (randomInt == 1) {
-			
-				numberOfItems 	= wants.length;
-				addIndex 	= getRandomInt(0, numberOfItems -1);
-				itemToAdd 	= wants[addIndex];
-				schedule.push(
-					{
-						"number":	number,
-						"minutes":	minutesToAdd,
-						"details":	{
-							"description": itemToAdd["description"]
-						},
-						"type":		"want"
-					}
-				);
+		else{
+			if (eIndex < scoredTasks["eTasks"].length) {
+				chosenList = scoredTasks["eTasks"];
+				chosenIndex = eIndex;
+				eIndex += 1;
 			}
-
-			// tasks
+			else if(nIndex < scoredTasks["nTasks"].length) {
+				chosenList = scoredTasks["nTasks"];
+				chosenIndex = nIndex;
+				nIndex += 1;	
+			}
+			else if(ntIndex < scoredTasks["ntTasks"].length) {
+				chosenList = scoredTasks["ntTasks"];
+				chosenIndex = ntIndex;
+				ntIndex += 1;
+			}
+			else if(repeatItems) {
+				eIndex 	= 0;
+				nIndex 	= 0;
+				ntIndex = 0;
+				chosenIndex = 0;
+			}
 			else {
-				if (eIndex < taskPriorities["eTasks"].length) {
-					chosenList = taskPriorities["eTasks"];
-					chosenIndex = eIndex;
-					eIndex += 1;
-				}
-				else if(nIndex < taskPriorities["nTasks"].length) {
-					chosenList = taskPriorities["nTasks"];
-					chosenIndex = nIndex;
-					nIndex += 1;	
-				}
-				else if(ntIndex < taskPriorities["ntTasks"].length) {
-					chosenList = taskPriorities["ntTasks"];
-					chosenIndex = ntIndex;
-					ntIndex += 1;
-				}
-				else if(repeatItems) {
-					eIndex 	= 0;
-					nIndex 	= 0;
-					ntIndex = 0;
-					chosenIndex = 0;
-				}
-				else {
-					// die
-					return [];
-				}
-				itemToAdd = chosenList[chosenIndex];
-
-				schedule.push(
-					{
-						"number":	number,
-						"minutes":	minutesToAdd,
-						"details":	{
-							"description":	itemToAdd["description"]
-						},
-						"type":		"task"
-					}
-				);
-
+				// die
+				return [];
 			}
+			itemToAdd = chosenList[chosenIndex];
 
-		}  //end of task or want block
+			schedule.push(
+				{
+					"number":	number,
+					"minutes":	minutesToAdd,
+					"details":	{
+						"description":	itemToAdd["description"]
+					},
+					"type":		"task"
+				}
+			);
+
+		}  //end of task block
 
 		number += 1;
 
 	} //end of time slot for loop	
-
 
 	return schedule;
 }
@@ -296,16 +269,20 @@ module.exports = function() {
 	};
 }();
 
-ScheduleSchema.methods.createNew = function(hours, tasks, wants, breaks) {
+ScheduleSchema.methods.createNew = function(hours, tasks, breathers) {
 
 	var repeatItems = true;
 	
 	var scoreData 		= getScoreData(tasks);
-	var taskPriorities 	= determineTaskPriorities(tasks, scoreData);
+	var scoredTasks 	= determineTaskPriorities(tasks, scoreData);
 	var timeSlots 		= generateTimeSlots(hours);
 
-	var schedule = makeSchedule(timeSlots, taskPriorities, wants, breaks, repeatItems);
-	this.items = schedule;
+	var schedule = makeSchedule(timeSlots, scoredTasks, breathers, repeatItems);
+	for( var i = 0; i < schedule.length; i++) {	
+		console.log(schedule[i]);
+		this.items.push(schedule[i]);
+	}
+	console.log(this.items);
 
 };
 

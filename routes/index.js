@@ -64,23 +64,22 @@ var Schedule = mongoose.model('Schedule');
 
 
 router.get('/tasks', function(req, res, next) {
-  Task.find(function(err, tasks){
-    if(err){ return next(err); }
-
-    res.json(tasks);
-  });
+	Task.find(function(err, tasks){
+		if(err){
+			return next(err);
+		}
+		res.json(tasks);
+  	});
 });
 
 router.get('/breathers', function(req, res, next) {
-  Breather.find(function(err, breathers){
-    if(err){ return next(err); }
-
-    res.json(breathers);
-  });
+	Breather.find(function(err, breathers){
+    		if(err){
+			return next(err);
+		}
+		res.json(breathers);
+  	});
 });
-
-var Task = mongoose.model('Task');
-//var Schedule = mongoose.model('Schedule');
 
 
 function mockTasks() {
@@ -100,20 +99,7 @@ function mockTasks() {
 	];
 }
 
-
-function mockWants() {
-	return [
-		{
-			description: "Gym"
-		},
-		{
-			description: "Read"
-		}
-	];
-}
-
-
-function mockBreaks() {
+function mockBreathers() {
 	return [
 		{
 			description: "Youtube"
@@ -124,24 +110,19 @@ function mockBreaks() {
 	];
 }
 
-
-
-
 router.get('/new_schedule', function(req, res, next) {
 
 	var userTasks = mockTasks();
-	var userWants = mockWants();
-	var userBreaks = mockBreaks();
+	var userBreathers = mockBreathers();
 	var hours = 4;
 
 	var schedule = new Schedule();
 	schedule.createNew(
 		hours,
 		userTasks,
-		userWants,
-		userBreaks
+		userBreathers
 	);
-
+	console.log(schedule.items);
 	res.json(
 		schedule.items
 	);
