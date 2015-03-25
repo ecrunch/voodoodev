@@ -129,7 +129,6 @@ app.factory('Schedule', ['$http',  function($http){
 		$http.get('/new_schedule').then(
 			function(data){
 				var items = data.data;
-				alert(items);
 				for (var i = 0; i < items.length; i++) {
 					schedule.items.push(items[i]);
 				}

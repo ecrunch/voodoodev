@@ -117,14 +117,13 @@ router.get('/new_schedule', function(req, res, next) {
 	var hours = 4;
 
 	var schedule = new Schedule();
-	schedule.createNew(
+	var items = schedule.createNew(
 		hours,
 		userTasks,
 		userBreathers
 	);
-	console.log(schedule.items);
 	res.json(
-		schedule.items
+		items
 	);
 });
 

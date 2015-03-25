@@ -279,10 +279,9 @@ ScheduleSchema.methods.createNew = function(hours, tasks, breathers) {
 
 	var schedule = makeSchedule(timeSlots, scoredTasks, breathers, repeatItems);
 	for( var i = 0; i < schedule.length; i++) {	
-		console.log(schedule[i]);
 		this.items.push(schedule[i]);
 	}
-	console.log(this.items);
+	return schedule;
 
 };
 
