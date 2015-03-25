@@ -42,6 +42,7 @@ router.post('/register', function(req, res, next){
   	});
 });
 
+
 router.post('/login', function(req, res, next){
 
 	if(!req.body.username || !req.body.password){
@@ -64,6 +65,7 @@ router.post('/login', function(req, res, next){
 /*
 *	MOCKS
 */
+
 
 function mockTasks() {
 	return [
@@ -324,6 +326,24 @@ router.put('/breathers/:breather/upvote', auth, function(req, res, next) {
 			return next(err);
 		}
 		res.json(breather);
+	});
+});
+
+
+
+/*
+*	USER-ROUTES
+*/
+
+
+router.post('/breathers/:breather/joinBreather', auth, function(req, res, next) {
+	user=User.find({_id: req.payload._id});
+	user.joinBreather(breather);
+	user.save(function(err, breather) {
+     		if(err){ return next(err); }
+
+      		res.json(breather);
+
 	});
 });
 

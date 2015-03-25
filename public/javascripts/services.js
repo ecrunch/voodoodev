@@ -248,5 +248,12 @@ app.factory('breathers',['$http', 'auth', function($http, auth){
                  });
                 };
 
+	b.joinBreather = function(breather) {
+		return $http.post('/breathers/'+ breather._id+'/joinBreather',null, {
+                		headers: {Authorization: 'Bearer '+auth.getToken()}
+               			 }).success(function(data){
+                 		 b.breathers.push(data);
+                		 });
+		};
  return b;
 }]);

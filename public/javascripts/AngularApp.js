@@ -169,7 +169,7 @@ function($scope, $stateParams, tasks, task, auth){
 
 
 app.controller('BreatherMainCtrl', [
-'$scope', 'breathers','auth',
+'$scope', 'breathers','auth', 
 function($scope, breathers, auth){
   	
 	$scope.isLoggedIn = auth.isLoggedIn;
@@ -186,6 +186,10 @@ function($scope, breathers, auth){
         	$scope.title = '';
         	$scope.link = '';
 	};
+	
+	$scope.joinB = function(breather){
+		breathers.joinBreather(breather); 
+	};	
 
   	$scope.incrementUpvotes = function(breather) {
         	breathers.upvote(breather);

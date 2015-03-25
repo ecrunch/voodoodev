@@ -13,8 +13,11 @@
           </a>
           <span ng-hide="breather.link">
             {{breather.title}}
-          </span>
-        </span>
+	</span>
+	<span class="glyphicon glyphicon-plus"
+		 ng-click="joinB(breather)">
+	</span>
+	</span>
       </div>
 
       <form ng-submit="addBreather()"
