@@ -198,13 +198,17 @@ app.controller('ScheduleCtrl', [
 '$scope', '$stateParams', 'Schedule',
 function($scope, $stateParams, Schedule) {
 
-	// kill old schedules
-	if(Schedule.items) {
-		Schedule.purge();
-	}
 
-	Schedule.createNew();
-	$scope.items = Schedule.items;
+	$scope.newSchedule = function() {
+		Schedule.purge();
+		Schedule.createNew();
+		$scope.items = Schedule.items;
+	};
+
+
+	$scope.newSchedule();
+
+
 
 }]);
 

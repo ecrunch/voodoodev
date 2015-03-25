@@ -1,13 +1,18 @@
 <div class= "page-header">
-	<h1> Schedule Test Page </h1>
-
-	<!-- we should make the individual parts
-		into angular directives when we get
-		the chance -->
-	<ul>
-		<li ng-repeat="item in items">
-			{{item.number}} -- {{item.minutes}} -- {{item.details.description}}
-		</li>
-	</ul>
-
+	<h3> My Schedule </h3>	
+	<input type="button" ng-click="newSchedule()" value="New Schedule">	
+	<a href="#/home">Home</a>
 </div>
+
+<table border="3">
+	<tr>
+		<th> Number </th>
+		<th> Description </th>
+		<th> Minutes </th>
+	</tr>
+	<tr ng-repeat="item in items">
+		<td> {{item.number}} </td>
+		<td> {{item.details.description}} </td>
+		<td> {{item.minutes}} </td>
+	</tr>
+</table>
