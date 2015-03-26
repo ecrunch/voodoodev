@@ -17,6 +17,8 @@ var SubTask =  mongoose.model('SubTask');
 var Task =  mongoose.model('Task');
 var Breather = mongoose.model('Breather');	
 var User = mongoose.model('User'); 
+var Schedule = mongoose.model('Schedule');
+
 
 
 router.post('/register', function(req, res, next){
@@ -59,28 +61,9 @@ router.post('/login', function(req, res, next){
 });
 
 
-var Task =  mongoose.model('Task'); 
-var Schedule = mongoose.model('Schedule');
-
-
-router.get('/tasks', function(req, res, next) {
-	Task.find(function(err, tasks){
-		if(err){
-			return next(err);
-		}
-		res.json(tasks);
-  	});
-});
-
-router.get('/breathers', function(req, res, next) {
-	Breather.find(function(err, breathers){
-    		if(err){
-			return next(err);
-		}
-		res.json(breathers);
-  	});
-});
-
+/*
+*	MOCKS
+*/
 
 function mockTasks() {
 	return [
@@ -110,33 +93,22 @@ function mockBreathers() {
 	];
 }
 
-router.get('/new_schedule', function(req, res, next) {
-
-	var userTasks = mockTasks();
-	var userBreathers = mockBreathers();
-	var hours = 4;
-
-	var schedule = new Schedule();
-	var items = schedule.createNew(
-		hours,
-		userTasks,
-		userBreathers
-	);
-	res.json(
-		items
-	);
-});
 
 
-router.get('/courses', function(req, res, next) {
+/*
+*	TASKS-ROUTES
+*/
 
-	Course.find(function(err, courses) {
-		if(err) {
+
+router.get('/tasks', function(req, res, next) {
+	Task.find(function(err, tasks){
+		if(err){
 			return next(err);
 		}
-		res.json(courses);
+		res.json(tasks);
   	});
 });
+
 
 router.post('/tasks', auth, function(req, res, next) {
 
@@ -151,32 +123,6 @@ router.post('/tasks', auth, function(req, res, next) {
 });
 
 
-router.post('/breathers', auth, function(req, res, next) {
-
-	var breather = new Breather(req.body);
-
-	breather.save(function(err, task) {
-		if(err) {
-			return next(err);
-		}
-		res.json(breather);
-	});
-});
-
-
-router.post('/courses', auth, function(req, res, next) {
-
-	var course = new Course(req.body);
-	
-	course.save(function(err, course) {
-		if(err) {
-			return next(err);
-		}
-		res.json(course);
-	});
-}); 
-
-
 router.param('task', function(req, res, next, id) {
 
 	var query = Task.findById(id);
@@ -189,54 +135,6 @@ router.param('task', function(req, res, next, id) {
 		}
 		req.task = task;
     		return next();
-	});
-});
-
-
-router.param('breather', function(req, res, next, id) {
-
-	var query = Breather.findById(id);
-	query.exec(function (err, breather){
-		if (err) {
-			return next(err);
-		}
-		if (!breather) {
-			return next(new Error('can\'t find breather'));
-		}
-		req.breather = breather;
-		return next();
-	});
-});
-
-
-router.param('course', function(req, res, next, id) {
-
-	var query = Course.findById(id);
-	query.exec(function (err, course){
-		if (err) {
-			return next(err);
-		}
-		if (!course) {
-			return next(new Error('can\'t find course'));
-		}
-		req.course = course;
-		return next();
-	});
-});
-
-
-router.param('comment', function(req, res, next, id) {
-
-	var query = Comment.findById(id);
-	query.exec(function (err, comment){
-		if (err) {
-			return next(err);
-		}
-		if (!comment) {
-			return next(new Error('can\'t find comment'));
-		}
-		req.comment = comment;
-		return next();
 	});
 });
 
@@ -280,23 +178,6 @@ router.get('/tasks/:task', function(req, res) {
 });
 
 
-router.get('/courses/:course', function(req, res) {
-	req.course.populate('courseTasks comments', function(err, course) {	 
-		res.json(req.course);
-	});
-});
-
-
-router.put('/courses/:course/upvote', auth, function(req, res, next) {
-	req.course.upvote(function(err, course){
-		if (err) {
-			return next(err);
-		}
-		res.json(course);
-	});
-});
-
-
 router.put('/tasks/:task/upvote', auth, function(req, res, next) {
 	req.task.upvote(function(err, task){
 		if (err) {
@@ -307,42 +188,12 @@ router.put('/tasks/:task/upvote', auth, function(req, res, next) {
 });
 
 
-router.put('/breathers/:breather/upvote', auth, function(req, res, next) {
-	req.breather.upvote(function(err, breather){
-		if (err) {
-			return next(err);
-		}
-		res.json(breather);
-	});
-});
-
-
-router.put('/courses/:course/comments/:comment/upvote', auth, function(req, res, next) {
-	req.comment.upvote(function(err, comment){
-		if (err) {
-			return next(err);
-		}
-		res.json(comment);
-	});
-});
-
-
 router.put('/tasks/:task/comments/:comment/upvote', auth, function(req, res, next) {
 	req.comment.upvote(function(err, comment){
 		if (err) {
 			return next(err);
 		}
 		res.json(comment);
-	});
-});
-
-
-router.put('/courses/:course/courseTasks/:courseTask/upvote', auth, function(req, res, next) {
-	req.courseTask.upvote(function(err, courseTask){
-		if (err) {
-			return next(err);
-		}
-		res.json(courseTask);
 	});
 });
 
@@ -378,6 +229,187 @@ router.post('/tasks/:task/comments', auth, function(req, res, next) {
 });
 
 
+
+router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
+
+	var subTask = new SubTask(req.body);
+	subTask.task = req.task;
+	subTask.author = req.payload.username;
+
+	subTask.save(function(err, subTask){
+		if(err){
+			return next(err);
+		}
+		req.task.subTasks.push(subTask);
+		req.task.save(function(err, task) {
+			if(err){
+				return next(err);
+			}
+			res.json(subTask);
+		});
+	});
+});
+
+
+/*
+*	SCHEDULE-ROUTES
+*/
+
+
+router.get('/new_schedule', function(req, res, next) {
+
+	var userTasks = mockTasks();
+	var userBreathers = mockBreathers();
+	var hours = 4;
+
+	var schedule = new Schedule();
+	var items = schedule.createNew(
+		hours,
+		userTasks,
+		userBreathers
+	);
+	res.json(
+		items
+	);
+});
+
+
+/*
+*	BREATHER-ROUTES
+*/
+
+
+router.get('/breathers', function(req, res, next) {
+	Breather.find(function(err, breathers){
+    		if(err){
+			return next(err);
+		}
+		res.json(breathers);
+  	});
+});
+
+
+router.post('/breathers', auth, function(req, res, next) {
+
+	var breather = new Breather(req.body);
+
+	breather.save(function(err, task) {
+		if(err) {
+			return next(err);
+		}
+		res.json(breather);
+	});
+});
+
+
+router.param('breather', function(req, res, next, id) {
+
+	var query = Breather.findById(id);
+	query.exec(function (err, breather){
+		if (err) {
+			return next(err);
+		}
+		if (!breather) {
+			return next(new Error('can\'t find breather'));
+		}
+		req.breather = breather;
+		return next();
+	});
+});
+
+
+router.put('/breathers/:breather/upvote', auth, function(req, res, next) {
+	req.breather.upvote(function(err, breather){
+		if (err) {
+			return next(err);
+		}
+		res.json(breather);
+	});
+});
+
+
+/*
+*	COURSE-ROUTES
+*/
+
+
+router.get('/courses', function(req, res, next) {
+
+	Course.find(function(err, courses) {
+		if(err) {
+			return next(err);
+		}
+		res.json(courses);
+  	});
+});
+
+
+router.post('/courses', auth, function(req, res, next) {
+
+	var course = new Course(req.body);
+	
+	course.save(function(err, course) {
+		if(err) {
+			return next(err);
+		}
+		res.json(course);
+	});
+}); 
+
+
+router.param('course', function(req, res, next, id) {
+
+	var query = Course.findById(id);
+	query.exec(function (err, course){
+		if (err) {
+			return next(err);
+		}
+		if (!course) {
+			return next(new Error('can\'t find course'));
+		}
+		req.course = course;
+		return next();
+	});
+});
+
+
+router.get('/courses/:course', function(req, res) {
+	req.course.populate('courseTasks comments', function(err, course) {	 
+		res.json(req.course);
+	});
+});
+
+
+router.put('/courses/:course/upvote', auth, function(req, res, next) {
+	req.course.upvote(function(err, course){
+		if (err) {
+			return next(err);
+		}
+		res.json(course);
+	});
+});
+
+
+router.put('/courses/:course/comments/:comment/upvote', auth, function(req, res, next) {
+	req.comment.upvote(function(err, comment){
+		if (err) {
+			return next(err);
+		}
+		res.json(comment);
+	});
+});
+
+
+router.put('/courses/:course/courseTasks/:courseTask/upvote', auth, function(req, res, next) {
+	req.courseTask.upvote(function(err, courseTask){
+		if (err) {
+			return next(err);
+		}
+		res.json(courseTask);
+	});
+});
+
+
 router.post('/courses/:course/comments', auth, function(req, res, next) {
 
 	var comment = new Comment(req.body);
@@ -396,27 +428,6 @@ router.post('/courses/:course/comments', auth, function(req, res, next) {
 			}
 
 			res.json(comment);
-		});
-	});
-});
-
-
-router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
-
-	var subTask = new SubTask(req.body);
-	subTask.task = req.task;
-	subTask.author = req.payload.username;
-
-	subTask.save(function(err, subTask){
-		if(err){
-			return next(err);
-		}
-		req.task.subTasks.push(subTask);
-		req.task.save(function(err, task) {
-			if(err){
-				return next(err);
-			}
-			res.json(subTask);
 		});
 	});
 });
@@ -444,4 +455,23 @@ router.post('/courses/:course/courseTasks', auth, function(req, res, next) {
 });
 
 
+/*
+*	COMMENT-ROUTES
+*/
+
+
+router.param('comment', function(req, res, next, id) {
+
+	var query = Comment.findById(id);
+	query.exec(function (err, comment){
+		if (err) {
+			return next(err);
+		}
+		if (!comment) {
+			return next(new Error('can\'t find comment'));
+		}
+		req.comment = comment;
+		return next();
+	});
+});
 module.exports = router;
