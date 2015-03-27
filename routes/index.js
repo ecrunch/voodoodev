@@ -330,22 +330,32 @@ router.put('/breathers/:breather/upvote', auth, function(req, res, next) {
 });
 
 
-
-/*
-*	USER-ROUTES
-*/
-
-
 router.post('/breathers/:breather/joinBreather', auth, function(req, res, next) {
-	user=User.find({_id: req.payload._id});
-	user.joinBreather(breather);
-	user.save(function(err, breather) {
-     		if(err){ return next(err); }
+		
+	var breatherId;
 
-      		res.json(breather);
+	User.findById(req.payload._id, function(err, user) {
+		
+		if(err) {
+			// do whatever
+			console.log(err);
+		}
+		breatherId = req.params.breather;
+
+		user.joinBreather(breatherId);
+
+		user.save(function(err, breather) {
+			if (err) {
+				console.log("Error Saving");
+				return next(err);
+			}
+			res.json(breather);
+		});
 
 	});
+
 });
+
 
 
 /*

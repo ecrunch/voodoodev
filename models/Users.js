@@ -10,8 +10,9 @@ var UserSchema = new mongoose.Schema({
 });
 
 UserSchema.methods.joinBreather = function(breather){
-	this.myBreathers += breather; 
-	};
+		
+	this.myBreathers.push(breather);
+};
 
 UserSchema.methods.setPassword = function(password){
 	this.salt = crypto.randomBytes(16).toString('hex');
