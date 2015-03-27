@@ -60,7 +60,13 @@ function($scope, courses, auth ){
 
 	$scope.incrementUpvotes = function(course) {
 		courses.upvote(course);
-	};	
+	};
+
+	$scope.joinC = function(course){
+        	console.log('in controller')
+	        courses.joinCourse(course);
+        };
+		
 }]);
 
 
@@ -105,6 +111,7 @@ function($scope, $stateParams, courses, course, auth ){
 		courses.upvoteComment(course, comment);
 	};
 	
+	
 }]);
 
 app.controller('TaskMainCtrl', [
@@ -128,7 +135,11 @@ function($scope, tasks, auth){
 
   	$scope.incrementUpvotes = function(task) {
         	tasks.upvote(task);
-	};       
+	}; 
+
+	$scope.joinT = function(task){
+                tasks.joinTask(task);
+        };      
 }]);
 
 app.controller('SubTaskCtrl',

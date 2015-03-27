@@ -6,12 +6,26 @@ var UserSchema = new mongoose.Schema({
 	username: {type: String, lowercase: true, unique: true},  
 	hash: String,
   	salt: String,
-	myBreathers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Breather' }]
+	myBreathers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Breather' }],
+	myCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
+	myTasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }]
+
+
 });
 
 UserSchema.methods.joinBreather = function(breather){
 		
 	this.myBreathers.push(breather);
+};
+
+UserSchema.methods.joinCourse = function(course){
+
+        this.myCourses.push(course);
+};
+
+UserSchema.methods.joinTask = function(task){
+
+        this.myTasks.push(task);
 };
 
 UserSchema.methods.setPassword = function(password){

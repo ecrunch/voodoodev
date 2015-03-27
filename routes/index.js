@@ -356,6 +356,58 @@ router.post('/breathers/:breather/joinBreather', auth, function(req, res, next) 
 
 });
 
+router.post('/courses/:course/joinCourse', auth, function(req, res, next) {
+	console.log('Made it to router')
+        var courseId;
+
+        User.findById(req.payload._id, function(err, user) {
+
+                if(err) {
+                        // do whatever
+                        console.log(err);
+                }
+                courseId = req.params.course;
+
+                user.joinCourse(courseId);
+
+                user.save(function(err, course) {
+                        if (err) {
+                                console.log("Error Saving");
+                                return next(err);
+                        }
+                        res.json(course);
+                });
+
+        });
+
+});
+
+router.post('/tasks/:task/joinTask', auth, function(req, res, next) {
+
+        var taskId;
+
+        User.findById(req.payload._id, function(err, user) {
+
+                if(err) {
+                        // do whatever
+                        console.log(err);
+                }
+                taskId = req.params.task;
+
+                user.joinTask(taskId);
+
+                user.save(function(err, task) {
+                        if (err) {
+                                console.log("Error Saving");
+                                return next(err);
+                        }
+                        res.json(task);
+                });
+
+        });
+
+});
+
 
 
 /*

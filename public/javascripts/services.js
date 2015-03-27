@@ -109,6 +109,16 @@ app.factory('tasks',['$http', 'auth', function($http, auth){
                 });
         };
     
+	t.joinTask = function(task) {
+                return $http.post('/tasks/'+ task._id+'/joinTask',null, {
+                                headers: {Authorization: 'Bearer '+auth.getToken()}
+                                 }).success(function(data){
+                                 t.tasks.push(data);
+                                 });
+                };
+
+
+
  return t;
     
 }]); 
@@ -207,6 +217,19 @@ app.factory('courses',['$http', 'auth', function($http, auth){
                          comment.upvotes += 1;
                 });
         };
+
+	o.joinCourse = function(course) {
+		
+		console.log('made it to service')
+                return $http.post('/courses/'+ course._id+'/joinCourse',null, {
+
+                                headers: {Authorization: 'Bearer '+auth.getToken()}
+                                 }).success(function(data){
+                                 o.courses.push(data);
+                                 });
+                };
+
+
 
  return o;
 
