@@ -63,7 +63,6 @@ function($scope, courses, auth ){
 	};
 
 	$scope.joinC = function(course){
-        	console.log('in controller')
 	        courses.joinCourse(course);
         };
 		

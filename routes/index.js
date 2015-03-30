@@ -25,7 +25,7 @@ router.post('/register', function(req, res, next){
 
 	if(!req.body.username || !req.body.password){
 		return res.status(400).json({message: 'Please fill out all fields'});
-  	}
+	}
 
 	var user = new User();
 
@@ -132,11 +132,11 @@ router.param('task', function(req, res, next, id) {
 		if (err) {
 			return next(err);
 		}
-    		if (!task) {
+		if (!task) {
 			return next(new Error('can\'t find task'));
 		}
 		req.task = task;
-    		return next();
+		return next();
 	});
 });
 
@@ -357,7 +357,6 @@ router.post('/breathers/:breather/joinBreather', auth, function(req, res, next) 
 });
 
 router.post('/courses/:course/joinCourse', auth, function(req, res, next) {
-	console.log('Made it to router')
         var courseId;
 
         User.findById(req.payload._id, function(err, user) {
