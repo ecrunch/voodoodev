@@ -104,6 +104,13 @@ function($stateProvider, $urlRouterProvider) {
                 controller: 'ScheduleCtrl'
         })
 
+	.state('userHomePage', {
+
+		url: '/userHomePage',
+		templateUrl: 'temps/userHomePage.html',
+		controller: 'userHomePageCtrl'
+	})
+
 	.state('test', {
                 url: '/test',
                 templateUrl: 'temps/test.html',

@@ -223,9 +223,17 @@ function($scope, $stateParams, Schedule) {
 
 	$scope.newSchedule();
 
+}]);
+
+
+app.controller('userHomePageCtrl', [
+'$scope', 'auth',
+function($scope, auth) {
 
 
 }]);
+
+
 
 app.controller('TaskCtrl', 
 ['$scope', '$stateParams',

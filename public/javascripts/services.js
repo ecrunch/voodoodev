@@ -124,6 +124,10 @@ app.factory('tasks',['$http', 'auth', function($http, auth){
 }]); 
 
 
+
+
+
+
 app.factory('Schedule', ['$http',  function($http){
 
 	var schedule = {
