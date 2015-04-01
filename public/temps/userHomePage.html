@@ -1,6 +1,23 @@
 <html>
 	<body>
-		<h3> User Home Page </h3>
+		<h1> User Home Page </h1>
 		<a href="#/home">Main Menu</a>
+
+		</br> </br>
+
+		<h2> My Breathers </h2>
+		<table border="3">
+			<tr>
+				<th> Title </th>
+				<th> ID </th>
+				<th> Upvotes </th>
+			</tr>
+			<tr ng-repeat= "breather in breathers">
+				<td> {{breather.title}} </td>
+				<td> {{breather._id}} </td>
+				<td> {{breather.upvotes}} </td>
+			</tr>
+		</table>
+
 	</body>
 </html>

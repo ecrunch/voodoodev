@@ -123,9 +123,48 @@ return t;
     
 }]); 
 
+app.factory('User', [
+'$http',
+'auth',
+function($http, auth) {
+
+	var user = {
+		
+		breatherIds: [
+
+		],
+	
+		breathers: [
+
+		]
+
+	};
+
+	user.initialize = function(loadAll) {
+
+		return $http.post('/user', null, {
+			headers: {
+				Authorization: 'Bearer '+auth.getToken()
+			}
+		})
+		.then(
+			//success
+			function(data) {	
+				user.breatherIds = data.data.myBreathers;
+				user.breathers = data.data.breathers;
+				
+			},
+			//failuer
+			function() {
+				console.log("Error");
+			}
+		);
+	};
 
 
+	return user;
 
+}]);
 
 
 app.factory('Schedule', ['$http',  function($http){
@@ -275,11 +314,27 @@ var b = {
 	};
 
 	b.joinBreather = function(breather) {
+		
 		return $http.post('/breathers/'+ breather._id+'/joinBreather',null, {
-		headers: {Authorization: 'Bearer '+auth.getToken()}
-		}).success(function(data){
+			headers: {
+				Authorization: 'Bearer '+auth.getToken()
+			}
+		})
+		.then(
+			//success
+			function(data) {
+			},
+			//failure
+			function() {
+				console.log("Error");
+			}
+		);
+
+		/*	
+		.success(function(data){
 			b.breathers.push(data);
 		});
+		*/
 	};
 return b;
 }]);

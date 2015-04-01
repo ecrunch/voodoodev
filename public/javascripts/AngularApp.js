@@ -229,8 +229,22 @@ function($scope, $stateParams, Schedule) {
 
 
 app.controller('userHomePageCtrl', [
-'$scope', 'auth',
-function($scope, auth) {
+'$scope', 'auth', 'User',
+function($scope, auth, User) {
+
+	$scope.loadAll = true;
+	//$scope.loadAll = false;
+
+	User.initialize($scope.loadAll)
+	.then(
+		function() {
+			$scope.breatherIds = User.breatherIds;
+			$scope.breathers = User.breathers;
+		},
+		function() {
+			console.log("Error");
+		}
+	);
 
 
 }]);

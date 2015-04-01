@@ -277,6 +277,50 @@ router.get('/new_schedule', function(req, res, next) {
 
 
 /*
+*	USER-ROUTES
+*/
+
+
+router.post('/user', auth, function(req, res, next) {
+
+	var userId = req.payload.id;
+	User.findById(userId, function(err, user) {
+		if(err) {
+			// do whatever
+			console.log(err);
+		}
+		else {
+
+			var toRet = {};
+
+			var withoutDupes = user.myBreathers.filter(function(item, pos){
+				return user.myBreathers.indexOf(item) == pos;
+			});
+
+			toRet.breatherIds = withoutDupes;
+
+
+			Breather.find({
+				'_id': { 
+					$in: toRet.breatherIds
+				}
+			}, 
+			function(err, breathers) {
+				if(err) {
+					console.log(err);
+					res.json(toRet);
+				}
+				else {
+					toRet.breathers = breathers;
+					res.json(toRet);
+				}
+			});
+		}
+	});
+
+});
+
+/*
 *	BREATHER-ROUTES
 */
 
@@ -334,7 +378,7 @@ router.post('/breathers/:breather/joinBreather', auth, function(req, res, next) 
 		
 	var breatherId;
 
-	User.findById(req.payload._id, function(err, user) {
+	User.findById(req.payload.id, function(err, user) {
 		
 		if(err) {
 			// do whatever
@@ -344,12 +388,12 @@ router.post('/breathers/:breather/joinBreather', auth, function(req, res, next) 
 
 		user.joinBreather(breatherId);
 
-		user.save(function(err, breather) {
+		user.save(function(err, userRet) {
 			if (err) {
 				console.log("Error Saving");
 				return next(err);
 			}
-			res.json(breather);
+			res.json(userRet);
 		});
 
 	});
