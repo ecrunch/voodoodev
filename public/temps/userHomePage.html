@@ -18,6 +18,40 @@
 				<td> {{breather.upvotes}} </td>
 			</tr>
 		</table>
+		
+		</br> </br>
+
+                <h2> My Courses </h2>
+                <table border="3">
+                        <tr>
+                                <th> Title </th>
+                                <th> ID </th>
+                                <th> Upvotes </th>
+                        </tr>
+                        <tr ng-repeat= "course in courses">
+                                <td> {{course.title}} </td>
+                                <td> {{course._id}} </td>
+                                <td> {{course.upvotes}} </td>
+                        </tr>
+                </table>
+		
+		</br> </br>
+
+                <h2> My Tasks </h2>
+                <table border="3">
+                        <tr>
+                                <th> Title </th>
+                                <th> ID </th>
+                                <th> Upvotes </th>
+                        </tr>
+                        <tr ng-repeat= "task in tasks">
+                                <td> {{task.title}} </td>
+                                <td> {{task._id}} </td>
+                                <td> {{task.upvotes}} </td>
+                        </tr>
+                </table>
+
+
 
 	</body>
 </html>

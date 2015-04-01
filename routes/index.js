@@ -291,30 +291,77 @@ router.post('/user', auth, function(req, res, next) {
 		}
 		else {
 
-			var toRet = {};
+			var bToRet = {};
+			var cToRet = {};
+			var tToRet = {};
 
-			var withoutDupes = user.myBreathers.filter(function(item, pos){
+
+			var bWithoutDupes = user.myBreathers.filter(function(item, pos){
 				return user.myBreathers.indexOf(item) == pos;
 			});
 
-			toRet.breatherIds = withoutDupes;
+			var cWithoutDupes = user.myCourses.filter(function(item, pos){
+                                return user.myCourses.indexOf(item) == pos;
+                        });
 
+			var tWithoutDupes = user.myTasks.filter(function(item, pos){
+                                return user.myTasks.indexOf(item) == pos;
+                        });
+
+
+			bToRet.breatherIds = bWithoutDupes;
+			cToRet.courseIds = cWithoutDupes;
+			tToRet.taskIds = tWithoutDupes;
 
 			Breather.find({
 				'_id': { 
-					$in: toRet.breatherIds
+					$in: bToRet.breatherIds
 				}
 			}, 
 			function(err, breathers) {
 				if(err) {
 					console.log(err);
-					res.json(toRet);
+					res.json(bToRet);
 				}
 				else {
-					toRet.breathers = breathers;
-					res.json(toRet);
+					bToRet.breathers = breathers;
+					res.json(bToRet);
 				}
 			});
+
+			Course.find({
+                                '_id': {
+                                        $in: cToRet.courseIds
+                                }
+                        },
+                        function(err, courses) {
+                                if(err) {
+                                        console.log(err);
+                                        res.json(cToRet);
+                                }
+                                else {
+                                        cToRet.courses = courses;
+                                        res.json(cToRet);
+                                }
+                        });
+			
+			Task.find({
+                                '_id': {
+                                        $in: tTtoRet.taskIds
+                                }
+                        },
+                        function(err, tasks) {
+                                if(err) {
+                                        console.log(err);
+                                        res.json(tToRet);
+                                }
+                                else {
+                                        tToRet.tasks = tasks;
+                                        res.json(tToRet);
+                                }
+                        });
+			
+		
 		}
 	});
 
@@ -403,7 +450,7 @@ router.post('/breathers/:breather/joinBreather', auth, function(req, res, next) 
 router.post('/courses/:course/joinCourse', auth, function(req, res, next) {
         var courseId;
 
-        User.findById(req.payload._id, function(err, user) {
+        User.findById(req.payload.id, function(err, user) {
 
                 if(err) {
                         // do whatever
@@ -413,12 +460,12 @@ router.post('/courses/:course/joinCourse', auth, function(req, res, next) {
 
                 user.joinCourse(courseId);
 
-                user.save(function(err, course) {
+                user.save(function(err, userRet) {
                         if (err) {
                                 console.log("Error Saving");
                                 return next(err);
                         }
-                        res.json(course);
+                        res.json(userRet);
                 });
 
         });
@@ -429,7 +476,7 @@ router.post('/tasks/:task/joinTask', auth, function(req, res, next) {
 
         var taskId;
 
-        User.findById(req.payload._id, function(err, user) {
+        User.findById(req.payload.id, function(err, user) {
 
                 if(err) {
                         // do whatever
@@ -439,12 +486,12 @@ router.post('/tasks/:task/joinTask', auth, function(req, res, next) {
 
                 user.joinTask(taskId);
 
-                user.save(function(err, task) {
+                user.save(function(err, userRet) {
                         if (err) {
                                 console.log("Error Saving");
                                 return next(err);
                         }
-                        res.json(task);
+                        res.json(userRet);
                 });
 
         });

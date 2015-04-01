@@ -240,6 +240,10 @@ function($scope, auth, User) {
 		function() {
 			$scope.breatherIds = User.breatherIds;
 			$scope.breathers = User.breathers;
+			$scope.courseIds = User.courseIds;
+                        $scope.courses = User.courses;
+			$scope.taskIds = User.breatherIds;
+                        $scope.tasks = User.tasks;
 		},
 		function() {
 			console.log("Error");

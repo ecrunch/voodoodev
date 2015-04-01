@@ -111,10 +111,24 @@ var t = {
     
 	t.joinTask = function(task) {
 		return $http.post('/tasks/'+ task._id+'/joinTask',null, {
-			headers: {Authorization: 'Bearer '+auth.getToken()}
+			headers: {
+				Authorization: 'Bearer '+auth.getToken()
+				}
+			})
+			.then(
+			//success
+			function(data) {
+			},
+			//failure
+			function() {
+				console.log("Error");
+			}
+		);
+	
+			/*
 			}).success(function(data){
 				t.tasks.push(data);
-			});
+			});*/
 		};
 
 
@@ -136,8 +150,21 @@ function($http, auth) {
 	
 		breathers: [
 
-		]
+		],
+		courseIds: [
 
+                ],
+
+                courses: [
+
+                ],
+		taskIds: [
+
+                ],
+
+                tasks: [
+
+                ]
 	};
 
 	user.initialize = function(loadAll) {
@@ -152,7 +179,10 @@ function($http, auth) {
 			function(data) {	
 				user.breatherIds = data.data.myBreathers;
 				user.breathers = data.data.breathers;
-				
+				user.courseIds = data.data.myCourses;
+                                user.courses = data.data.courses;
+				user.taskIds = data.data.myTasks;
+                                user.tasks = data.data.tasks;
 			},
 			//failuer
 			function() {
@@ -264,11 +294,27 @@ var o = {
 	o.joinCourse = function(course) {
 		
 		return $http.post('/courses/'+ course._id+'/joinCourse',null, {
+		headers: {
+				Authorization: 'Bearer '+auth.getToken()
+			}
+		})
+		.then(
+			//success
+			function(data) {
+			},
+			//failure
+			function() {
+				console.log("Error");
+			}
+		);
 
-		headers: {Authorization: 'Bearer '+auth.getToken()}
+	
+	/*
 		}).success(function(data){
 			o.courses.push(data);
 		});
+	*/
+	
 	};
 
 
