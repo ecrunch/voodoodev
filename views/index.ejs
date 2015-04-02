@@ -11,6 +11,18 @@
   <style> .glyphicon-thumbs-up { cursor:pointer } </style>
 </head>
 <body ng-app="courseInput">
+
+<nav class="navbar navbar-default pull-left" ng-controller="NavCtrl">
+	<ul class="nav navbar-nav">
+		<li><a href="/#/home" class="navbar-brand">Brainless</a></li>
+		<li><a href="#/courseshome">Courses</a></li>
+		<li><a href="#/taskshome">Tasks</a></li>
+		<li><a href="#/breathershome">Breathers</a></li>
+		<li><a href="#/schedule">Schedule</a></li>	
+	</ul>
+</nav>
+
+
 <nav class="navbar navbar-default pull-right" ng-controller="NavCtrl">
     <ul class="nav navbar-nav">
       <li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
