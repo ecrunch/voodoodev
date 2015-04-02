@@ -1,22 +1,16 @@
 <div class="page-header">
 	<h3>
-	<a ng-show="course.link" href="{{course.link}}">
-		{{course.title}}
-	</a>
-	<span ng-hide="course.link">
+	<span>
 		{{course.title}}
 	</span>
-	<a href="#/home">Go Home</a>
-	<a href="#/courseshome">Courses</a> 
 	</h3>
 </div>
 
-<div ng-repeat="courseTask in course.courseTasks | orderBy:'-upvotes'">
-	<span class="glyphicon glyphicon-thumbs-up"
-	ng-click="incrementUpvotes(courseTask)"></span>
-		{{courseTask.upvotes}} - by {{courseTask.author}}
+<div ng-repeat="courseTask in course.courseTasks | orderBy:'-dueDate'">
 	<span style="font-size:20px; margin-left:10px;">
-		{{courseTask.name}} - Due {{courseTask.dueDate}}
+		{{courseTask.name}} 
+		created by {{courseTask.author}}
+		 - Due {{courseTask.dueDate}}
 	</span>
 </div>
 
