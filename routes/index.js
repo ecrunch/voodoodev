@@ -291,79 +291,70 @@ router.post('/user', auth, function(req, res, next) {
 		}
 		else {
 
-			var bToRet = {};
-			var cToRet = {};
-			var tToRet = {};
+			var toRet = {};
 
 
-			var bWithoutDupes = user.myBreathers.filter(function(item, pos){
+			toRet.breatherIds = user.myBreathers.filter(function(item, pos){
 				return user.myBreathers.indexOf(item) == pos;
 			});
 
-			var cWithoutDupes = user.myCourses.filter(function(item, pos){
+			toRet.courseIds = user.myCourses.filter(function(item, pos){
                                 return user.myCourses.indexOf(item) == pos;
                         });
 
-			var tWithoutDupes = user.myTasks.filter(function(item, pos){
+			toRet.taskIds = user.myTasks.filter(function(item, pos){
                                 return user.myTasks.indexOf(item) == pos;
                         });
 
-
-			bToRet.breatherIds = bWithoutDupes;
-			cToRet.courseIds = cWithoutDupes;
-			tToRet.taskIds = tWithoutDupes;
-
 			Breather.find({
 				'_id': { 
-					$in: bToRet.breatherIds
+					$in: toRet.breatherIds
 				}
 			}, 
 			function(err, breathers) {
+	
 				if(err) {
 					console.log(err);
-					res.json(bToRet);
+					console.log("Cannot get breathers");
 				}
 				else {
-					bToRet.breathers = breathers;
-					res.json(bToRet);
-				}
-			});
+					toRet.breathers = breathers;
 
-			Course.find({
-                                '_id': {
-                                        $in: cToRet.courseIds
-                                }
-                        },
-                        function(err, courses) {
-                                if(err) {
-                                        console.log(err);
-                                        res.json(cToRet);
-                                }
-                                else {
-                                        cToRet.courses = courses;
-                                        res.json(cToRet);
-                                }
-                        });
-			
-			Task.find({
-                                '_id': {
-                                        $in: tTtoRet.taskIds
-                                }
-                        },
-                        function(err, tasks) {
-                                if(err) {
-                                        console.log(err);
-                                        res.json(tToRet);
-                                }
-                                else {
-                                        tToRet.tasks = tasks;
-                                        res.json(tToRet);
-                                }
-                        });
-			
+					Course.find({
+                                		'_id': {
+                                        		$in: toRet.courseIds
+                                		}
+                        		},
+                        		function(err, courses) {
+                                		if(err) {
+                                        		console.log(err);
+                                        		console.log("Cannot get courses");
+                                		}
+                                		else {
+                                        		toRet.courses = courses;
+							Task.find({
+                                				'_id': {
+                                        				$in: toRet.taskIds
+                                				}
+                        				},
+                        				function(err, tasks) {
+                                				if(err) {
+                                        				console.log(err);
+                                					console.log("Cannot get tasks");
+								}
+                                				else {
+                                        				toRet.tasks = tasks;
+                                        				res.json(toRet);
+                                				}
+                        				});  //end of tasks callback
+                                		}  //end of else
+                        		});  //end of courses callback
+				} //end of else
+			}); //end of breathers callback
 		
-		}
-	});
+		}  //end of else
+	}); // end of users callback
+
 
 });
 
