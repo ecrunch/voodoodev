@@ -9,14 +9,11 @@ function($stateProvider, $urlRouterProvider) {
         .state('home', {
                 url: '/home',
                 templateUrl: 'temps/home.html',
-                controller: 'MainCtrl',
-                resolve: {
-                        coursePromise: ['courses', function(courses){
-                                return courses.getAll();
-                        }]
+                controller: 'userHomePageCtrl',
+                        
 
                 }
-        })
+        )
 	
 	.state('login', {
 		url: '/login',
