@@ -2,18 +2,32 @@
         <h1>Tasks</h1>
 </div>
 
+
+
 <div ng-repeat="task in tasks | orderBy:'-upvotes'">
 	<span style="font-size:20px; margin-left:10px;">
 	<span>
-		<a href = "#/tasks/{{task._id}}">
-		 {{task.title}}
-	</a>	
+		<p>{{task.description}}</a>	
+        </span>
+	<span>
+		<p>{{task.dueDate}}</a>	
+        </span>
+	<span>
+		<p>{{task.type}}</a>	
+        </span>
+	<span>
+		<p>{{task.totalMinutes}}</a>	
+        </span>
+	<span>
+		<p>{{task.upvotes}}</a>	
         </span>
 	<span class="glyphicon glyphicon-plus"
                  ng-click="joinT(task)">
 	</span>
 	</span>
 </div>
+
+
          
 <form ng-submit="addTask()"
 	style="margin-top:30px;">

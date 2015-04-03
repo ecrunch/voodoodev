@@ -114,19 +114,29 @@ router.get('/tasks', function(req, res, next) {
 
 router.post('/tasks', auth, function(req, res, next) {
 
+	var description = req.body.description;
+	var dueDate = req.body.dueDate;
+	var type = req.body.type;
 
-	console.log(req.body);
+	var task = new Task({
+		description: 	description,
+		dueDate: 	dueDate,
+		type:		type,
+		totalMinutes:	0
+	});
 
-	/*
-	var task = new Task(req.body);
+	console.log(task);
 
 	task.save(function(err, task) {
 		if(err) {
-			return next(err);
+			console.log("Had trouble saving task");
+			return next(err);	
 		}
-		res.json(task);
-  	});
-	*/
+		else {
+			res.json(task);
+		}
+	});
+
 });
 
 
