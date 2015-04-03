@@ -114,6 +114,10 @@ router.get('/tasks', function(req, res, next) {
 
 router.post('/tasks', auth, function(req, res, next) {
 
+
+	var userId 	= req.payload.id;
+	var userName 	= req.payload.username;
+
 	var description = req.body.description;
 	var dueDate = req.body.dueDate;
 	var type = req.body.type;
@@ -122,10 +126,11 @@ router.post('/tasks', auth, function(req, res, next) {
 		description: 	description,
 		dueDate: 	dueDate,
 		type:		type,
-		totalMinutes:	0
+		totalMinutes:	0,
+		userId:		userId,
+		userName:	userName
 	});
 
-	console.log(task);
 
 	task.save(function(err, task) {
 		if(err) {

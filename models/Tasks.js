@@ -16,7 +16,9 @@ var TaskSchema = new mongoose.Schema({
 	type:		String,
 	totalMinutes:	Number,	
 	comments: 	[{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
-	upvotes: 	{type: Number, default: 0}
+	upvotes: 	{type: Number, default: 0},
+	userId:		{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	userName:	String
 });
 
 
