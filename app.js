@@ -18,7 +18,7 @@ require('./config/passport');
 require('./models/Schedules');
 
 
-mongoose.connect('mongodb://localhost/testdbv1');
+mongoose.connect('mongodb://localhost/testdbv2');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
