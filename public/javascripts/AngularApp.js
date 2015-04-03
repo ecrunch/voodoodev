@@ -117,36 +117,38 @@ function($scope, $stateParams, courses, course, auth ){
 }]);
 
 app.controller('TaskMainCtrl', [
-'$scope', 'tasks','auth', 
-function($scope, tasks, auth){
+'$scope', 'Task','auth', 
+function($scope, Task, auth){
   	
 	$scope.isLoggedIn = auth.isLoggedIn;	
-  	$scope.tasks = tasks.tasks ;
+  	$scope.tasks = Task.tasks ;
 
   	$scope.addTask = function() {
         	if ($scope.title === '') {
 			return;
 		} 
-        	tasks.create({
-        		title: $scope.title,
-        		link: $scope.link,
+        	Task.create({
+        		description: $scope.newTaskDescription,
+        		dueDate: $scope.newTaskDueDate,
+			type:	$scope.newTaskType
         	});
-        	$scope.title = '';
-        	$scope.link = '';
+        	$scope.newTaskDescription = '';
+        	$scope.newTaskDueDate = '';
+        	$scope.newTaskType = '';
 	};
 
   	$scope.incrementUpvotes = function(task) {
-        	tasks.upvote(task);
+        	Task.upvote(task);
 	}; 
 
 	$scope.joinT = function(task){
-                tasks.joinTask(task);
+                Task.joinTask(task);
         };      
 }]);
 
 app.controller('SubTaskCtrl',
-['$scope', '$stateParams', 'tasks', 'task', 'auth',
-function($scope, $stateParams, tasks, task, auth){
+['$scope', '$stateParams', 'Task', 'task', 'auth',
+function($scope, $stateParams, Task, task, auth){
         $scope.isLoggedIn = auth.isLoggedIn;
 	$scope.task = task;
           
@@ -163,7 +165,7 @@ function($scope, $stateParams, tasks, task, auth){
         
          $scope.addSubTask = function(){
                 if($scope.name=== '') { return; }
-                 tasks.addSubTask(task._id, {
+                 Task.addSubTask(task._id, {
                         name: $scope.name,
                         dueDate: $scope.dueDate,
                         author: 'user',
@@ -176,7 +178,7 @@ function($scope, $stateParams, tasks, task, auth){
 
 
         $scope.incrementUpvotes = function(comment){
-                tasks.upvoteComment(task, comment);
+                Task.upvoteComment(task, comment);
         };
 }]);
 
@@ -252,14 +254,4 @@ function($scope, auth, User) {
 
 
 }]);
-
-
-
-app.controller('TaskCtrl', 
-['$scope', '$stateParams',
-function($scope, $stateParams, Task) {
-	$scope.message = "Tasks";
-}]);
-
-
 

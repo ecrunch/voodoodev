@@ -53,69 +53,86 @@ app.factory('auth', ['$http', '$window', function($http, $window){
 }]);
 
 
-app.factory('tasks',['$http', 'auth', function($http, auth){
-var t = {
-	tasks:[]
+app.factory('Task',['$http', 'auth', function($http, auth){
+
+	var service = {
+		tasks:[]
 	};
           
-	t.getAll = function() { 
-		return $http.get('/tasks').success(function(data){
-		angular.copy(data, t.tasks);
-		});
+	service.getAll = function() { 
+		return $http.get('/tasks').success(
+			function(data){
+				angular.copy(data, service.tasks);
+			}
+		);
 	};
         
-	t.get = function(id) {
-		return $http.get('/tasks/' + id).then(function(res){
-			return res.data;
-		});
+	service.get = function(id) {
+		return $http.get('/tasks/' + id).then(
+			function(res){
+				return res.data;
+			}
+		);
 	};
         
-	t.create = function(task) {
+	service.create = function(task) {
 		return $http.post('/tasks', task, {
-		headers: {Authorization: 'Bearer '+auth.getToken()}
-		}).success(function(data){
-			t.tasks.push(data);
-		});
-
+			headers: {
+				Authorization: 'Bearer '+auth.getToken()
+			}
+		}).success(
+			function(data){
+				service.tasks.push(data);
+			}
+		);
 	};
 
-	t.addComment = function(id, comment) {
+	service.addComment = function(id, comment) {
 		return $http.post('/tasks/' + id + '/comments', comment, {
-		headers: {Authorization: 'Bearer '+auth.getToken()}
+			headers: {
+				Authorization: 'Bearer '+auth.getToken()
+			}
 		});
-		};
+	};
 
-	t.addSubTask = function(id, subTask) {
+	service.addSubTask = function(id, subTask) {
 		return $http.post('/tasks/' + id + '/subTasks', subTask, {
-		headers: {Authorization: 'Bearer '+auth.getToken()}
+			headers: {
+				Authorization: 'Bearer '+auth.getToken()
+			}
 		});                                                                                 
-		};
+	};
 
-	t.upvote = function(task) {
+	service.upvote = function(task) {
 		return $http.put('/tasks/' + task._id + '/upvote', null, {
-		headers: {Authorization: 'Bearer '+auth.getToken()}
-		})
-		.success(function(data){
-		task.upvotes += 1;
-		});
-		};
+			headers: {
+				Authorization: 'Bearer '+auth.getToken()
+			}
+		}).success(
+			function(data){
+				task.upvotes += 1;
+			}
+		);
+	};
 
-	t.upvoteComment = function(task, comment) {
-	return $http.put('/tasks/' + task._id + '/comments/'+ comment._id + '/upvote', null, {
-		headers: {Authorization: 'Bearer '+auth.getToken()}
-		})
-		.success(function(data){
-			comment.upvotes += 1;
-		});
+	service.upvoteComment = function(task, comment) {
+		return $http.put('/tasks/' + task._id + '/comments/'+ comment._id + '/upvote', null, {
+			headers: {
+				Authorization: 'Bearer '+auth.getToken()
+			}
+		}).success(
+			function(data){
+				comment.upvotes += 1;
+			}
+		);
 	};
     
-	t.joinTask = function(task) {
+	service.joinTask = function(task) {
 		return $http.post('/tasks/'+ task._id+'/joinTask',null, {
 			headers: {
 				Authorization: 'Bearer '+auth.getToken()
-				}
-			})
-			.then(
+			}
+		}).then(
 			//success
 			function(data) {
 			},
@@ -125,17 +142,12 @@ var t = {
 			}
 		);
 	
-			/*
-			}).success(function(data){
-				t.tasks.push(data);
-			});*/
-		};
+	};
 
-
-
-return t;
+	return service;
     
 }]); 
+
 
 app.factory('User', [
 '$http',

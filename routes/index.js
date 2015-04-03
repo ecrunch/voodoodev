@@ -114,6 +114,10 @@ router.get('/tasks', function(req, res, next) {
 
 router.post('/tasks', auth, function(req, res, next) {
 
+
+	console.log(req.body);
+
+	/*
 	var task = new Task(req.body);
 
 	task.save(function(err, task) {
@@ -122,6 +126,7 @@ router.post('/tasks', auth, function(req, res, next) {
 		}
 		res.json(task);
   	});
+	*/
 });
 
 

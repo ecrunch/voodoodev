@@ -1,11 +1,22 @@
 var mongoose = require('mongoose');
 
+/*
 var TaskSchema = new mongoose.Schema({
 	title: String,
 	link: String,
 	upvotes: {type: Number, default: 0},  
 	subTasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'SubTask' }],
 	comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
+});
+*/
+
+var TaskSchema = new mongoose.Schema({
+	description: 	String,
+	dueDate:	Date,
+	type:		String,
+	totalMinutes:	Number,	
+	comments: 	[{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+	upvotes: 	{type: Number, default: 0}
 });
 
 
@@ -28,8 +39,8 @@ module.exports = function() {
 }();
 
 
-TaskSchema.methods.getScore = function() {
-	return getScore();
+TaskSchema.methods.getScore = function(base) {
+	return getScore(base);
 };
 
 TaskSchema.methods.upvote = function(cb) {
