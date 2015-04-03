@@ -94,6 +94,17 @@ function($stateProvider, $urlRouterProvider) {
                 }
         })
 
+	.state('breathers', {
+                url: '/breathers/{id}',
+                templateUrl: 'temps/breathers.html',
+                controller: 'BreatherCtrl',
+                resolve: {
+                        breather: ['$stateParams', 'breathers', function($stateParams, breathers) {
+                                return breathers.get($stateParams.id);
+                        }]
+                }
+        })
+
 	
         .state('schedule', {
                 url: '/schedule',

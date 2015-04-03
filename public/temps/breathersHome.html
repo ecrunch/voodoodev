@@ -6,12 +6,9 @@
 	ng-click="incrementUpvotes(breather)"></span>
         	{{breather.upvotes}}
 	<span style="font-size:20px; margin-left:10px;">
-	<a ng-show="breather.link" href="{{breather.link}}">
+	<a  href="#/breathers/{{breather._id}}">
 		{{breather.title}}
 	</a>
-	<span ng-hide="breather.link">
-		{{breather.title}}
-	</span>
 	<span class="glyphicon glyphicon-plus"
 		 ng-click="joinB(breather)">
 	</span>

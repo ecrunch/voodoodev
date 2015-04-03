@@ -182,6 +182,12 @@ function($scope, $stateParams, Task, task, auth){
         };
 }]);
 
+app.controller('BreatherCtrl',
+['$scope', '$stateParams', 'breathers', 'breather', 'auth',
+function($scope, $stateParams, Breather, breather, auth){
+        $scope.isLoggedIn = auth.isLoggedIn;
+        $scope.breather = breather;
+}]);
 
 app.controller('BreatherMainCtrl', [
 '$scope', 'breathers','auth', 

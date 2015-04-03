@@ -420,6 +420,13 @@ router.get('/breathers', function(req, res, next) {
 });
 
 
+router.get('/breathers/:breather', function(req, res) {
+	req.breather.populate('comment', function(err, breather) {
+		res.json(req.breather);
+        });
+});
+
+
 router.post('/breathers', auth, function(req, res, next) {
 
 	var breather = new Breather(req.body);
@@ -447,6 +454,7 @@ router.param('breather', function(req, res, next, id) {
 		return next();
 	});
 });
+
 
 
 router.put('/breathers/:breather/upvote', auth, function(req, res, next) {
