@@ -237,6 +237,8 @@ function($scope, auth, User) {
 	$scope.loadAll = true;
 	//$scope.loadAll = false;
 
+	$scope.tasks = [];
+
 	User.initialize($scope.loadAll)
 	.then(
 		function() {

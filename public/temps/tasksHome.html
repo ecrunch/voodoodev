@@ -3,33 +3,24 @@
 </div>
 
 
-
-<div ng-repeat="task in tasks | orderBy:'-upvotes'">
-	<span style="font-size:20px; margin-left:10px;">
-	<span>
-		<p>{{task.description}}</a>	
-        </span>
-	<span>
-		<p>{{task.userName}}</a>	
-        </span>
-	<span>
-		<p>{{task.dueDate}}</a>	
-        </span>
-	<span>
-		<p>{{task.type}}</a>	
-        </span>
-	<span>
-		<p>{{task.totalMinutes}}</a>	
-        </span>
-	<span>
-		<p>{{task.upvotes}}</a>	
-        </span>
-	<span class="glyphicon glyphicon-plus"
-                 ng-click="joinT(task)">
-	</span>
-	</span>
-</div>
-
+<table border="3">
+<tr>
+	<td> Description </td> 
+	<td> Username </td> 
+	<td> Due Date </td> 
+	<td> Type </td> 
+	<td> Total Minutes </td> 
+	<td> Upvotes </td> 
+</tr>
+<tr  ng-repeat="task in tasks | orderBy:'-upvotes'">
+	<td>{{task.description}}</td>	
+	<td>{{task.userName}}</td>	
+	<td>{{task.dueDate}}</td>	
+	<td>{{task.type}}</td>	
+	<td>{{task.totalMinutes}}</td>	
+	<td>{{task.upvotes}}</td>	
+</tr>
+</table>
 
          
 <form ng-submit="addTask()"

@@ -353,12 +353,13 @@ router.post('/user', auth, function(req, res, next) {
                                 		else {
                                         		toRet.courses = courses;
 							Task.find({
-                                				'_id': {
+								'userId': userId
+                                				/*'_id': {
                                         				$in: toRet.taskIds
-                                				}
+                                				}*/
                         				},
                         				function(err, tasks) {
-                                				if(err) {
+								if(err) {
                                         				console.log(err);
                                 					console.log("Cannot get tasks");
 								}
