@@ -278,12 +278,40 @@ router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
 */
 
 
-router.get('/new_schedule', function(req, res, next) {
+router.post('/new_schedule', auth, function(req, res, next) {
 
 	var userTasks = mockTasks();
 	var userBreathers = mockBreathers();
 	var hours = 4;
 
+	var userId = req.payload.id;
+
+	Task.find(
+		{
+			'userId': userId
+		},
+		function(err, tasks) {
+			if(err) {
+				console.log("Could not load tasks");
+				return next(err);
+			}
+			else {
+
+				if(tasks.length > 0) {
+					userTasks = tasks;
+				}
+
+				var schedule = new Schedule();
+				var items = schedule.createNew(
+					hours,
+					userTasks,
+					userBreathers
+				);
+				res.json(items);
+			}
+		}
+	);
+	/*
 	var schedule = new Schedule();
 	var items = schedule.createNew(
 		hours,
@@ -293,6 +321,7 @@ router.get('/new_schedule', function(req, res, next) {
 	res.json(
 		items
 	);
+	*/
 });
 
 
@@ -354,9 +383,6 @@ router.post('/user', auth, function(req, res, next) {
                                         		toRet.courses = courses;
 							Task.find({
 								'userId': userId
-                                				/*'_id': {
-                                        				$in: toRet.taskIds
-                                				}*/
                         				},
                         				function(err, tasks) {
 								if(err) {

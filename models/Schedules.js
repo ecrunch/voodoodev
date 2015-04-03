@@ -23,6 +23,9 @@ function getStd() {
 	return 0;
 }
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 function getScoreData(tasks) {
 
@@ -36,7 +39,9 @@ function getScoreData(tasks) {
 	
 	var score;
 	for(var i = 0; i < tasks.length; i++) {	
-		score = tasks[i].getScore();
+		
+		score = getRandomInt(1, 10); //hardcoded for now
+		//score = tasks[i].getScore();
 		scoreData["total"] += score;
 		scoreData["list"].push(score);
 	}
@@ -63,7 +68,8 @@ function determineTaskPriorities(tasks, scoreData) {
 	
 	for(var i = 0; i < tasks.length; i++) {
 		
-		taskScore	= tasks[i].getScore();
+		//taskScore	= tasks[i].getScore();
+		taskScore	= getRandomInt(1, 10);
 		zScore		= (taskScore - mean)/stdDev;
 
 		if (zScore >= 0.8416) {
@@ -81,11 +87,6 @@ function determineTaskPriorities(tasks, scoreData) {
 	}
 
 	return taskPriorities;
-}
-
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 

@@ -209,9 +209,12 @@ function($http, auth) {
 }]);
 
 
-app.factory('Schedule', ['$http',  function($http){
+app.factory('Schedule', [
+'$http',  
+'auth',
+function($http, auth){
 
-	var schedule = {
+	var service = {
 
 		items: [
 
@@ -220,29 +223,37 @@ app.factory('Schedule', ['$http',  function($http){
 
 	};
 
-	schedule.createNew = function() {
-		$http.get('/new_schedule').then(
+	service.createNew = function() {
+
+		$http.post('/new_schedule', null, {
+			headers: {
+				Authorization: 'Bearer '+auth.getToken()
+			}
+		}).then(
+			// success
 			function(data){
 				var items = data.data;
 				for (var i = 0; i < items.length; i++) {
-					schedule.items.push(items[i]);
+					service.items.push(items[i]);
 				}
 			},
+
+			// failure
 			function(){
-				alert("Failure");
+				alert("Error creating schedule");
 			}
 		);
 	};
 
-	schedule.purge = function() {
-		schedule.items = [];
+	service.purge = function() {
+		service.items = [];
 	};
 
-	schedule.save = function() {
+	service.save = function() {
 		return;
 	};
 
-	return schedule;
+	return service;
 
 }]);
 
