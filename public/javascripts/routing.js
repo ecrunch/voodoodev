@@ -65,8 +65,8 @@ function($stateProvider, $urlRouterProvider) {
                 templateUrl: 'temps/tasksHome.html',
                 controller: 'TaskMainCtrl',
                 resolve: {
-                        taskPromise: ['tasks', function(tasks){
-                                return tasks.getAll();
+                        taskPromise: ['Task', function(Task){
+                                return Task.getAll();
                         }]
 
                 }
