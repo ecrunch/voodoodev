@@ -1,6 +1,6 @@
 
 var assert 		= require("assert");
-var taskFuncs 		= require('../models/Tasks.js');
+var Task 		= require('../models/src/Task.js');
 var Scheduler 		= require('../models/src/Scheduler.js');
 var Mock 		= require('../models/src/Mocks.js');
 
@@ -10,13 +10,24 @@ var Mock 		= require('../models/src/Mocks.js');
 */
 
 
-describe('Initial task tests', function() {
-	it('Should set up the base scores', function() {
-		assert.equal(taskFuncs.getScore("Exam"), 5);
-		assert.equal(taskFuncs.getScore("Project"), 4);
-		assert.equal(taskFuncs.getScore("Paper"), 4);
-		assert.equal(taskFuncs.getScore("Homework"), 3);
+
+describe('Task tests', function() {
+	
+	var exam, project, paper, homework, other;
+	beforeEach(function(done) {
+		exam 		= new Task({type:'Exam'});
+		project 	= new Task({type:'Project'});
+		paper 		= new Task({type:'Paper'});
+		homework 	= new Task({type:'Homework'});
+		done();
 	});
+
+	it('Should get the days remaining until the due date', function() {
+	
+		// TODO write some tests
+	});
+
+
 });
 
 
