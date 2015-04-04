@@ -16,7 +16,7 @@ var ScheduleSchema = new mongoose.Schema({
 
 ScheduleSchema.methods.createNew = function(hours, tasks, breathers) {
 
-	var scheduler  	= new Scheduler(hours, tasks, breathers);
+	var scheduler  	= new Scheduler({'hours':hours, 'tasks':tasks, 'breathers':breathers});
 	var schedule 	= scheduler.makeNewSchedule();
 
 	for( var i = 0; i < schedule.length; i++) {	

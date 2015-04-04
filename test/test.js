@@ -45,7 +45,7 @@ describe('Scheduler tests', function() {
 	var scheduler;
 
 	beforeEach(function(done) {
-		scheduler = new Scheduler(4, [], []);
+		scheduler = new Scheduler({'hours':4});
 		done();
 	});
 

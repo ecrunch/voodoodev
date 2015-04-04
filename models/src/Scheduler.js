@@ -6,10 +6,10 @@
 
 
 
-function Scheduler(hours, tasks, breathers) {
-	this.hours = hours;
-	this.tasks = tasks;
-	this.breathers = breathers;
+function Scheduler(init) {
+	this.hours 	= init.hours || 4;
+	this.tasks 	= init.tasks || [];
+	this.breathers 	= init.breathers || [];
 }
 
 
