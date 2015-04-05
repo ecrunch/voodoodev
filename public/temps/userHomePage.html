@@ -1,61 +1,37 @@
 <html>
+
+	<br></br>
 	<body>
-		<h1> User Home Page </h1>
-		<a href="#/home">Main Menu</a>
-
-		</br> </br>
-
-		<h2> My Breathers </h2>
-		<table border="3">
-			<tr>
-				<th> Title </th>
-				<th> ID </th>
-				<th> Upvotes </th>
-			</tr>
-			<tr ng-repeat= "breather in breathers">
-				<td> {{breather.title}} </td>
-				<td> {{breather._id}} </td>
-				<td> {{breather.upvotes}} </td>
-			</tr>
-		</table>
+	<div class="row">
+		<div class="col-md-4">		
+               		<h4> My Breathers </h4>
+			<div ng-repeat= "breather in breathers">
+				<a href = "#/breathers/{{breather._id}}">
+					{{breather.title}} 
+				</a>	
+			</div>
+                </div>
 		
-		</br> </br>
-
-                <h2> My Courses </h2>
-                <table border="3">
-                        <tr>
-                                <th> Title </th>
-                                <th> ID </th>
-                                <th> Upvotes </th>
-                        </tr>
-                        <tr ng-repeat= "course in courses">
-                                <td> {{course.title}} </td>
-                                <td> {{course._id}} </td>
-                                <td> {{course.upvotes}} </td>
-                        </tr>
-                </table>
+		<div class="col-md-4">	
+                	<h4> My Courses </h4>
+			<div ng-repeat= "course in courses">
+				<a href= "#/courses/{{course._id}}">
+					{{course.title}}
+				</a>	
+			</div>
+		</div>
 		
-		</br> </br>
+		<div class="col-md-4">
+			<h4> My Tasks </h4>
+			<div ng-repeat= "task in tasks">
+				<a href= "#/tasks/{{task._id}}">
+					{{task.title}}
+				</a>	
+			</div>
+		</div>
+	</div>
+	
+        </body>
+		
 
-                <h2> My Tasks </h2>
-                <table border="3">
-                        <tr>
-                                <th> Description</th>
-                                <th> Id</th>
-                                <th> Due Date </th>
-                                <th> Type </th>
-                                <th> Upvotes </th>
-                        </tr>
-                        <tr ng-repeat= "task in tasks">
-                                <td> {{task.description}} </td>
-                                <td> {{task._id}} </td>
-                                <td> {{task.dueDate}} </td>
-                                <td> {{task.type}} </td>
-                                <td> {{task.upvotes}} </td>
-                        </tr>
-                </table>
-
-
-
-	</body>
 </html>

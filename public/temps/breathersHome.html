@@ -1,7 +1,20 @@
 <div class="page-header">
 	<h1>Breathers</h1>
 </div>
-<div ng-repeat="breather in breathers | orderBy:'-upvotes'">
+
+<div class="row">
+	<div class="col-md-4">
+	<h4>Breather</h4>
+	</div>
+	<div class="col-md-1">
+        <h4>Join</h4>
+        </div>
+</div>
+ 
+	
+<div ng-repeat="breather in breathers | orderBy:'-upvotes'" class="row" >
+	
+	<div class="col-md-4">
 	<span class="glyphicon glyphicon-thumbs-up"
 	ng-click="incrementUpvotes(breather)"></span>
         	{{breather.upvotes}}
@@ -9,15 +22,21 @@
 	<a  href="#/breathers/{{breather._id}}">
 		{{breather.title}}
 	</a>
+	</div>
+	<div class="col-md-1">
 	<span class="glyphicon glyphicon-plus"
 		 ng-click="joinB(breather)">
 	</span>
 	</span>
+	</div>
+	
 </div>
+
+<div class="row">
 <form ng-submit="addBreather()"
 	style="margin-top:30px;">
 	<h3>Add a new Breather </h3>
-	
+	<div class="col-md-4">
 	<div class="form-group">
 		<input type="text"
 		class="form-control"
@@ -29,6 +48,7 @@
 		class="form-control"
 		placeholder="Link"
 		ng-model="link"></input>
+	</div>
 	</div>
 	<button type="submit" class="btn btn-primary">Post</button>
 </form>
