@@ -120,6 +120,7 @@ app.controller('TaskMainCtrl', [
 '$scope', 'Task','auth', 
 function($scope, Task, auth){
   	
+ 	$scope.user = auth.currentUser;	
 	$scope.isLoggedIn = auth.isLoggedIn;	
   	$scope.tasks = Task.tasks ;
 

@@ -1,24 +1,21 @@
 <div class="page-header">
         <h1>Tasks</h1>
 </div>
-
+</div>{{user()}}</div>
 
 <table border="3">
 <tr>
 	<td> Description </td> 
-	<td> Username </td> 
 	<td> Due Date </td> 
 	<td> Type </td> 
 	<td> Total Minutes </td> 
-	<td> Upvotes </td> 
 </tr>
-<tr  ng-repeat="task in tasks | orderBy:'-upvotes'">
+<tr ng-repeat="task in tasks | orderBy:'-upvotes'" ng-show="'{{user()}}' == '{{task.userName}}'">
+
 	<td>{{task.description}}</td>	
-	<td>{{task.userName}}</td>	
 	<td>{{task.dueDate}}</td>	
 	<td>{{task.type}}</td>	
 	<td>{{task.totalMinutes}}</td>	
-	<td>{{task.upvotes}}</td>	
 </tr>
 </table>
 
