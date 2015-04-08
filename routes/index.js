@@ -18,7 +18,7 @@ var Task =  mongoose.model('Task');
 var Breather = mongoose.model('Breather');	
 var User = mongoose.model('User'); 
 var Schedule = mongoose.model('Schedule');
-
+var Post = mongoose.model('Post');
 
 
 router.post('/register', function(req, res, next){
@@ -592,7 +592,7 @@ router.param('course', function(req, res, next, id) {
 
 
 router.get('/courses/:course', function(req, res) {
-	req.course.populate('courseTasks comments', function(err, course) {	 
+	req.course.populate('posts courseTasks comments', function(err, course) {	 
 		res.json(req.course);
 	});
 });
@@ -626,6 +626,30 @@ router.put('/courses/:course/courseTasks/:courseTask/upvote', auth, function(req
 		res.json(courseTask);
 	});
 });
+
+
+router.post('/courses/:course/posts', auth, function(req, res, next) {
+	console.log('made it to router');
+        var post = new Post(req.body);
+        post.course = req.course;
+        post.author = req.payload.username;
+	console.log('made new post');
+        post.save(function(err, post){
+                if(err){
+                        return next(err);
+                }
+
+                req.course.posts.push(post);
+                req.course.save(function(err, course) {
+                        if(err){
+                                return next(err);
+                        }
+
+                        res.json(post);
+                });
+        });
+});
+
 
 
 router.post('/courses/:course/comments', auth, function(req, res, next) {

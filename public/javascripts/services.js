@@ -290,6 +290,12 @@ var o = {
 		});
 	};
 
+	o.addPost = function(id, post) {
+                return $http.post('/courses/' + id + '/posts', post, {
+                headers: {Authorization: 'Bearer '+auth.getToken()}
+                });
+        };
+
 	o.addCourseTask = function(id, courseTask) {
 		return $http.post('/courses/' + id + '/courseTasks', courseTask, {
 		headers: {Authorization: 'Bearer '+auth.getToken()}

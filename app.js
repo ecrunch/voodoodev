@@ -16,6 +16,7 @@ require('./models/Users');
 require('./models/Breathers');
 require('./config/passport');
 require('./models/Schedules');
+require('./models/Posts');
 
 
 mongoose.connect('mongodb://localhost/testdbv2');

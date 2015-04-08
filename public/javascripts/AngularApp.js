@@ -91,6 +91,21 @@ function($scope, $stateParams, courses, course, auth ){
 		});
 		$scope.body = '';
 	};
+
+	$scope.addPost = function(){
+                if($scope.title === '') {
+                        return;
+                }
+                courses.addPost(course._id, {
+                        title: $scope.title,
+                        pBody: $scope.pBody,
+                        author: 'user',
+                }).success(function(post) {
+                        $scope.course.posts.push(post);
+                });
+                $scope.pBody = '';
+                $scope.title ='';
+        };
 	
 	$scope.addCourseTask = function(){
 
