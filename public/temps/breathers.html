@@ -5,3 +5,35 @@
         </span>
         </h3>
 </div>
+
+<div ng-repeat="link in breather.links | orderBy:'-upvotes'">
+        <span class="glyphicon glyphicon-thumbs-up"
+        ng-click="incrementUpvotes(link)"></span>
+                {{link.upvotes}} - by {{link.author}}
+        <span style="font-size:20px; margin-left:10px;">
+                {{link.title}} - {{link.link}} 
+        </span>
+</div>
+
+<form ng-submit="addLink()"
+        style="margin-top:30px;">
+        <h3>Add a new Link</h3>
+
+        <div class="form-group">
+
+                <input type="text"
+                class="form-control"
+                placeholder="title"
+                ng-model="title"></input>
+
+		<input type="text"
+                class="form-control"
+                placeholder="link"
+                ng-model="link"></input>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Post</button>
+</form>
+
+
+

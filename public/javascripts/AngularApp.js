@@ -200,9 +200,24 @@ function($scope, $stateParams, Task, task, auth){
 
 app.controller('BreatherCtrl',
 ['$scope', '$stateParams', 'breathers', 'breather', 'auth',
-function($scope, $stateParams, Breather, breather, auth){
+function($scope, $stateParams, breathers, breather, auth){
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.breather = breather;
+
+	$scope.addLink = function(){
+                if($scope.title === '') { return; }
+                 breathers.addLink(breather._id, {
+                        title: $scope.title,
+                        link: $scope.link,
+                        author: 'user',
+                }).success(function(link) {
+                        $scope.breather.links.push(link);
+                 });
+
+                        $scope.title = '';
+                        $scope.link = '';
+                };
+	
 }]);
 
 app.controller('BreatherMainCtrl', [

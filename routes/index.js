@@ -19,7 +19,7 @@ var Breather = mongoose.model('Breather');
 var User = mongoose.model('User'); 
 var Schedule = mongoose.model('Schedule');
 var Post = mongoose.model('Post');
-
+var Link = mongoose.model('Link');
 
 router.post('/register', function(req, res, next){
 
@@ -406,7 +406,7 @@ router.post('/user', auth, function(req, res, next) {
 });
 
 /*
-*	BREATHER-ROUTES
+*	REATHER-ROUTES
 */
 
 
@@ -421,7 +421,7 @@ router.get('/breathers', function(req, res, next) {
 
 
 router.get('/breathers/:breather', function(req, res) {
-	req.breather.populate('comment', function(err, breather) {
+	req.breather.populate('comments links', function(err, breather) {
 		res.json(req.breather);
         });
 });
@@ -455,7 +455,28 @@ router.param('breather', function(req, res, next, id) {
 	});
 });
 
+router.post('/breathers/:breather/links', auth, function(req, res, next) {
+	console.log('got to router')
+        var link = new Link(req.body);
+        link.breather = req.breather;
+        link.author = req.payload.username;
+	console.log('created new link')
+        link.save(function(err, link){
+                if(err){
+                        return next(err);
+                }
+		console.log('no error on save')		
+                req.breather.links.push(link);
+		console.log('able to push link') 
+                req.breather.save(function(err, breather) {
+                        if(err){
+                                return next(err);
+                        }
 
+                        res.json(link);
+                });
+        });
+});
 
 router.put('/breathers/:breather/upvote', auth, function(req, res, next) {
 	req.breather.upvote(function(err, breather){

@@ -363,7 +363,7 @@ var b = {
 		});
 	};
 
-	 b.get = function(id) {
+	b.get = function(id) {
 		return $http.get('/breathers/' + id).then(function(res){
 			return res.data;
 		});
@@ -387,6 +387,12 @@ var b = {
 		breather.upvotes += 1;
 		});
 	};
+
+	b.addLink = function(id, link) {
+                return $http.post('/breathers/' + id + '/links', link, {
+                headers: {Authorization: 'Bearer '+auth.getToken()}
+                });
+        };	
 
 	b.joinBreather = function(breather) {
 		
