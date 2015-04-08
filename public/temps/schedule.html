@@ -1,7 +1,10 @@
 <div class= "page-header">
 	<h3> My Schedule </h3>	
 	<input type="button" ng-click="newSchedule()" value="New Schedule">	
-	<a href="#/home">Home</a>
+	<div>
+	Current time is: <span my-current-time="format"></span>
+	</div>
+
 </div>
 
 <table border="3">
@@ -14,5 +17,5 @@
 		<td> {{item.number}} </td>
 		<td> {{item.details.description}} </td>
 		<td> {{item.minutes}} </td>
-	</tr>
+	</tr
 </table>

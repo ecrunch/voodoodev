@@ -122,7 +122,7 @@ function($stateProvider, $urlRouterProvider) {
 	.state('test', {
                 url: '/test',
                 templateUrl: 'temps/test.html',
-                controller: 'TestCtrl'
+                controller: 'TimeCtrl'
         });
 
 	

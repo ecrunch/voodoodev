@@ -456,18 +456,15 @@ router.param('breather', function(req, res, next, id) {
 });
 
 router.post('/breathers/:breather/links', auth, function(req, res, next) {
-	console.log('got to router')
         var link = new Link(req.body);
         link.breather = req.breather;
         link.author = req.payload.username;
-	console.log('created new link')
         link.save(function(err, link){
                 if(err){
                         return next(err);
                 }
-		console.log('no error on save')		
                 req.breather.links.push(link);
-		console.log('able to push link') 
+		console.log('no error on save') 
                 req.breather.save(function(err, breather) {
                         if(err){
                                 return next(err);
