@@ -360,6 +360,6 @@ app.controller('TimeCtrl', ['$scope', '$interval',
           element.on('$destroy', function() {
             $interval.cancel(stopTime);
           });
-        }
+        };
       }]);
 
