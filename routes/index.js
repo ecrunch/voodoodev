@@ -464,7 +464,6 @@ router.post('/breathers/:breather/links', auth, function(req, res, next) {
                         return next(err);
                 }
                 req.breather.links.push(link);
-		console.log('no error on save') 
                 req.breather.save(function(err, breather) {
                         if(err){
                                 return next(err);
