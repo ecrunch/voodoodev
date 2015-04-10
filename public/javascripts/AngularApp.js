@@ -1,4 +1,4 @@
-var app = angular.module('courseInput', ['ui.router','courseServices','courseRouting']);
+var app = angular.module('courseInput', ['ui.router','angularMoment','courseServices','courseRouting']);
 
 app.controller('MainCtrl',
 ['$scope', '$stateParams',
@@ -300,8 +300,11 @@ app.controller('TimeCtrl', ['$scope', '$interval',
         $scope.format = 'M/d/yy h:mm:ss a';
         $scope.blood_1 = 100;
         $scope.blood_2 = 120;
-
-        var stop;
+	var now = moment();
+        
+	$scope.tnow = now;
+	
+	var stop;
         $scope.fight = function() {
           // Don't start a new fight if we are already fighting
           if ( angular.isDefined(stop) ) return;

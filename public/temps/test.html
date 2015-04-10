@@ -2,7 +2,8 @@
 <div>
   <div ng-controller="TimeCtrl">
     Date format: <input ng-model="format"> <hr/>
-    Current time is: <span my-current-time="format"></span>
+	momentjs time is: <span>{{tnow}}</span>     
+	Current time is: <span my-current-time="format"></span>
     <hr/>
     Blood 1 : <font color='red'>{{blood_1}}</font>
     Blood 2 : <font color='red'>{{blood_2}}</font>
