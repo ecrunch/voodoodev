@@ -291,78 +291,41 @@ function($scope, auth, User) {
 		}
 	);
 
-
 }]);
 
 
 app.controller('TimeCtrl', ['$scope', '$interval',
       function($scope, $interval) {
-        $scope.format = 'M/d/yy h:mm:ss a';
-        $scope.blood_1 = 100;
-        $scope.blood_2 = 120;
-	var now = moment();
-        
-	$scope.tnow = now;
+	var now = moment().format('h:mm:ss a') ;
+	var endTime;
+	var time;
 	
-	var stop;
-        $scope.fight = function() {
-          // Don't start a new fight if we are already fighting
-          if ( angular.isDefined(stop) ) return;
+	$scope.tnow = now;
+	$scope.time = time;
+	
+	$scope.setEndTime = function(time){
+		$scope.endTime = moment().add($scope.time, 'm').format('h:mm:ss a')
+	};
+	
 
-          stop = $interval(function() {
-            if ($scope.blood_1 > 0 && $scope.blood_2 > 0) {
-              $scope.blood_1 = $scope.blood_1 - 3;
-              $scope.blood_2 = $scope.blood_2 - 4;
-            } else {
-              $scope.stopFight();
-            }
-          }, 100);
-        };
+}]).directive('momentInterval',['$interval', function($interval){
 
-        $scope.stopFight = function() {
-          if (angular.isDefined(stop)) {
-            $interval.cancel(stop);
-            stop = undefined;
-          }
-        };
+	return function(scope, element, attrs){
+		var stopTime;
 
-        $scope.resetFight = function() {
-          $scope.blood_1 = 100;
-          $scope.blood_2 = 120;
-        };
+		function updateTime() {
+			element.text(moment().format('h:mm:ss a'));
+		}
+		
+		scope.$watch(attrs.momentInterval, function(){
+			updateTime();
+		});
 
-        $scope.$on('$destroy', function() {
-          // Make sure that the interval is destroyed too
-          $scope.stopFight();
-        });
-      }])
-    // Register the 'myCurrentTime' directive factory method.
-    // We inject $interval and dateFilter service since the factory method is DI.
-    .directive('myCurrentTime', ['$interval', 'dateFilter',
-      function($interval, dateFilter) {
-        // return the directive link function. (compile function not needed)
-        return function(scope, element, attrs) {
-          var format,  // date format
-              stopTime; // so that we can cancel the time updates
+		stopTime = $interval(updateTime, 1000);
 
-          // used to update the UI
-          function updateTime() {
-            element.text(dateFilter(new Date(), format));
-          }
-
-          // watch the expression, and update the UI on change.
-          scope.$watch(attrs.myCurrentTime, function(value) {
-            format = value;
-            updateTime();
-          });
-
-          stopTime = $interval(updateTime, 1000);
-
-          // listen on DOM destroy (removal) event, and cancel the next UI update
-          // to prevent updating time after the DOM element was removed.
-          element.on('$destroy', function() {
-            $interval.cancel(stopTime);
-          });
-        };
-      }]);
+		element.on('$destroy', function() {
+			$interval.cancel(stopTime);
+		});
+	};
+}]);	
 
