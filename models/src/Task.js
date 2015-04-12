@@ -25,21 +25,29 @@ function getRandomInt(min, max) {
 
 
 function Task(init){
-	this.dueDate 		= init.dueDate || Date();	
+	this.description	= init.description || "A Task";
+	this.userId		= init.userId || "User";
+	this.userName		= init.userName || "Name";
+	this.currentDate	= new Date(init.currentDate) || new Date();
+	this.dueDate 		= new Date(init.dueDate) || new Date();	
 	this.type 		= init.type || "Other";
 	this.totalMinutes 	= init.totalMinutes || 0;
 }
 
 
-Task.prototype.getCurrentDate = function() {
-	return Date();
-};
+Task.prototype.getDaysRemaining = function() {	
 
+	var MS_PER_DAY = 1000*60*60*24;
 
+	if (this.dueDate < this.currentDate) {
+		console.log("Overdue");
+		this.dueDate = new Date();
+	}
 
-Task.prototype.getDaysRemaining = function() {
-	// TODO
-	return getRandomInt(1,30);
+	var daysRemaining = (this.dueDate - this.currentDate)/MS_PER_DAY;
+
+	return Math.floor(daysRemaining);
+
 };
 
 

@@ -12,19 +12,26 @@ var Mock 		= require('../models/src/Mocks.js');
 
 
 describe('Task tests', function() {
-	
-	var exam, project, paper, homework, other;
+
 	beforeEach(function(done) {
-		exam 		= new Task({type:'Exam'});
-		project 	= new Task({type:'Project'});
-		paper 		= new Task({type:'Paper'});
-		homework 	= new Task({type:'Homework'});
 		done();
 	});
 
 	it('Should get the days remaining until the due date', function() {
 	
-		// TODO write some tests
+		var exam = new Task(
+			{
+				type:'Exam',
+				dueDate: 'Mon Apr 20 2015 00:00:00 GMT-0500 (CDT)',   /// hope this is the right format
+				currentDate: 'Sun Apr 12 2015 00:00:00 GMT-0500 (CDT)'   /// hope this is the right format
+			}
+		);
+
+
+		assert.equal(exam.getDaysRemaining(), 8);
+
+		
+
 	});
 
 

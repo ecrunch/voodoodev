@@ -40,8 +40,8 @@ Scheduler.prototype.getScoreData = function(tasks) {
 	var score;
 	for(var i = 0; i < tasks.length; i++) {	
 		
-		score = getRandomInt(1, 10); //hardcoded for now
-		//score = tasks[i].getScore();
+		//score = getRandomInt(1, 10); //hardcoded for now
+		score = tasks[i].getScore();
 		scoreData["total"] += score;
 		scoreData["list"].push(score);
 	}
