@@ -18,7 +18,18 @@ describe('Task tests', function() {
 	});
 
 	it('Should get the days remaining until the due date', function() {
-	
+
+
+		// defaults to 'today'
+		var paper = new Task(
+			{
+				type: 'Paper'
+			}
+		);
+		assert.equal(paper.getDaysRemaining(), 0);
+
+
+		// should be 8 days
 		var exam = new Task(
 			{
 				type:'Exam',
@@ -26,12 +37,9 @@ describe('Task tests', function() {
 				currentDate: 'Sun Apr 12 2015 00:00:00 GMT-0500 (CDT)'   /// hope this is the right format
 			}
 		);
-
-
 		assert.equal(exam.getDaysRemaining(), 8);
 
 		
-
 	});
 
 

@@ -25,11 +25,17 @@ function getRandomInt(min, max) {
 
 
 function Task(init){
+
 	this.description	= init.description || "A Task";
 	this.userId		= init.userId || "User";
 	this.userName		= init.userName || "Name";
-	this.currentDate	= new Date(init.currentDate) || new Date();
-	this.dueDate 		= new Date(init.dueDate) || new Date();	
+
+	init.currentDate ?
+		this.currentDate = new Date(init.currentDate) : this.currentDate = new Date();
+
+	init.dueDate ?
+		this.dueDate = new Date(init.dueDate) : this.dueDate = new Date();
+
 	this.type 		= init.type || "Other";
 	this.totalMinutes 	= init.totalMinutes || 0;
 }
