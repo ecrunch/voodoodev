@@ -1,5 +1,7 @@
 var app = angular.module('courseInput', ['ui.router','angularMoment','courseServices','courseRouting']);
 
+
+
 app.controller('MainCtrl',
 ['$scope', '$stateParams',
 function($scope, $stateParams) {
@@ -299,14 +301,79 @@ app.controller('TimeCtrl', ['$scope', '$interval',
 	var now = moment().format('h:mm:ss a') ;
 	var endTime;
 	var time;
-	
+	var setTimer = 0;
+	var timerTime = 0;
+	var tacoTime = { 
+		"tacos":[
+			{"name":"taco1", "time":5},
+			{"name":"taco2", "time":10},
+			{"name":"taco2", "time":30},
+			{"name":"taco2", "time":100}
+			]};				 
 	$scope.tnow = now;
 	$scope.time = time;
+	$scope.timerTimes = 0;
+	$scope.timerTimem = 0;
 	
 	$scope.setEndTime = function(time){
-		$scope.endTime = moment().add($scope.time, 'm').format('h:mm:ss a')
+		$scope.endTime = moment().add($scope.time, 'm').format('h:mm:ss a');
 	};
+	var ta = tacoTime.tacos[0];
+	var tal = tacoTime.tacos.length;
+	$scope.tal = tal;	
 	
+	$scope.testItem = ta.time;	
+
+	$scope.timerTime =function(){
+		 $scope.timerTime = (($scope.setTimer)*60000);
+	};
+	var next ='';
+	var i = 0;
+	$scope.i = i; 
+	var j;
+	
+	$scope.tacoTimer = function(){ 
+	if (angular.isUndefined(j)){  
+		j=i;
+		$scope.timer();
+	} else{
+		j=j+1;	
+		$scope.timer();
+	}
+	};
+
+		
+	var stop;	
+	$scope.timer = function(){
+	if ( angular.isDefined(stop) ) return;
+		var tacos = tacoTime.tacos[j];
+        	var tTime = (tacos.time)*1000;
+		$scope.tTime = tTime;	
+	stop = $interval(function() {
+		if ($scope.tTime > 0) {
+			console.log(tTime);
+			$scope.tTime = $scope.tTime - 1000;
+			$scope.timerTimes = moment.duration($scope.tTime).seconds();
+			$scope.timerTimem = moment.duration($scope.tTime).minutes();
+		} else {
+			console.log(tTime);
+			$scope.stopTimer();
+		}	
+	}, 1000);	
+	
+	};
+
+	$scope.stopTimer = function() {
+          if (angular.isDefined(stop)) {
+            $interval.cancel(stop);
+            stop = undefined;
+          }
+        };
+	
+	$scope.$on('$destroy', function() {
+          // Make sure that the interval is destroyed too
+          $scope.stopTimer();
+        });	
 
 }]).directive('momentInterval',['$interval', function($interval){
 
