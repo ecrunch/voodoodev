@@ -225,7 +225,7 @@ function($http, auth){
 
 	service.createNew = function() {
 
-		$http.post('/new_schedule', null, {
+		return $http.post('/new_schedule', null, {
 			headers: {
 				Authorization: 'Bearer '+auth.getToken()
 			}
@@ -236,6 +236,7 @@ function($http, auth){
 				for (var i = 0; i < items.length; i++) {
 					service.items.push(items[i]);
 				}
+				console.log(service.items);
 			},
 
 			// failure

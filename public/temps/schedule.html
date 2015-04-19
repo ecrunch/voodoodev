@@ -1,21 +1,40 @@
 <div class= "page-header">
 	<h3> My Schedule </h3>	
-	<input type="button" ng-click="newSchedule()" value="New Schedule">	
-	<div>
-	Current time is: <span my-current-time="format"></span>
-	</div>
+</div>
+<div class="row">
+<div class="col-md-5">
 
+		<h4>Description - Time</h4>
+
+<div ng-repeat="item in items | orderBy:'item.number'">
+	<span style="font-size:20px;">
+		{{item.number}}	 {{item.details.description}}
+		- {{item.minutes}}
+        </span>
+</div>
 </div>
 
-<table border="3">
-	<tr>
-		<th> Number </th>
-		<th> Description </th>
-		<th> Minutes </th>
-	</tr>
-	<tr ng-repeat="item in items">
-		<td> {{item.number}} </td>
-		<td> {{item.details.description}} </td>
-		<td> {{item.minutes}} </td>
-	</tr
-</table>
+
+<div class="col-md-5">
+
+<input type="button" ng-click="newSchedule()" value="New Schedule">
+<input type="button" ng-click="tacoTimer()" value="Start" ng-show='(tk === 0)'>
+<input type="button" ng-click="startTime()" value="Start" ng-show='(tk === 1)'>
+<input type="button" ng-click="stopTimer()" value="Stop" ng-show='(tk === 1)'>
+<div class="row">
+<div class="col-md-5">
+<span style="font-size:30px;">{{display}}</span>
+</div>
+</div>
+<div class="row">
+<div class="col-md-5" ng-show='(tk === 1)'>
+<span style="font-size:60px;">{{timerTimem}}</span><span>minutes</span>
+</div>
+</div>
+<div class="row">
+<div class="col-md-5" ng-show='(tk === 1)'>
+<span style="font-size:30px;">{{timerTimes}}</span><span>seconds</span>
+</div>
+</div>
+</div>
+</div>
