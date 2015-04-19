@@ -258,14 +258,6 @@ function($scope, $stateParams, Schedule, $interval) {
 	var j;
         var i=0;
 	$scope.tk=0;	
-	var tacoTime = {	
-	"tacos":[
-                        {"name":"taco1", "time":5},
-                        {"name":"taco2", "time":10},
-                        {"name":"taco2", "time":30},
-                        {"name":"taco2", "time":100}
-                        ]};
-
 	 
 	$scope.newSchedule = function() {
 	
@@ -273,11 +265,12 @@ function($scope, $stateParams, Schedule, $interval) {
 		Schedule.createNew().then(function(){
 			$scope.items = Schedule.items;
 			j=undefined;
+			$scope.iTime = 0;
 		});
 	};
 
 	
-	$scope.tacoTimer = function(){
+	$scope.scheduleTimer = function(){
 	if ( angular.isDefined(stop) ) return;
 	if (angular.isUndefined(j)){
                 j=i;
@@ -302,10 +295,10 @@ function($scope, $stateParams, Schedule, $interval) {
         $scope.timer = function(){
         stop = $interval(function() {
                 if ($scope.iTime > 0) {
-                        $scope.iTime = $scope.iTime - 1000;
                         $scope.timerTimes = moment.duration($scope.iTime).seconds();
                         $scope.timerTimem = moment.duration($scope.iTime).minutes();
-                } else {
+                	$scope.iTime = $scope.iTime - 1000;
+		} else {
                         $scope.tk=0;
                         $scope.stopTimer();
                 }
@@ -322,6 +315,14 @@ function($scope, $stateParams, Schedule, $interval) {
 	
 	$scope.startTime=function(){
 		$scope.timer();
+	};
+	
+	$scope.skipTimer = function(){
+		console.log('test')
+		$scope.stopTimer();
+		$scope.display='';
+		$scope.iTime ='';
+		$scope.scheduleTimer();
 	};
 	
         $scope.$on('$destroy', function() {
