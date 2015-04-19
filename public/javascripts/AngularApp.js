@@ -268,6 +268,12 @@ function($scope, $stateParams, Schedule, $interval) {
 			$scope.iTime = 0;
 		});
 	};
+	$scope.storeTime = function(){
+		var trackt = (($scope.tTime-$scope.iTime)/60000);
+		Schedule.storeTime();	
+		console.log(trackt);
+
+	};
 
 	
 	$scope.scheduleTimer = function(){

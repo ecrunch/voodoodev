@@ -223,6 +223,10 @@ function($http, auth){
 
 	};
 
+	service.storeTime = function() {
+		console.log('In services')
+	};
+
 	service.createNew = function() {
 
 		return $http.post('/new_schedule', null, {
