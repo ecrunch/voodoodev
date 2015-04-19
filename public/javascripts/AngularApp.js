@@ -285,6 +285,7 @@ function($scope, $stateParams, Schedule, $interval) {
 		var item = $scope.items[j];
                 var iTime = (item.minutes)*60000;
                 $scope.iTime = iTime;
+		$scope.tTime = iTime;
 		$scope.tk=1;
 		$scope.display = item.details.description;
 		$scope.timer();
@@ -307,10 +308,11 @@ function($scope, $stateParams, Schedule, $interval) {
         };
 	
 	$scope.stopTimer = function() {
-          if (angular.isDefined(stop)) {
-            $interval.cancel(stop);
-            stop = undefined;
-          }
+		console.log(($scope.tTime - $scope.iTime));	
+		if (angular.isDefined(stop)) {
+			$interval.cancel(stop);
+			stop = undefined;
+		}
         };
 	
 	$scope.startTime=function(){

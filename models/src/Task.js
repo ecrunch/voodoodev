@@ -26,9 +26,9 @@ function getRandomInt(min, max) {
 
 function Task(init){
 
-	this.description	= init.description || "A Task";
-	this.userId		= init.userId || "User";
-	this.userName		= init.userName || "Name";
+	this.description	= init.description;
+	this.userId		= init.userId;
+	this.userName		= init.userName;
 
 	init.currentDate ?
 		this.currentDate = new Date(init.currentDate) : this.currentDate = new Date();
