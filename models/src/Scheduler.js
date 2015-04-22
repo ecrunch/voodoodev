@@ -242,7 +242,8 @@ Scheduler.prototype.makeSchedule = function(timeSlots, scoredTasks, breathers, r
 					"number":	number,
 					"minutes":	minutesToAdd,
 					"details":	{
-						"description":	itemToAdd["description"]
+						"description":	itemToAdd["description"],
+						"id":		itemToAdd["id"]
 					},
 					"type":		"task"
 				}

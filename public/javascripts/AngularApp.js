@@ -68,6 +68,7 @@ function($scope, courses, auth ){
 	};
 
 	$scope.joinC = function(course){
+		console.log('in AA');
 	        courses.joinCourse(course);
         };
 		
@@ -268,10 +269,11 @@ function($scope, $stateParams, Schedule, $interval) {
 			$scope.iTime = 0;
 		});
 	};
-	$scope.storeTime = function(){
+	$scope.storeTime = function(id,trackt){
+		var id =  $scope.id;	
 		var trackt = (($scope.tTime-$scope.iTime)/60000);
-		Schedule.storeTime();	
-		console.log(trackt);
+		Schedule.storeTime(id, trackt);	
+	/*	console.log(trackt);*/
 
 	};
 
@@ -294,6 +296,7 @@ function($scope, $stateParams, Schedule, $interval) {
 		$scope.tTime = iTime;
 		$scope.tk=1;
 		$scope.display = item.details.description;
+		$scope.id = item.details.id;
 		$scope.timer();
 	};
 	

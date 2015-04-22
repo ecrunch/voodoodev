@@ -277,6 +277,14 @@ router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
 *	SCHEDULE-ROUTES
 */
 
+router.put('/tasks/:task/addTime', auth, function(trackt){
+	return function(req, res, next) {
+	var time = trackt
+	console.log('in router');
+	console.log(time);
+	res.send(200);
+}});
+
 
 router.post('/new_schedule', auth, function(req, res, next) {
 
@@ -511,7 +519,8 @@ router.post('/breathers/:breather/joinBreather', auth, function(req, res, next) 
 });
 
 router.post('/courses/:course/joinCourse', auth, function(req, res, next) {
-        var courseId;
+      	console.log('in routes'); 
+	var courseId;
 
         User.findById(req.payload.id, function(err, user) {
 

@@ -23,12 +23,14 @@ ScheduleSchema.methods.createNew = function(hours, tasks, breathers) {
 	for(var i = 0; i < tasks.length; i++) {
 		
 		init = {
+			id:		tasks[i]._id,
 			description:	tasks[i].description,
 			userId:		tasks[i].userId,
 			userName:	tasks[i].userName,
 			dueDate:	tasks[i].dueDate,
 			type:		tasks[i].type,
 			totalMinutes:	tasks[i].totalMinutes
+			
 		};
 		ourTasks.push(new Task(init));
 	}

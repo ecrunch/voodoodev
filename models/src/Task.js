@@ -26,6 +26,7 @@ function getRandomInt(min, max) {
 
 function Task(init){
 
+	this.id			= init.id;
 	this.description	= init.description;
 	this.userId		= init.userId;
 	this.userName		= init.userName;
