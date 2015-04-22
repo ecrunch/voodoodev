@@ -277,13 +277,19 @@ router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
 *	SCHEDULE-ROUTES
 */
 
-router.put('/tasks/:task/addTime', auth, function(trackt){
+router.post('/tasks/:task/time', auth, function(req, res, next){
+	
+	console.log(req.body);
+	res.json([]);
+
+	/*
 	return function(req, res, next) {
-	var time = trackt
-	console.log('in router');
-	console.log(time);
-	res.send(200);
-}});
+		var time = trackt
+		console.log(time);
+		res.send(200);
+	}
+	*/
+});
 
 
 router.post('/new_schedule', auth, function(req, res, next) {

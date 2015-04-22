@@ -224,16 +224,21 @@ function($http, auth){
 	};
 
 	service.storeTime = function(id, trackt){
-		console.log(id);
-		console.log(trackt);
-		console.log('In services');
-		return $http.put('/tasks/'+ id + '/addTime', trackt,{
+		console.log("ID: " + id);
+		console.log("TRACKT: " + trackt);
+		return $http.post('/tasks/' + id + '/time', trackt, {
 			headers: {
 				Authorization: 'Bearer '+auth.getToken()
 			}
-		}).success(
-				function(trackt){
-				}
+		}).then(
+			// success
+			function(data) {
+				return data;
+			},
+			// faiure
+			function() {
+				console.log("Could not store minutes");
+			}
 		);	
 		
 	};
