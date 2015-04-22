@@ -223,8 +223,19 @@ function($http, auth){
 
 	};
 
-	service.storeTime = function() {
-		console.log('In services')
+	service.storeTime = function(id, trackt){
+		console.log(id);
+		console.log(trackt);
+		console.log('In services');
+		return $http.put('/tasks/'+ id + '/addTime', trackt,{
+			headers: {
+				Authorization: 'Bearer '+auth.getToken()
+			}
+		}).success(
+				function(trackt){
+				}
+		);	
+		
 	};
 
 	service.createNew = function() {
@@ -326,7 +337,7 @@ var o = {
 	};
 
 	o.joinCourse = function(course) {
-		
+		console.log('in services');	
 		return $http.post('/courses/'+ course._id+'/joinCourse',null, {
 		headers: {
 				Authorization: 'Bearer '+auth.getToken()
