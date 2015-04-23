@@ -226,7 +226,7 @@ function($http, auth){
 	service.storeTime = function(id, trackt){
 		console.log("ID: " + id);
 		console.log("TRACKT: " + trackt);
-		return $http.post('/tasks/' + id + '/time', trackt, {
+		return $http.post('/tasks/' + id + '/time/' + trackt, null, {
 			headers: {
 				Authorization: 'Bearer '+auth.getToken()
 			}

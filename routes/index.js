@@ -277,10 +277,11 @@ router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
 *	SCHEDULE-ROUTES
 */
 
-router.post('/tasks/:task/time', auth, function(req, res, next){
-	
-	console.log(req.body);
-	res.json([]);
+router.post('/tasks/:id/time/:trackt', auth, function(req, res, next){
+
+	console.log("Inside route");
+
+	console.log(req.params.id);
 
 	/*
 	return function(req, res, next) {
