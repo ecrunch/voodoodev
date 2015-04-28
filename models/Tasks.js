@@ -12,6 +12,9 @@ var TaskSchema = new mongoose.Schema({
 	userName:	String
 });
 
+TaskSchema.methods.addTime = function(track) {
+	this.totalMinutes = Number(this.totalMinutes) + Number(track);
+};
 
 TaskSchema.methods.upvote = function(cb) {
 	this.upvotes += 1;

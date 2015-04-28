@@ -277,19 +277,24 @@ router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
 *	SCHEDULE-ROUTES
 */
 
-router.post('/tasks/:id/time/:trackt', auth, function(req, res, next){
+router.put('/tasks/:task/time/:trackt', auth, function(req, res, next){
 
-	console.log("Inside route");
-
-	console.log(req.params.id);
-
-	/*
-	return function(req, res, next) {
-		var time = trackt
-		console.log(time);
-		res.send(200);
-	}
-	*/
+	var track = req.params.trackt;
+	var current = req.task.totalMinutes;
+	Task.findById(req.params.task, function(err, task) {
+		if(err){
+			console.log(err);
+		}
+		task.addTime(track);
+		
+		task.save(function(err, task){
+			if (err){
+				console.log("Error Saving");
+				return next(err);
+			}
+			res.json(task);
+		});
+	});	
 });
 
 
