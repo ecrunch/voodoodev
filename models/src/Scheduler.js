@@ -13,18 +13,35 @@ function Scheduler(init) {
 }
 
 
-
-//implement or get from somewhere 
-function getMean(){
-	return 0;
-}
-
-function getStd() {
-	return 0;
-}
-
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getMean(scoreData){
+	return scoreData["total"]/scoreData["list"].length;
+}
+
+
+function getVariance(scoreData) {
+	
+	var len = scoreData["list"].length;
+	if (len <= 1) {
+		return 0;
+	}
+	var sum = scoreData["total"];
+	var mean = scoreData["mean"];	
+	var v = 0;
+	var score;
+	for (var i = 0; i < len; i++) {
+		score = scoreData["list"][i];
+		v = v + (score - mean) * (score - mean);	
+	}
+	return v/len;
+
+}
+
+function getStd(scoreData) {
+	return Math.sqrt(scoreData["variance"]);
 }
 
 Scheduler.prototype.getScoreData = function(tasks) {
@@ -38,18 +55,15 @@ Scheduler.prototype.getScoreData = function(tasks) {
 	};
 	
 	var score;
-	for(var i = 0; i < tasks.length; i++) {	
-		
-		//score = getRandomInt(1, 10); //hardcoded for now
+	for(var i = 0; i < tasks.length; i++) {		
 		score = tasks[i].getScore();
 		scoreData["total"] += score;
 		scoreData["list"].push(score);
 	}
 
-	//fill in the last 3 stats
-	scoreData["mean"] 	= scoreData["total"]/scoreData["list"].length;
-	//scoreData["variance"] 	= getVariance(scoreData["list"]); 
-	//scoreData["stdDev"] 	= Math.sqrt(scoreData["variance"]);
+	scoreData["mean"] 	= getMean(scoreData);
+	scoreData["variance"] 	= getVariance(scoreData); 
+	scoreData["stdDev"] 	= getStd(scoreData);
 
 	return scoreData;
 
@@ -69,8 +83,8 @@ Scheduler.prototype.determineTaskPriorities = function(tasks, scoreData) {
 	
 	for(var i = 0; i < tasks.length; i++) {
 		
-		//taskScore	= tasks[i].getScore();
-		taskScore	= getRandomInt(1, 10);
+		taskScore	= tasks[i].getScore();
+		//taskScore	= getRandomInt(1, 10);
 		zScore		= (taskScore - mean)/stdDev;
 
 		if (zScore >= 0.8416) {
