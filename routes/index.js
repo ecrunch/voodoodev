@@ -18,8 +18,12 @@ var Task =  mongoose.model('Task');
 var Breather = mongoose.model('Breather');	
 var User = mongoose.model('User'); 
 var Schedule = mongoose.model('Schedule');
+var Assignment = mongoose.model('Assignment');
+
+
 var Post = mongoose.model('Post');
 var Link = mongoose.model('Link');
+
 
 router.post('/register', function(req, res, next){
 
@@ -270,6 +274,16 @@ router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
 			res.json(subTask);
 		});
 	});
+});
+
+
+/*
+*	ASSIGNMENT-ROUTES
+*/
+router.post('/new_assignment', auth, function(req, res, next) {
+
+	Assignment.test();
+
 });
 
 
