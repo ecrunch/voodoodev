@@ -7,7 +7,7 @@ var AssignmentSchema = new mongoose.Schema({
 
 
 
-Assignment.methods.test = function() {
+AssignmentSchema.methods.test = function() {
 	console.log("Shit is connected");
 };
 
