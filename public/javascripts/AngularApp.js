@@ -270,8 +270,8 @@ function($scope, $stateParams, Schedule, $interval) {
 		});
 	};
 	$scope.storeTime = function(id,trackt){
-		var id =  $scope.id;	
-		var trackt = (($scope.tTime-$scope.iTime)/60000);
+		id =  $scope.id;	
+		trackt = (($scope.tTime-$scope.iTime)/60000);
 		Schedule.storeTime(id, trackt);	
 	/*	console.log(trackt);*/
 
@@ -329,7 +329,7 @@ function($scope, $stateParams, Schedule, $interval) {
 	};
 	
 	$scope.skipTimer = function(){
-		console.log('test')
+		console.log('test');
 		$scope.stopTimer();
 		$scope.display='';
 		$scope.iTime ='';

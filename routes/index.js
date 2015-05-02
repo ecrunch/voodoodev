@@ -281,8 +281,9 @@ router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
 *	ASSIGNMENT-ROUTES
 */
 router.post('/new_assignment', auth, function(req, res, next) {
-
-	Assignment.test();
+	var assignment = new Assignment();
+			 
+	assignment.test();
 
 });
 

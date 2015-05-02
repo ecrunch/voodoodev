@@ -41,7 +41,10 @@ function getVariance(scoreData) {
 }
 
 function getStd(scoreData) {
-	return Math.sqrt(scoreData["variance"]);
+	var variance = scoreData["variance"];
+	var std = Math.sqrt(variance);
+
+	return std;
 }
 
 Scheduler.prototype.getScoreData = function(tasks) {
@@ -60,11 +63,9 @@ Scheduler.prototype.getScoreData = function(tasks) {
 		scoreData["total"] += score;
 		scoreData["list"].push(score);
 	}
-
 	scoreData["mean"] 	= getMean(scoreData);
-	scoreData["variance"] 	= getVariance(scoreData); 
+	scoreData["variance"] 	= getVariance(scoreData);
 	scoreData["stdDev"] 	= getStd(scoreData);
-
 	return scoreData;
 
 };
@@ -100,7 +101,14 @@ Scheduler.prototype.determineTaskPriorities = function(tasks, scoreData) {
 		}
 		 
 	}
-
+/*
+	for (var key in taskPriorities) {
+		var bucket = taskPriorities[key];
+		console.log("bucket: " + key);
+		bucket.forEach(function(d){
+			console.log("name: " + d.description + ", score: " + d.getScore());
+		}); 
+	}*/ 
 	return taskPriorities;
 };
 
@@ -268,7 +276,6 @@ Scheduler.prototype.makeSchedule = function(timeSlots, scoredTasks, breathers, r
 		number += 1;
 
 	} //end of time slot for loop	
-
 	return schedule;
 };
 
