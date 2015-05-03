@@ -280,10 +280,27 @@ router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
 /*
 *	ASSIGNMENT-ROUTES
 */
-router.post('/new_assignment', auth, function(req, res, next) {
-	var assignment = new Assignment();
-			 
-	assignment.test();
+router.post('/courses/:course/assignments', auth, function(req, res, next) {
+	var assignment = new Assignment(req.body);
+        assignment.course = req.course;
+        assignment.author = req.payload.username;
+
+        assignment.save(function(err, assignment){
+                if(err){
+                        return next(err);
+                }
+
+                req.course.assignments.push(assignment);
+                req.course.save(function(err, course) {
+                        if(err){
+                                return next(err);
+                        }
+
+                        res.json(assignment);
+                });
+        });
+		 
+	
 
 });
 
@@ -645,7 +662,7 @@ router.param('course', function(req, res, next, id) {
 
 
 router.get('/courses/:course', function(req, res) {
-	req.course.populate('posts courseTasks comments', function(err, course) {	 
+	req.course.populate('posts assignments comments', function(err, course) {	 
 		res.json(req.course);
 	});
 });
@@ -682,11 +699,9 @@ router.put('/courses/:course/courseTasks/:courseTask/upvote', auth, function(req
 
 
 router.post('/courses/:course/posts', auth, function(req, res, next) {
-	console.log('made it to router');
         var post = new Post(req.body);
         post.course = req.course;
         post.author = req.payload.username;
-	console.log('made new post');
         post.save(function(err, post){
                 if(err){
                         return next(err);

@@ -1,8 +1,11 @@
 var mongoose = require('mongoose');
 
 var AssignmentSchema = new mongoose.Schema({
-	title: String,
-	tasks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}]
+	name: String,
+	dueDate: Date,
+	author: String,
+	course: {type: mongoose.Schema.Types.ObjectId, ref: 'Course'},
+	users: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 

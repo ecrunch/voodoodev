@@ -7,15 +7,15 @@
 </div>
 <div class="row">
 <div class="col-md-5">
-<div ng-repeat="courseTask in course.courseTasks | orderBy:'-dueDate'">
+<div ng-repeat="assignment in course.assignments | orderBy:'-dueDate'">
 	<span style="font-size:20px; margin-left:10px;">
-		{{courseTask.name}} 
-		created by {{courseTask.author}}
-		 - Due {{courseTask.dueDate}}
+		{{assignment.name}} 
+		created by {{assignment.author}}
+		 - Due {{assignment.dueDate}}
 	</span>
 </div>
 
-<form ng-submit="addCourseTask()"
+<form ng-submit="addAssignment()"
 	style="margin-top:30px;">
 	<h3>Add a new Assignments</h3>
 	<div class="form-group">
@@ -32,7 +32,7 @@
 	
 	</div>
 
-	 <button type="submit" class="btn btn-primary">Post</button>
+	 <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </div>
 

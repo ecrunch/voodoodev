@@ -317,8 +317,8 @@ var o = {
                 });
         };
 
-	o.addCourseTask = function() {
-		return $http.post('/new_assignment', null, {
+	o.addAssignment = function(id, assignment) {
+		return $http.post('/courses/' + id + '/assignments', assignment, {
 		headers: {Authorization: 'Bearer '+auth.getToken()}
 		});
 	};

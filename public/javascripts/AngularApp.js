@@ -110,20 +110,19 @@ function($scope, $stateParams, courses, course, auth ){
                 $scope.title ='';
         };
 	
-	$scope.addCourseTask = function(){
-
+	$scope.addAssignment = function(){
 		if($scope.name=== '') {
 			return;
 		}
 
-		courses.addCourseTask(course._id, {
+		courses.addAssignment(course._id, {
 			name: $scope.name,
 			dueDate: $scope.dueDate,
 			author: 'user',
-		}).success(function(courseTask) {
-			$scope.course.courseTasks.push(courseTask);
+		}).success(function(assignment) {
+			$scope.course.assignments.push(assignment);
 		});
-			$scope.body = '';
+			$scope.name = '';
 			$scope.dueDate = '';
 	};
 	
