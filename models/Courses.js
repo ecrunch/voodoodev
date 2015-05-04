@@ -5,6 +5,8 @@ var CourseSchema = new mongoose.Schema({
 	link: String,
 	upvotes: {type: Number, default: 0},
 	posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+	users:[],	
+	usernames:[],
 	assignments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Assignment' }],
 	comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
 });

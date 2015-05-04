@@ -566,25 +566,33 @@ router.post('/courses/:course/joinCourse', auth, function(req, res, next) {
       	console.log('in routes'); 
 	var courseId;
 
-        User.findById(req.payload.id, function(err, user) {
+	req.course.users.push(req.payload.id);
+	req.course.usernames.push(req.payload.username);
+	req.course.save(function(err,course){
+		if(err){
+			return next(err);
+		}
+		User.findById(req.payload.id, function(err, user) {
 
-                if(err) {
-                        // do whatever
-                        console.log(err);
-                }
-                courseId = req.params.course;
+	                if(err) {
+        	                // do whatever
+                	        console.log(err);
+               		}
+                	courseId = req.params.course;
 
-                user.joinCourse(courseId);
+                	user.joinCourse(courseId);
 
-                user.save(function(err, userRet) {
+                	user.save(function(err, userRet) {
                         if (err) {
                                 console.log("Error Saving");
                                 return next(err);
                         }
-                        res.json(userRet);
-                });
+                        	res.json(userRet);
+        	        });
 
-        });
+        	});	
+	});	
+	
 
 });
 
