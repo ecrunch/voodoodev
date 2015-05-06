@@ -280,8 +280,8 @@ function($http, auth){
 
 app.factory('courses',['$http', 'auth', function($http, auth){
 
-var o = {
-	courses:[]
+	var o = {
+		courses:[]
 	};
           
 	o.getAll = function() { 
@@ -342,7 +342,6 @@ var o = {
 	};
 
 	o.joinCourse = function(course) {
-		console.log('in services');	
 		return $http.post('/courses/'+ course._id+'/joinCourse',null, {
 		headers: {
 				Authorization: 'Bearer '+auth.getToken()
@@ -356,20 +355,31 @@ var o = {
 			function() {
 				console.log("Error");
 			}
-		);
+		);	
+	};
 
-	
-	/*
-		}).success(function(data){
-			o.courses.push(data);
-		});
-	*/
-	
+	o.joinAssignment = function(assignment) {
+		return $http.post('/assignments/' + assignment._id + '/join', null,
+			{
+				headers: {
+					Authorization: 'Bearer ' + auth.getToken()
+				}
+			}
+		)
+		.then(
+			// success
+			function(data) {
+
+			},
+			// error
+			function() {
+				console.log("error mother fucker");
+			}
+		);
 	};
 
 
-
-return o;
+	return o;
 
 }]);
 

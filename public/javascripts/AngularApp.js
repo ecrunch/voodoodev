@@ -71,7 +71,8 @@ function($scope, courses, auth ){
 		console.log('in AA');
 	        courses.joinCourse(course);
         };
-		
+	
+	
 }]);
 
 
@@ -130,6 +131,9 @@ function($scope, $stateParams, courses, course, auth ){
 		courses.upvoteComment(course, comment);
 	};
 	
+	$scope.joinAssignment = function(assignment) {
+		courses.joinAssignment(assignment);
+	};
 	
 }]);
 

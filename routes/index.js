@@ -280,29 +280,54 @@ router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
 /*
 *	ASSIGNMENT-ROUTES
 */
+
+
+
 router.post('/courses/:course/assignments', auth, function(req, res, next) {
+	
+
 	var assignment = new Assignment(req.body);
         assignment.course = req.course;
         assignment.author = req.payload.username;
 
+
+	// TODO : need to save the task type
+
+	// save the assignment
         assignment.save(function(err, assignment){
                 if(err){
                         return next(err);
                 }
 
                 req.course.assignments.push(assignment);
-                req.course.save(function(err, course) {
+                
+		// save the course
+		req.course.save(function(err, course) {
                         if(err){
                                 return next(err);
                         }
-
                         res.json(assignment);
                 });
         });
 		 
-	
+});
+
+
+router.post('/assignments/:assignment/join', auth, function(req, res, next) {
+
+	// TODO : obtain user id
+
+
+	Assignment.findById(req.params.assignment, function(err, assignment) {
+		console.log(assignment);
+
+		// TODO : need to create a task w the user id and all the assignment shit 
+
+	});
+
 
 });
+
 
 
 /*
@@ -363,17 +388,6 @@ router.post('/new_schedule', auth, function(req, res, next) {
 			}
 		}
 	);
-	/*
-	var schedule = new Schedule();
-	var items = schedule.createNew(
-		hours,
-		userTasks,
-		userBreathers
-	);
-	res.json(
-		items
-	);
-	*/
 });
 
 
