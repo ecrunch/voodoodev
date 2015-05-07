@@ -291,7 +291,6 @@ router.post('/courses/:course/assignments', auth, function(req, res, next) {
         assignment.author = req.payload.username;
 	assignment.users = req.course.users
 
-	// TODO : need to save the task type
 
 	// save the assignment
         assignment.save(function(err, assignment){
@@ -315,14 +314,19 @@ router.post('/courses/:course/assignments', auth, function(req, res, next) {
 
 router.post('/assignments/:assignment/join', auth, function(req, res, next) {
 
-	// TODO : obtain user id
-
+	var userId = req.payload.id;
 
 	Assignment.findById(req.params.assignment, function(err, assignment) {
 		console.log(assignment);
-
-		// TODO : need to create a task w the user id and all the assignment shit 
-
+		assignment.users.push(userId);
+		assignment.save(function(err, assignment) {
+			if(err) {
+				console.log("Could not save: " + err);
+			}
+			else{
+				res.json(assignment);
+			}	
+		});
 	});
 
 
@@ -653,6 +657,27 @@ router.get('/courses', function(req, res, next) {
   	});
 });
 
+router.post('/get_pending_assignments', auth, function(req, res, next) {
+
+	
+	var userId = req.payload.id;
+
+	Assignment.find({users: userId}, function(err, assignments){
+		if(err) {
+			console.log(err);
+		}
+		else {
+			
+			// TODO : need to filter out/return the assignments that do not have
+			// user id in their joined user array
+
+			console.log(assignments);
+			res.json([]);
+			//res.json(assignments);
+		}
+	}); 
+
+});
 
 router.post('/courses', auth, function(req, res, next) {
 

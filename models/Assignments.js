@@ -6,7 +6,8 @@ var AssignmentSchema = new mongoose.Schema({
 	author: String,
 	type: String,
 	course: {type: mongoose.Schema.Types.ObjectId, ref: 'Course'},
-	users: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
+	users: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+	joinedUsers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
 

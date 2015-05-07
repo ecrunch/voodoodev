@@ -351,13 +351,15 @@ function($scope, $stateParams, Schedule, $interval) {
 
 
 app.controller('userHomePageCtrl', [
-'$scope', 'auth', 'User',
-function($scope, auth, User) {
+'$scope', 'auth', 'User', 'courses',
+function($scope, auth, User, courses) {
 
 	$scope.loadAll = true;
 	//$scope.loadAll = false;
 
 	$scope.tasks = [];
+
+	$scope.pendingAssignments = [];
 
 	User.initialize($scope.loadAll)
 	.then(
@@ -368,11 +370,37 @@ function($scope, auth, User) {
                         $scope.courses = User.courses;
 			$scope.taskIds = User.breatherIds;
                         $scope.tasks = User.tasks;
+
+
+			// only do this once the other shit is loaded? regardless, need to refactor
+			$scope.getPendingAssignments()
+			.then(
+				// success
+				function(data) {
+					//alert(data);
+					$scope.pendingAssignments = data;	
+				},
+				// error
+				function() {
+					console.log("Controller: Error loading pending assignments");
+				}
+			);
+
 		},
 		function() {
-			console.log("Error");
+			console.log("Error loading user data");
 		}
 	);
+
+	// returns a promise or some shit
+	$scope.getPendingAssignments = function() {
+		return courses.getPendingAssignments();
+	};
+
+	$scope.joinAssignment = function(assId) {
+		
+	};
+
 
 }]);
 

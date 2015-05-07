@@ -373,11 +373,30 @@ app.factory('courses',['$http', 'auth', function($http, auth){
 			},
 			// error
 			function() {
-				console.log("error mother fucker");
+				console.log("Error joining assignments");
 			}
 		);
 	};
 
+	o.getPendingAssignments = function() {
+		return $http.post('/get_pending_assignments', null, 
+			{
+				headers: {
+					Authorization: 'Bearer ' + auth.getToken()
+				}
+			}
+		)
+		.then(
+			// success
+			function(data) {
+				return data;
+			},
+			//  error
+			function() {
+				console.log('Service: Error loading pending assignments');
+			}
+		);
+	};
 
 	return o;
 
