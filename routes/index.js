@@ -289,7 +289,7 @@ router.post('/courses/:course/assignments', auth, function(req, res, next) {
 	var assignment = new Assignment(req.body);
         assignment.course = req.course;
         assignment.author = req.payload.username;
-
+	assignment.users = req.course.users
 
 	// TODO : need to save the task type
 

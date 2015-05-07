@@ -120,6 +120,7 @@ function($scope, $stateParams, courses, course, auth ){
 			name: $scope.name,
 			dueDate: $scope.dueDate,
 			author: 'user',
+			type: $scope.type
 		}).success(function(assignment) {
 			$scope.course.assignments.push(assignment);
 		});
