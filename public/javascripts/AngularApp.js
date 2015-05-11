@@ -68,7 +68,6 @@ function($scope, courses, auth ){
 	};
 
 	$scope.joinC = function(course){
-		console.log('in AA');
 	        courses.joinCourse(course);
         };
 	
@@ -351,8 +350,8 @@ function($scope, $stateParams, Schedule, $interval) {
 
 
 app.controller('userHomePageCtrl', [
-'$scope', 'auth', 'User', 'courses',
-function($scope, auth, User, courses) {
+'$scope', 'auth', 'User','Task','courses',
+function($scope, auth, User, Task, courses) {
 
 	$scope.loadAll = true;
 	//$scope.loadAll = false;
@@ -377,6 +376,9 @@ function($scope, auth, User, courses) {
 			.then(
 				// success
 				function(data) {
+					console.log('im here');
+					$scope.pendings = data.data;
+					console.log($scope.pendings[0]);
 					//alert(data);
 					$scope.pendingAssignments = data;	
 				},
@@ -396,9 +398,18 @@ function($scope, auth, User, courses) {
 	$scope.getPendingAssignments = function() {
 		return courses.getPendingAssignments();
 	};
-
+	$scope.joined = function(assId){
+		courses.joined(assId);
+		};
+	
 	$scope.joinAssignment = function(assId) {
+		Task.create({
+			description:	assId.name,
+        		dueDate:	assId.dueDate,
+        		type:		assId.type
+		});
 		
+		$scope.joined(assId._id);
 	};
 
 

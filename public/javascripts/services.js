@@ -322,7 +322,14 @@ app.factory('courses',['$http', 'auth', function($http, auth){
 		headers: {Authorization: 'Bearer '+auth.getToken()}
 		});
 	};
-
+	
+	o.joined = function(id) {
+		return $http.put('/assignments/' + id + '/joined', null, {
+		headers: {Authorization: 'Bearer '+auth.getToken()}
+		});
+         
+	}; 
+	
 	o.upvote = function(course) {
 		return $http.put('/courses/' + course._id + '/upvote', null, {
 		headers: {Authorization: 'Bearer '+auth.getToken()}
@@ -379,6 +386,7 @@ app.factory('courses',['$http', 'auth', function($http, auth){
 	};
 
 	o.getPendingAssignments = function() {
+
 		return $http.post('/get_pending_assignments', null, 
 			{
 				headers: {

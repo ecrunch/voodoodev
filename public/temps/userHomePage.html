@@ -31,11 +31,11 @@
 		</div>
 		<div class="col-md-3">
 			<h4> Pending Assignments </h4>
-			<div ng-repeat= "assignment in pendingAssignments">
+			<div ng-repeat= "pendings in pendings">
 				<span>
-				<p> {{assignment.description}} </p> 
+				<div> {{pendings.name}} </div> 
 				<input type="button" value="Join!"
-					ng-click="joinAssignment(assignment)"/>
+					ng-click="joinAssignment(pendings)"/>
 				</span>
 			</div>
 		</div>
