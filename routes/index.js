@@ -11,9 +11,7 @@ router.get('/', function(req, res, next) {
 var mongoose = require('mongoose');
 var passport = require('passport');
 var Course = mongoose.model('Course');
-var CourseTask =  mongoose.model('CourseTask');
 var Comment = mongoose.model('Comment');
-var SubTask =  mongoose.model('SubTask'); 
 var Task =  mongoose.model('Task');
 var Breather = mongoose.model('Breather');	
 var User = mongoose.model('User'); 
@@ -165,40 +163,9 @@ router.param('task', function(req, res, next, id) {
 });
 
 
-router.param('subTask', function(req, res, next, id) {
-
-	var query = SubTask.findById(id);
-	query.exec(function (err, comment){
-		if (err) {
-			return next(err);
-		}
-		if (!subTask) {
-			return next(new Error('can\'t find Sub Task'));
-		}
-		req.subTask = subTask;
-		return next();
-	});
-});
-
-
-router.param('courseTask', function(req, res, next, id) {
-
-	var query = CourseTask.findById(id);
-	query.exec(function (err, comment){
-		if (err) {
-			return next(err);
-		}
-		if (!courseTask) {
-			return next(new Error('can\'t find Task'));
-		}
-		req.courseTask = courseTask;
-		return next();
-	});
-});
-
 
 router.get('/tasks/:task', function(req, res) {
-	req.task.populate('subTasks comments', function(err, task) {
+	req.task.populate('comments', function(err, task) {
 		res.json(req.task);
        	});
 });
@@ -224,15 +191,6 @@ router.put('/tasks/:task/comments/:comment/upvote', auth, function(req, res, nex
 });
 
 
-router.put('/tasks/:task/subTasks/:subTask/upvote', auth, function(req, res, next) {
-	req.subTask.upvote(function(err, subTask){
-		if (err) {
-			return next(err);
-		}
-		res.json(subTask);
-	});
-});
-
 
 router.post('/tasks/:task/comments', auth, function(req, res, next) {
 
@@ -254,27 +212,6 @@ router.post('/tasks/:task/comments', auth, function(req, res, next) {
   	});
 });
 
-
-
-router.post('/tasks/:task/subTasks', auth, function(req, res, next) {
-
-	var subTask = new SubTask(req.body);
-	subTask.task = req.task;
-	subTask.author = req.payload.username;
-
-	subTask.save(function(err, subTask){
-		if(err){
-			return next(err);
-		}
-		req.task.subTasks.push(subTask);
-		req.task.save(function(err, task) {
-			if(err){
-				return next(err);
-			}
-			res.json(subTask);
-		});
-	});
-});
 
 
 /*
@@ -760,15 +697,6 @@ router.put('/courses/:course/comments/:comment/upvote', auth, function(req, res,
 });
 
 
-router.put('/courses/:course/courseTasks/:courseTask/upvote', auth, function(req, res, next) {
-	req.courseTask.upvote(function(err, courseTask){
-		if (err) {
-			return next(err);
-		}
-		res.json(courseTask);
-	});
-});
-
 
 router.post('/courses/:course/posts', auth, function(req, res, next) {
         var post = new Post(req.body);
@@ -815,26 +743,6 @@ router.post('/courses/:course/comments', auth, function(req, res, next) {
 });
 
 
-router.post('/courses/:course/courseTasks', auth, function(req, res, next) {
-
-	var courseTask = new CourseTask(req.body);
-	courseTask.course = req.course;
-	courseTask.author = req.payload.username;
-
-	courseTask.save(function(err, courseTask){
-		if(err){
-			return next(err);
-		}
-
-		req.course.courseTasks.push(courseTask);
-		req.course.save(function(err, course) {
-			if(err){
-				return next(err);
-			}
-			res.json(courseTask);
-		});
-	});
-});
 
 
 /*

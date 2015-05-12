@@ -168,41 +168,6 @@ function($scope, Task, auth){
         };      
 }]);
 
-app.controller('SubTaskCtrl',
-['$scope', '$stateParams', 'Task', 'task', 'auth',
-function($scope, $stateParams, Task, task, auth){
-        $scope.isLoggedIn = auth.isLoggedIn;
-	$scope.task = task;
-          
-        $scope.addComment = function(){
-                if($scope.body === '') { return; }
-                 tasks.addComment(task._id, {
-                        body: $scope.body,
-                        author: 'user',
-                }).success(function(comment) {
-                        $scope.task.comments.push(comment);
-                 }); 
-                        $scope.body = '';
-                }; 
-        
-         $scope.addSubTask = function(){
-                if($scope.name=== '') { return; }
-                 Task.addSubTask(task._id, {
-                        name: $scope.name,
-                        dueDate: $scope.dueDate,
-                        author: 'user',
-                }).success(function(subTask) {
-                        $scope.task.subTasks.push(subTask);
-                 });
-                        $scope.body = '';
-                        $scope.dueDate = '';
-                };
-
-
-        $scope.incrementUpvotes = function(comment){
-                Task.upvoteComment(task, comment);
-        };
-}]);
 
 app.controller('BreatherCtrl',
 ['$scope', '$stateParams', 'breathers', 'breather', 'auth',

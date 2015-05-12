@@ -8,10 +8,8 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 
 require('./models/Courses');
-require('./models/CourseTasks');
 require('./models/Comments');
 require('./models/Tasks');
-require('./models/SubTasks');
 require('./models/Users');
 require('./models/Breathers');
 require('./config/passport');
