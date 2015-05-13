@@ -1,4 +1,21 @@
-var app = angular.module('courseInput', ['userHomePageCtrl','ScheduleCtrl','BreatherCtrl','TaskCtrl','CourseCtrl','AuthCtrl','NavCtrl','ui.router','angularMoment','courseServices','courseRouting']);
+var app = angular.module('courseInput', 
+	['userHomePageCtrl',
+	'ScheduleCtrl',
+	'BreatherCtrl',
+	'TaskCtrl',
+	'CourseCtrl',
+	'AuthCtrl',
+	'NavCtrl',
+	'ui.router',
+	'angularMoment',
+	'courseService',
+	'authService',
+	'taskService',
+	'userService',
+	'scheduleService',
+	'breatherService',
+	'courseRouting']
+);
 
 
 
