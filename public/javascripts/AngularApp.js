@@ -241,7 +241,6 @@ function($scope, $stateParams, Schedule, $interval) {
 		id =  $scope.id;	
 		trackt = (($scope.tTime-$scope.iTime)/60000);
 		Schedule.storeTime(id, trackt);	
-	/*	console.log(trackt);*/
 
 	};
 
@@ -285,7 +284,6 @@ function($scope, $stateParams, Schedule, $interval) {
         };
 	
 	$scope.stopTimer = function() {
-		console.log(($scope.tTime - $scope.iTime));	
 		if (angular.isDefined(stop)) {
 			$interval.cancel(stop);
 			stop = undefined;
@@ -297,7 +295,6 @@ function($scope, $stateParams, Schedule, $interval) {
 	};
 	
 	$scope.skipTimer = function(){
-		console.log('test');
 		$scope.stopTimer();
 		$scope.display='';
 		$scope.iTime ='';
@@ -341,9 +338,7 @@ function($scope, auth, User, Task, courses) {
 			.then(
 				// success
 				function(data) {
-					console.log('im here');
 					$scope.pendings = data.data;
-					console.log($scope.pendings[0]);
 					//alert(data);
 					$scope.pendingAssignments = data;	
 				},

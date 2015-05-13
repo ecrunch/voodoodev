@@ -224,8 +224,6 @@ function($http, auth){
 	};
 
 	service.storeTime = function(id, trackt){
-		console.log("ID: " + id);
-		console.log("TRACKT: " + trackt);
 		return $http.put('/tasks/' + id + '/time/' + trackt, null, {
 			headers: {
 				Authorization: 'Bearer '+auth.getToken()
@@ -256,7 +254,6 @@ function($http, auth){
 				for (var i = 0; i < items.length; i++) {
 					service.items.push(items[i]);
 				}
-				console.log(service.items);
 			},
 
 			// failure

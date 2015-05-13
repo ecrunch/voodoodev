@@ -254,7 +254,6 @@ router.post('/assignments/:assignment/join', auth, function(req, res, next) {
 	var userId = req.payload.id;
 
 	Assignment.findById(req.params.assignment, function(err, assignment) {
-		console.log(assignment);
 		assignment.users.push(userId);
 		assignment.save(function(err, assignment) {
 			if(err) {
@@ -518,7 +517,6 @@ router.post('/breathers/:breather/joinBreather', auth, function(req, res, next) 
 });
 
 router.post('/courses/:course/joinCourse', auth, function(req, res, next) {
-      	console.log('in routes'); 
 	var courseId;
 
 	req.course.users.push(req.payload.id);
@@ -633,7 +631,6 @@ router.post('/get_pending_assignments', auth, function(req, res, next) {
 			// TODO : need to filter out/return the assignments that do not have
 			// user id in their joined user array
 
-			console.log(assignments);
 			res.json(assignments);
 			//res.json(assignments);
 		}
