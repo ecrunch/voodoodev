@@ -303,6 +303,7 @@ router.post('/new_schedule', auth, function(req, res, next) {
 
 	var userId = req.payload.id;
 
+
 	Task.find(
 		{
 			'userId': userId
@@ -318,13 +319,31 @@ router.post('/new_schedule', auth, function(req, res, next) {
 					userTasks = tasks;
 				}
 
-				var schedule = new Schedule();
-				var items = schedule.createNew(
-					hours,
-					userTasks,
-					userBreathers
+				Breather.find(
+					{
+						'userId': userId
+					},
+					function(err, breathers) {
+						
+						if (err) {
+							return next(err);
+						}
+						else {
+							if (breathers.length > 0) {
+								userBreathers = breathers; 
+							}
+
+
+							var schedule = new Schedule();
+							var items = schedule.createNew(
+								hours,
+								userTasks,
+								userBreathers
+							);
+							res.json(items);
+						}
+					}
 				);
-				res.json(items);
 			}
 		}
 	);
@@ -434,6 +453,9 @@ router.get('/breathers/:breather', function(req, res) {
 
 
 router.post('/breathers', auth, function(req, res, next) {
+
+	var userId = req.payload.id;
+	req.body.userId = userId;
 
 	var breather = new Breather(req.body);
 

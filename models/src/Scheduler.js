@@ -201,6 +201,8 @@ Scheduler.prototype.generateTimeSlots = function(hours) {
 
 Scheduler.prototype.makeSchedule = function(timeSlots, scoredTasks, breathers, repeatItems) {
 
+	console.log(breathers);
+
 	var eIndex 	= 0;
 	var nIndex 	= 0;
 	var ntIndex 	= 0;

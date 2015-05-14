@@ -6,6 +6,8 @@ var Scheduler = require('./src/Scheduler.js');
 
 var Task = require('./src/Task.js');
 
+var Breather = require('./src/Breather.js');
+
 var ScheduleSchema = new mongoose.Schema({
 
 	hours: Number,
@@ -19,6 +21,7 @@ var ScheduleSchema = new mongoose.Schema({
 ScheduleSchema.methods.createNew = function(hours, tasks, breathers) {
 
 	var ourTasks = [];
+	var ourBreathers = [];
 	var init;
 	for(var i = 0; i < tasks.length; i++) {
 		
@@ -35,7 +38,16 @@ ScheduleSchema.methods.createNew = function(hours, tasks, breathers) {
 		ourTasks.push(new Task(init));
 	}
 
-	var scheduler  	= new Scheduler({'hours':hours, 'tasks':ourTasks, 'breathers':breathers});
+	for(var i = 0; i < breathers.length; i++) {
+		init = {
+			id: breathers[i]._id,
+			description: breathers[i].title,
+		};
+		ourBreathers.push(new Breather(init));
+	}
+
+
+	var scheduler  	= new Scheduler({'hours':hours, 'tasks':ourTasks, 'breathers':ourBreathers});
 	var schedule 	= scheduler.makeNewSchedule();
 
 	for( var i = 0; i < schedule.length; i++) {	

@@ -5,7 +5,8 @@ var BreatherSchema = new mongoose.Schema({
 	link: String,
 	links: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Link' }],
 	upvotes: {type: Number, default: 0},
-	comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
+	comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+	userId: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 
 
