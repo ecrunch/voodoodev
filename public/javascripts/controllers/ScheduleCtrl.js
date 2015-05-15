@@ -9,9 +9,8 @@ function($scope, $stateParams, Schedule, $interval) {
         $scope.tk=0;
 
         $scope.newSchedule = function() {
-
                 Schedule.purge();
-                Schedule.createNew().then(function(){
+                Schedule.createNew($scope.userTime).then(function(){
                         $scope.items = Schedule.items;
                         j=undefined;
                         $scope.iTime = 0;

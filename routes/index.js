@@ -295,11 +295,10 @@ router.put('/tasks/:task/time/:trackt', auth, function(req, res, next){
 });
 
 
-router.post('/new_schedule', auth, function(req, res, next) {
-
+router.post('/new_schedule/:time', auth, function(req, res, next) {
 	var userTasks = mockTasks();
 	var userBreathers = mockBreathers();
-	var hours = 4;
+	var hours = req.params.time;
 
 	var userId = req.payload.id;
 

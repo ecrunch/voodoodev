@@ -32,9 +32,8 @@ function($http, auth){
 
         };
 
-        service.createNew = function() {
-
-                return $http.post('/new_schedule', null, {
+        service.createNew = function(time) {
+                return $http.post('/new_schedule/' + time, null, {
                         headers: {
                                 Authorization: 'Bearer '+auth.getToken()
                         }
