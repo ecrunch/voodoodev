@@ -1,13 +1,10 @@
+
+//TODO figure out the correct syling here or whatever this looks shitty
+
 var express = require('express');
 var jwt = require('express-jwt');
 var router = express.Router();
 var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Express' });
-});
-
 var mongoose = require('mongoose');
 var passport = require('passport');
 var Course = mongoose.model('Course');
@@ -17,10 +14,14 @@ var Breather = mongoose.model('Breather');
 var User = mongoose.model('User'); 
 var Schedule = mongoose.model('Schedule');
 var Assignment = mongoose.model('Assignment');
-
-
 var Post = mongoose.model('Post');
 var Link = mongoose.model('Link');
+
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+	res.render('index', { title: 'Express' });
+});
 
 
 router.post('/register', function(req, res, next){
