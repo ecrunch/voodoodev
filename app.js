@@ -37,17 +37,12 @@ app.use(passport.initialize());
 
 
 
-// NEED to break up the routes somehow
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var test = require('./routes/test');
+var allRouters = require('./routes/all');
+var usersRouter = require('./routes/users');
 
-
-app.use('/', routes);
-app.use('/users', users);
-
-
-
+//app.use('/', routesRouter);
+app.use('/', allRouters);
+app.use('/users', usersRouter);
 
 
 // catch 404 and forward to error handler
