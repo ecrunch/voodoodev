@@ -85,7 +85,8 @@ function($scope, $stateParams, Schedule, $interval) {
                 $scope.storeTime();
 		$scope.display='';
                 $scope.timeLeft ='';
-                $scope.scheduleTimer();
+                $scope.timerStatus = 2;
+		$scope.scheduleTimer();
 		
         };
 
