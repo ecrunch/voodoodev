@@ -20,7 +20,7 @@ require('./models/Posts');
 require('./models/Links');
 
 
-mongoose.connect('mongodb://localhost/testdbv2');
+mongoose.connect('mongodb://localhost/prototypedb');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
