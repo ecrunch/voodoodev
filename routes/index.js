@@ -50,8 +50,132 @@ module.exports = function(router, User, passport, Breather, Course, Task, Commen
 	});
 
 
-	// TODO : investigate the difference between this and the users
-	// route that already exists
+
+	// figure out how to use get requests or at least the difference
+	// between them
+
+
+	router.post('/user/tasks', auth, function(req, res, next) {
+
+		var userId = req.payload.id;
+
+		User.findById(userId, function(err, user) {
+			
+			if (err) {
+				next(err);
+			}
+			else {
+
+				// TODO figure out why I did this in the first place  ..? weeird
+				var taskIds = user.myTasks.filter(function(item, pos) {
+					return user.myTasks.indexOf(item) == pos;
+				});
+
+
+				Task.find({
+					'_id': {
+						$in: taskIds
+					}
+				},
+				function(err, tasks) {
+					
+					if (err) {
+						next(err);
+					}
+					else {
+						res.json({
+							taskIds: taskIds,
+							tasks: tasks
+						});
+					}
+				});  // end of task callback
+
+			}
+		});
+
+
+	});
+
+	router.post('/user/breathers', auth, function(req, res, next) {
+
+		var userId = req.payload.id;
+
+		User.findById(userId, function(err, user) {
+			
+			if (err) {
+				next(err);
+			}
+			else {
+
+				// TODO figure out why I did this in the first place  ..? weeird
+				var breatherIds = user.myBreathers.filter(function(item, pos) {
+					return user.myBreathers.indexOf(item) == pos;
+				});
+
+
+				Breather.find({
+					'_id': {
+						$in: breatherIds
+					}
+				},
+				function(err, breathers) {
+				
+					if (err) {
+						next(err);
+					}
+					else {
+						res.json({
+							breatherIds: breatherIds,
+							breathers: breathers
+						});
+					}
+				});  // end of breathers callback
+
+			}
+		});
+
+
+	});
+	router.post('/user/courses', auth, function(req, res, next) {
+
+		var userId = req.payload.id;
+
+		User.findById(userId, function(err, user) {
+			
+			if (err) {
+				next(err);
+			}
+			else {
+
+				// TODO figure out why I did this in the first place  ..? weeird
+				var courseIds = user.myCourses.filter(function(item, pos) {
+					return user.myCourses.indexOf(item) == pos;
+				});
+
+				Course.find({
+					'_id': {
+						$in: courseIds
+					}
+				},
+				function(err, courses) {
+				
+					if (err) {
+						next(err);
+					}
+					else {
+						res.json({
+							courseIds: courseIds,
+							courses: courses
+						});
+					}	
+				});  // end of courses callback
+
+			}
+		});
+
+
+	});
+
 
 	router.post('/user', auth, function(req, res, next) {
 
@@ -63,6 +187,9 @@ module.exports = function(router, User, passport, Breather, Course, Task, Commen
 			}
 			else {
 				var toRet = {};
+
+
+				// the fuck is this code doing ?
 
 				toRet.breatherIds = user.myBreathers.filter(function(item, pos){
 					return user.myBreathers.indexOf(item) == pos;

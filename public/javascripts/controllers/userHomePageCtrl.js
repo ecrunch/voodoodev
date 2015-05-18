@@ -11,37 +11,41 @@ function($scope, auth, User, Task, courses) {
 
         $scope.pendingAssignments = [];
 
-        User.initialize($scope.loadAll)
-        .then(
-                function() {
-                        $scope.breatherIds = User.breatherIds;
-                        $scope.breathers = User.breathers;
-                        $scope.courseIds = User.courseIds;
-                        $scope.courses = User.courses;
-                        $scope.taskIds = User.breatherIds;
-                        $scope.tasks = User.tasks;
 
+	User.initializeTasks().then(
+		// success
+		function(data) {
+			$scope.tasks 	= User.tasks;
+			$scope.taskIds 	= User.taskIds;
+		},
+		// failure
+		function(err) {
+			console.log(err);
+		}
+	);
+	User.initializeBreathers().then(
+		// success
+		function(data) {
+			$scope.breathers 	= User.breathers;
+			$scope.breatherIds 	= User.breatherIds;
+		},
+		// failure
+		function(err) {
+			console.log(err);
+		}
+	);
+	User.initializeCourses().then(
+		// success
+		function(data) {
+			$scope.courses 		= User.courses;
+			$scope.courseIds 	= User.courseIds;
+		},
+		// failure
+		function(err) {
+			console.log(err);
+		}
+	);
 
-                        // only do this once the other shit is loaded? regardless, need to refactor
-                        $scope.getPendingAssignments()
-                        .then(
-                                // success
-                                function(data) {
-                                        $scope.pendings = data.data;
-                                        //alert(data);
-                                        $scope.pendingAssignments = data;
-                                },
-                                // error
-                                function() {
-                                        console.log("Controller: Error loading pending assignments");
-                                }
-                        );
-
-                },
-                function() {
-                        console.log("Error loading user data");
-                }
-        );
 
         // returns a promise or some shit
         $scope.getPendingAssignments = function() {
@@ -60,6 +64,20 @@ function($scope, auth, User, Task, courses) {
 
                 $scope.joined(assId._id);
         };
+
+
+	// only do this once the other shit is loaded? regardless, need to refactor
+        $scope.getPendingAssignments().then(
+        	// success
+                function(data) {
+                	$scope.pendings = data.data;
+                        $scope.pendingAssignments = data;
+                },
+                // error
+                function() {
+                	console.log("Controller: Error loading pending assignments");
+               	}
+	);
 
 
 }]);

@@ -11,16 +11,6 @@ module.exports = function(router, Task, auth, Comment, User) {
 	});
 
 
-	router.get('/tasks', function(req, res, next) {
-		Task.find(function(err, tasks){
-			if(err){
-				return next(err);
-			}
-			res.json(tasks);
-  		});
-	});
-
-
 	router.post('/tasks', auth, function(req, res, next) {
 
 
@@ -47,7 +37,17 @@ module.exports = function(router, Task, auth, Comment, User) {
 				return next(err);	
 			}
 			else {
-				res.json(task);
+
+				User.findById(userId, function(err, user) {	
+					user.joinTask(task._id);
+					user.save(function(err, user) {
+						if(err) {
+							console.log(err);
+						}
+						res.json(task);
+					});
+				});
+
 			}
 		});
 
