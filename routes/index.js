@@ -8,6 +8,9 @@ module.exports = function(router, User, passport, Breather, Course, Task, Commen
 	});
 
 
+	router.get('/test', function(req, res, next) {
+		res.render('test', {title: 'Test'});
+	});
 
 	router.post('/register', function(req, res, next){
 
