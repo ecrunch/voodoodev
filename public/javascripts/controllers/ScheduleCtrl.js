@@ -18,9 +18,13 @@ function($scope, $stateParams, Schedule, $interval) {
 	}
 
 	var currentIndex = 0;
-	
+
+	// TODO : name these numbered constants something that makes sense	
 	//timerStatus handles what buttons should be showing on the userside
         $scope.timerStatus = 0;
+
+	$scope.skippedTasks = [];
+	$scope.skippedTaskStatus = false;
 
         $scope.newSchedule = function() {
                 Schedule.purge();
@@ -34,6 +38,7 @@ function($scope, $stateParams, Schedule, $interval) {
                         currentIndex = 0;
                         $scope.timeLeft = 0;
 			$scope.timerStatus = 1;
+			$scope.skippedTaskStatus = false;
                 });
         };
 
@@ -103,11 +108,17 @@ function($scope, $stateParams, Schedule, $interval) {
         };
 
         $scope.skipTimer = function(){
+		$scope.skippedTaskStatus = true;
                 $scope.stopTimer();
                 $scope.storeTime();
 		$scope.display='';
                 $scope.timeLeft ='';
                 $scope.timerStatus = 2;
+
+		// TODO : figure out how to do minutes worked on
+		var skipped = $scope.items[currentIndex];
+		$scope.skippedTasks.push(skipped);
+		
 		$scope.remoteItem(currentIndex);
 		$scope.scheduleTimer();
 		
