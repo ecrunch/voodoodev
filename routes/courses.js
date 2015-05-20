@@ -48,15 +48,21 @@ module.exports = function(router, Course, auth, Assignment, User, Post, Comment)
                			}
                 		courseId = req.params.course;
 
-                		user.joinCourse(courseId);
+				if (user.myCourses.indexOf(courseId) >= 0) {
+					console.log("Already joined this course");
+					res.json(user);
+				}
+				else {
+                			user.joinCourse(courseId);
 
-                		user.save(function(err, userRet) {
-                        		if (err) {
-                                		console.log("Error Saving");
-                                		return next(err);
-                        		}
-                        		res.json(userRet);
-        	        	});
+                			user.save(function(err, userRet) {
+                        			if (err) {
+                                			console.log("Error Saving");
+                                			return next(err);
+                        			}
+                        			res.json(userRet);
+        	        		});
+				}
 
         		});	
 		});	

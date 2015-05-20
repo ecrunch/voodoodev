@@ -91,17 +91,26 @@ module.exports = function(router, Breather, auth, Link, User) {
 				// do whatever
 				console.log(err);
 			}
+
+
 			breatherId = req.params.breather;
 
-			user.joinBreather(breatherId);
 
-			user.save(function(err, userRet) {
-				if (err) {
-					console.log("Error Saving");
-					return next(err);
-				}
-				res.json(userRet);
-			});
+			if(user.myBreathers.indexOf(breatherId) >= 0) {
+				console.log("Already have this breather");
+				res.json(user);
+			}
+			else {
+				user.joinBreather(breatherId);
+
+				user.save(function(err, user) {
+					if (err) {
+						console.log("Error Saving");
+						return next(err);
+					}
+					res.json(user);
+				});
+			}
 
 		});
 
