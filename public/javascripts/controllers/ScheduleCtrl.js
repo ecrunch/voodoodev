@@ -4,14 +4,31 @@ var app = angular.module('ScheduleCtrl',['angularMoment']);
 app.controller('ScheduleCtrl', [
 '$scope', '$stateParams', 'Schedule', '$interval',
 function($scope, $stateParams, Schedule, $interval) {
-        var j;
+        
+	var defaultHours = 4;
+
+	function validateTime(input) {
+		if (input == null || input == "") {
+			console.log("Bad input, using default time of " + defaultHours + " hours");
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	// TODO fix these
+	var j;
         var i = 0;
 	//timerStatus handles what buttons should be showing on the userside
         $scope.timerStatus = 0;
 
         $scope.newSchedule = function() {
                 Schedule.purge();
-                Schedule.createNew($scope.userTime).then(function(){
+
+		var numHours = validateTime($scope.userTime) ? $scope.userTime : defaultHours; // DEFAULT to 4 
+
+                Schedule.createNew(numHours).then(function(){
                         $scope.items = Schedule.items;
                         j=undefined;
                         $scope.timeLeft = 0;
