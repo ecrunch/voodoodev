@@ -1,12 +1,14 @@
 <html>
 <head>
   <title>Courses</title>
-  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link href="stylesheets/style.css" rel="stylesheet">	
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.1/moment.min.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.0/angular-moment.min.js"></script>	
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>	
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.1/moment.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.0/angular-moment.min.js"></script>	
   <script src="/javascripts/AngularApp.js"></script>
   <script src="/javascripts/routing.js"></script>
   <script src="/javascripts/controllers/userHomePageCtrl.js"></script>
@@ -16,6 +18,7 @@
   <script src="/javascripts/controllers/CourseCtrl.js"></script> 
   <script src="/javascripts/controllers/AuthCtrl.js"></script>
   <script src="/javascripts/controllers/NavCtrl.js"></script>
+  <script src="/javascripts/controllers/SideNavCtrl.js"></script>
   <script src="/javascripts/services/authService.js"></script> 
   <script src="/javascripts/services/taskService.js"></script>
   <script src="/javascripts/services/userService.js"></script>
@@ -40,12 +43,42 @@
 </nav>
   
 <div class="row">
-	<nav class="col-md-2 bs-docs-sidebar">
-		<ul id="sidebar" class="nav nav-stacked navbar-inverse fixed">
-			<li><a href="#/courseshome">Courses</a></li>
-	                <li><a href="#/taskshome">Tasks</a></li>
-        	        <li><a href="#/breathershome">Breathers</a></li>
+	<nav class="col-md-2 bs-docs-sidebar" ng-controller="SideNavCtrl">
+		<ul id="sidebar" class="nav nav-stacked navbar-inverse">
                 	<li><a href="#/schedule">Schedule</a></li>
+			<li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Tasks<span class="caret"></span> </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#/taskshome">Search Tasks</a></li>
+                                <li ng-repeat="task in tasks">
+                                <a href = "#/tasks/{{task._id}}">
+                                        {{task.description}}
+                                </a>
+                                </li>
+                            </ul>
+                        </li>
+			<li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Courses<span class="caret"></span> </a>
+                            <ul class="dropdown-menu">
+				<li><a href="#/courseshome">Search Courses</a></li>
+                                <li ng-repeat="course in courses">
+                                <a href = "#/courses/{{course._id}}">
+                                        {{course.title}}
+                                </a>
+                                </li>
+                            </ul>
+                        </li>
+			<li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">Breathers<span class="caret"></span> </a>
+                            <ul class="dropdown-menu">
+				<li><a href="#/breathershome">Search Breathers</a></li>
+                            	<li ng-repeat="breather in breathers">
+				<a href = "#/breathers/{{breather._id}}">	
+					{{breather.title}}
+				</a>
+				</li>
+			    </ul>
+                        </li>
 		</ul>
 	</nav>
 	

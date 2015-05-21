@@ -40,6 +40,7 @@ module.exports = function(router, Task, auth, Comment, User) {
 
 				User.findById(userId, function(err, user) {	
 					user.joinTask(task._id);
+					console.log('here');
 					user.save(function(err, user) {
 						if(err) {
 							console.log(err);

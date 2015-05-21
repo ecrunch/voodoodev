@@ -23,6 +23,7 @@
     "serve-favicon": "~2.2.0"
   },
   "devDependencies": {
+    "gulp-bootlint": "^0.5.0",
     "gulp-jasmine": "^2.0.0",
     "gulp-jshint": "^1.9.4",
     "gulp-livereload": "^3.8.0",

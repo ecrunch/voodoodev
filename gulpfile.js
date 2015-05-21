@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
     gutil = require('gulp-util'),
+    bootlint  = require('gulp-bootlint');
     map = require('gulp-map'),
     nodemon = require('gulp-nodemon'),
     watch = require('gulp-watch'),
@@ -7,7 +8,7 @@ var gulp = require('gulp'),
     mocha = require('gulp-mocha'),
     jasmine = require('gulp-jasmine');
     livereload = require('gulp-livereload'),
-    _paths = ['server/**/*.js','app.js','public/**/*.js','routes/**/*.js','views/**/*.js'];
+    _paths = ['server/**/*.js','app.js','public/**/*.js','routes/**/*.js','views/*.js'];
 
 
 
@@ -35,7 +36,12 @@ gulp.task('lint', function () {
   return gulp.src(_paths)
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
-})
+});
+
+gulp.task('bootlint', function() {
+    return gulp.src('.views/index.html')
+        .pipe(bootlint());
+});
 
 gulp.task('mocha', function () {
     return gulp.src('test/test.js', {read: false})
@@ -48,5 +54,5 @@ gulp.task('jasmine', function () {
 });
 
 
-gulp.task('default', ['start','lint','mocha','jasmine']);
+gulp.task('default', ['start','lint','mocha','jasmine','bootlint']);
 
