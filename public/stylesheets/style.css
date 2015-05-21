@@ -32,6 +32,17 @@ a {
     height: 100%;
 }
 
+.bs-docs-sidebar .notify {
+	position: absolute;
+	right : 15px;
+}
+
+.bs-docs-sidebar .joining {
+	color: #FF6600;
+        position: absolute;
+        right : 35px;
+}
+
 .bs-docs-sidebar .nav-second-level li,
 .bs-docs-sidebar .nav-third-level li {
     border-bottom: 0!important;

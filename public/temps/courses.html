@@ -44,11 +44,12 @@
 </div>
 
 <div class="col-md-5">
+<!--
 <h4>Users in this Class</h4>
 <div ng-repeat="username in course.usernames">
 		{{username}}
 </div>
-
+-->
 <div ng-repeat="comment in course.comments | orderBy:'-upvotes'">
 	<span class="glyphicon glyphicon-thumbs-up"
 	ng-click="incrementUpvotes(comment)"></span>
