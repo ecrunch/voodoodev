@@ -19,6 +19,7 @@ function($scope, $state, auth){
                         $scope.error = error;
                 }).then(function(){
                         $state.go('home');
+			location.reload(true);
                 });
         };
 }]);

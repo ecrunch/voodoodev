@@ -58,6 +58,7 @@ function($scope, auth, $state, User, courses, Task){
                         dueDate:        pending.dueDate,
                         type:           pending.type
                 });
+		location.reload();
 		$scope.Pcount =(Object.keys($scope.pendings).length);
                 $scope.joined(pending._id);
         };

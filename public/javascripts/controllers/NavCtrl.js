@@ -10,6 +10,8 @@ function($scope, auth, $state ){
         $scope.logOut = function(){
                 auth.logOut();
                 $state.go('login');
+		document.location.reload(true);
+
         };
 
 }]);
