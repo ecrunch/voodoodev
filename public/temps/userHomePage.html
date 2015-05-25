@@ -6,13 +6,7 @@
 
 	<tabset type="pills">
 		<tab heading= "My Tasks">
-			<div ng-repeat= "task in tasks">
-				<!--<a href= "#/tasks/{{task._id}}">-->
-				<p>
-					{{task.description}}
-				</p>
-				<!--</a>-->	
-			</div>
+			<div ng-include="'temps/home_partials/task.html'"></div>
 		</tab>
 		<tab heading= "My Courses">
 			<div ng-repeat= "course in courses">
