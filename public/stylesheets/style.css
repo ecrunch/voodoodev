@@ -13,6 +13,18 @@ a {
         margin-bottom: 0px;
 }
 
+.navbar .top-nav .search{
+	margin-top: 10px;
+	border-radius: 5px;
+
+}
+
+.navbar .top-nav .search>input{
+	height: 30px;
+	width: 250px;
+}
+
+
 .bs-docs-sidebar {
     margin-top: 0px;
     margin-bottom: 20px;
