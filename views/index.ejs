@@ -40,10 +40,34 @@
 	<body ng-controller="MainCtrl">
 
 		<nav class="navbar navbar-inverse" ng-controller="NavCtrl">
-			<ul class="nav navbar-nav top-nav">
+			<ul class="nav navbar-nav pull-left top-nav">
 				<li><a href="/#/home" class="navbar-brand">Brainless</a></li>
+				<li id= "typeahead-bar">
+					<input
+					type= "text"
+					ng-model= "searchText"
+					placeholder = "Search for something"
+					typeahead = "result.text for result in getSearchResults($viewValue)"
+`					typeahead-on-select = "onSelect($item, $model, $label)"
+					class = "form-control"	
+					></input>
+				</li>
 			</ul>
 			<ul class="nav navbar-nav pull-right top-nav">
+				<li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown"></span><span>{{Pcount}}<span class="caret"></span> </a>
+                                            <ul class="dropdown-menu">
+                                                <li class="dropdown-header">Pending Assignments</li>
+						<li class="divider"></li>
+						<li ng-repeat="pending in pendings">
+                                                <a href = "#/courses/{{pending.course}}">
+                                                        {{pending.name}}
+                                                </a>
+                                                <a class="joining glyphicon glyphicon-flash" ng-click="joinAssignment(pending)"></a>
+                                                </li>
+						<li ng-show="Pcount===0">You have no Pending Assignments</li>
+                                            </ul>
+                                 </li>
 				<li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
 				<li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
 				<li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
@@ -88,28 +112,6 @@
 						</a>
 						</li>
 					    </ul>
-					</li>
-					<li class="dropdown">
-					    <a class="dropdown-toggle" data-toggle="dropdown">Pending<span class="caret"></span><span class="notify" >{{Pcount}}</span> </a>
-					    <ul class="dropdown-menu">
-						<li ng-repeat="pending in pendings">
-						<a href = "#/courses/{{pending.course}}">
-							{{pending.name}}
-						</a>
-						<a class="joining glyphicon glyphicon-flash" ng-click="joinAssignment(pending)"></a>
-						</li>
-					    </ul>
-					</li>
-					</br></br>
-					<li id= "typeahead-bar">
-						<input
-						type= "text"
-						ng-model= "searchText"
-						placeholder = "Search for something"
-						typeahead = "result.text for result in getSearchResults($viewValue)"
-						typeahead-on-select = "onSelect($item, $model, $label)"
-						class = "form-control"	
-						></input>
 					</li>
 				</ul>
 			</nav>
