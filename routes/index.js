@@ -52,7 +52,10 @@ module.exports = function(router, User, passport, Breather, Course, Task, Commen
 		})(req, res, next);
 	});
 
-
+	router.get('/user/currUser', function(req, res, next) {
+		var userId = req.payload.id;
+		res.json({token: userId});
+	});
 
 	// figure out how to use get requests or at least the difference
 	// between them
