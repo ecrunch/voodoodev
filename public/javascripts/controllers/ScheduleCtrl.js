@@ -8,6 +8,9 @@ function($scope, $stateParams, Schedule, $interval) {
 	var defaultHours = 4;
 
 	function validateTime(input) {
+
+		// TODO : check against letters and other non number shit
+
 		if (input == null || input == "") {
 			console.log("Bad input, using default time of " + defaultHours + " hours");
 			return false;
@@ -21,10 +24,13 @@ function($scope, $stateParams, Schedule, $interval) {
 
 
 	$scope.items = [];	
+ 
+	var CREATE_NEW_SCHEDULE = 0;
+	var SCHEDULE_STARTED = 1;
+	var SCHEDULE_STOPPED = 2;
 
-	// TODO : name these numbered constants something that makes sense	
-	//timerStatus handles what buttons should be showing on the userside
-        $scope.timerStatus = 0;
+
+	$scope.timerStatus = CREATE_NEW_SCHEDULE;
 
 	$scope.skippedTasks = [];
 	$scope.skippedTaskStatus = false;
@@ -42,8 +48,14 @@ function($scope, $stateParams, Schedule, $interval) {
 		
 		Schedule.createNew(numHours).then(
 			function(data) {
-				console.log(data);
+				
 				$scope.items = data.data;
+				
+				currentIndex 			= 0;
+				$scope.timeLeft 		= 0;
+				$scope.timerStatus 		= SCHEDULE_STARTED;
+				$scope.skippedTaskStatus 	= false;
+														
 			},
 			function(err) {
 				console.log(err);
@@ -76,7 +88,7 @@ function($scope, $stateParams, Schedule, $interval) {
 		var timeLeft 		= (item.minutes)*60000;
                 $scope.timeLeft 	= timeLeft;
                 $scope.totalTime 	= timeLeft;
-                $scope.timerStatus	= 2;
+                $scope.timerStatus	= SCHEDULE_STOPPED;
                 $scope.display 		= item.details.description;
                 $scope.id 		= item.details.id;
                 $scope.timer(); 
@@ -95,7 +107,7 @@ function($scope, $stateParams, Schedule, $interval) {
                 	} else {
 				$scope.storeTime();
 				$scope.removeItem(currentIndex);
-                        	$scope.timerStatus = 1;
+                        	$scope.timerStatus = SCHEDULE_STARTED;
                         	$scope.stopTimer();
                 	}
         	}, 1000);
@@ -104,14 +116,14 @@ function($scope, $stateParams, Schedule, $interval) {
 
         $scope.stopTimer = function() {
                 if (angular.isDefined(stop)) {
-                        $scope.timerStatus = 3;
+                        $scope.timerStatus = SCHEDULE_STOPPED;
 			$interval.cancel(stop);
                         stop = undefined;
                 }
         };
 
         $scope.startTime = function(){
-                $scope.timerStatus = 2;
+                $scope.timerStatus = SCHEDULE_STARTED;
 		$scope.timer();
         };
 
@@ -122,7 +134,7 @@ function($scope, $stateParams, Schedule, $interval) {
                 $scope.storeTime();
 		$scope.display='';
                 $scope.timeLeft ='';
-                $scope.timerStatus = 2;
+                $scope.timerStatus = SCHEDULE_STARTED;
 
 		// TODO : figure out how to do minutes worked on
 		var skipped = $scope.items[currentIndex];
