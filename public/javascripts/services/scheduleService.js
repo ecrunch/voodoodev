@@ -7,11 +7,6 @@ function($http, auth){
 
         var service = {
 
-                items: [
-
-
-                ]
-
         };
 
         service.storeTime = function(id, trackt){
@@ -25,12 +20,15 @@ function($http, auth){
                                 return data;
                         },
                         // faiure
-                        function() {
-                                console.log("Could not store minutes");
+                        function(err) {
+                                console.log(err);
                         }
                 );
 
         };
+
+	
+
 
         service.createNew = function(time) {
                 return $http.post('/new_schedule/' + time, null, {
@@ -40,26 +38,16 @@ function($http, auth){
                 }).then(
                         // success
                         function(data){
-                                var items = data.data;
-                                for (var i = 0; i < items.length; i++) {
-                                        service.items.push(items[i]);
-                                }
+				return data;
                         },
 
                         // failure
-                        function(){
-                                alert("Error creating schedule");
+                        function(err){
+                                console.log(err);
                         }
                 );
         };
 
-        service.purge = function() {
-                service.items = [];
-        };
-
-        service.save = function() {
-                return;
-        };
         return service;
 
 }]);

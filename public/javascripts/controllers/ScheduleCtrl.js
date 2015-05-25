@@ -19,6 +19,9 @@ function($scope, $stateParams, Schedule, $interval) {
 
 	var currentIndex = 0;
 
+
+	$scope.items = [];	
+
 	// TODO : name these numbered constants something that makes sense	
 	//timerStatus handles what buttons should be showing on the userside
         $scope.timerStatus = 0;
@@ -26,22 +29,27 @@ function($scope, $stateParams, Schedule, $interval) {
 	$scope.skippedTasks = [];
 	$scope.skippedTaskStatus = false;
 
-        $scope.newSchedule = function() {
-                Schedule.purge();
 
-		var numHours = validateTime($scope.userTime) ? $scope.userTime : defaultHours; // DEFAULT to 4 
+	$scope.resetSchedule = function() {
+		$scope.items = [];
+	}
 
-		// TODO : this is weird, we should just have it assemble the items
-		// and not have to build up an object
-                Schedule.createNew(numHours).then(function(){
-                        $scope.items = Schedule.items;
-                        currentIndex = 0;
-                        $scope.timeLeft = 0;
-			$scope.timerStatus = 1;
-			$scope.skippedTaskStatus = false;
-                });
-        };
 
+	$scope.newSchedule = function() {
+
+		$scope.resetSchedule();
+		var numHours = validateTime($scope.userTime) ? $scope.userTime : defaultHours;
+		
+		Schedule.createNew(numHours).then(
+			function(data) {
+				console.log(data);
+				$scope.items = data.data;
+			},
+			function(err) {
+				console.log(err);
+			}
+		);
+	}
 	
 	$scope.remoteItem = function(slot) {
 		console.log("Removing at slot: " + slot);
@@ -108,6 +116,7 @@ function($scope, $stateParams, Schedule, $interval) {
         };
 
         $scope.skipTimer = function(){
+		
 		$scope.skippedTaskStatus = true;
                 $scope.stopTimer();
                 $scope.storeTime();
@@ -125,9 +134,9 @@ function($scope, $stateParams, Schedule, $interval) {
         };
 
         $scope.$on('$destroy', function() {
-          // Make sure that the interval is destroyed too
-          $scope.stopTimer();
-        });
+		// Make sure that the interval is destroyed too
+		$scope.stopTimer();
+	});
 
 
 }]);
