@@ -3,12 +3,12 @@
 	<br></br>
 	<body>
 
-	<input type= "button" value ="New Schedule" ng-click= "newSchedule()">
-	</input>
 
-	</br></br>
 
 	<tabset type="pills">
+		<tab heading= "Schedule">
+			<div ng-include="'temps/home_partials/schedule.html'"></div>
+		</tab> 
 		<tab heading= "My Tasks">
 			<div ng-include="'temps/home_partials/task.html'"></div>
 		</tab>
