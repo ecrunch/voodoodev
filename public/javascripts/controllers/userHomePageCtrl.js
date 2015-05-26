@@ -1,8 +1,8 @@
 var app = angular.module('userHomePageCtrl', []);
 
 app.controller('userHomePageCtrl', [
-'$scope', 'auth', 'User','Task','courses',
-function($scope, auth, User, Task, courses) {
+'$scope', 'auth', 'User','Task','courses', '$location',
+function($scope, auth, User, Task, courses, $location) {
 
         $scope.loadAll = true;
         //$scope.loadAll = false;
@@ -10,6 +10,10 @@ function($scope, auth, User, Task, courses) {
         $scope.tasks = [];
 
         $scope.pendingAssignments = [];
+
+	$scope.newSchedule = function() {
+		$location.path('/schedule');	
+	};
 
 
 	User.initializeTasks().then(
