@@ -1,25 +1,57 @@
 var app = angular.module('ScheduleHomeCtrl', []);
 
 app.controller('ScheduleHomeCtrl', [
-	'$scope',
-	function($scope) {
+	'$scope','Schedule',
+	function($scope,Schedule) {
 
-
-		console.log("Hey");
-
-		$scope.chosenItems = [];
-
-		$scope.addRemove = function(item) {
-			
-			console.log(item);
+		$scope.chosenTasks = [];
+		$scope.chosenBreathers = [];
+		$scope.chosenTasksNames = [];
+                $scope.chosenBreathersNames = [];
 	
-			if ($scope.chosenItems.indexOf(item) >= 0) {
-				$scope.chosenItems = $scope.choseItems.filter(function(d) { return d != item;});	
+		$scope.addRemoveTask = function(item) {
+			
+	
+			if ($scope.chosenTasks.indexOf(item) >= 0) {
+				$scope.chosenTasks = $scope.chosenTasks.filter(function(d) { return d != item;});	
 			}
 			else {
-				$scope.chosenItems.push(item);
+				$scope.chosenTasks.push(item._id);
+				$scope.chosenTasksNames.push(item.description)
 			}
-		}
+		};
+		
+		$scope.addRemoveBreather = function(item) {
+			$scope.chosenBreathersNames.push(item.title);
+                        if ($scope.chosenBreathers.indexOf(item) >= 0) {
+                                $scope.chosenBreathers = $scope.chosenBreathers.filter(function(d) { return d != item;});
+                        }
+                        else {
+                                $scope.chosenBreathers.push(item._id);
+        		}	       
+		};	
 
-	}
-]);
+			
+	var time;	
+	var tasks = [];
+	var breathers = [];
+	
+	$scope.createMadeSchedule = function(){
+		
+		tasks = $scope.chosenTasks;
+		console.log(tasks);
+		breathers = $scope.chosenBreathers;
+		time = $scope.time; 
+		Schedule.createMade(time, tasks, breathers).then(
+			function(data) {
+				
+				$scope.items = data.data;
+				
+			},
+			function(err) {
+				console.log(err);
+			}
+		);		
+
+	 };
+}]);

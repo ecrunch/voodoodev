@@ -47,7 +47,25 @@ function($http, auth){
                         }
                 );
         };
+	
+	 service.createMade = function(time, tasks, breathers) {
+		return $http.post('/new_schedule/' + time + '/' + tasks + '/' + breathers, null, {
+                        headers: {
+                                Authorization: 'Bearer '+auth.getToken()
+                        }
+                }).then(
+                        // success
+                        function(data){
+                                return data;
+                        },
 
+                        // failure
+                        function(err){
+                                console.log(err);
+                        }
+                );
+        };
+	
         return service;
 
 }]);
