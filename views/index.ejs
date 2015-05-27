@@ -43,18 +43,55 @@
 		<nav class="navbar navbar-inverse" ng-controller="NavCtrl">
 			<ul class="nav navbar-nav pull-left top-nav">
 				<li><a href="/#/home" class="navbar-brand">Brainless</a></li>
-				<li class="search" id= "typeahead-bar">
-					<input
-					type= "text"
-					ng-model= "searchText"
-					placeholder = "Search for something"
-					typeahead = "result.text for result in getSearchResults($viewValue)"
-`					typeahead-on-select = "onSelect($item, $model, $label)"
-					class = "form-control"	
-					></input>
-				</li>
+				<li><a href="#/schedule">Schedule</a></li>
+				<li ng-hide="itenMenuStatus"><a href="" ng-click="clickItems()">Items</a></li>
+				<li ng-show="itenMenuStatus" class="dropdown">
+                                   	<a class="dropdown-toggle" data-toggle="dropdown">Tasks<span class="caret"></span><span class="notify" ng-show="tasks">{{Tcount}}</span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#/taskshome">Search Tasks</a></li>
+                                                <li ng-repeat="task in tasks">
+                                                <a href = "#/tasks/{{task._id}}">
+                                                        {{task.description}}
+                                                </a>
+                                                </li>
+                                	</ul>
+                           	</li>
+                               	<li ng-show="itenMenuStatus"  class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown">Courses<span class="caret"></span><span class="notify" >{{Ccount}}</span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#/courseshome">Search Courses</a></li>
+                                                <li ng-repeat="course in courses">
+                                                <a href = "#/courses/{{course._id}}">
+                                                        {{course.title}}
+                                                </a>
+                                                </li>
+                                            </ul>
+                            	</li>
+                       		<li ng-show="itenMenuStatus" class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown">Breathers<span class="caret"></span><span class="notify">{{Bcount}}</span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#/breathershome">Search Breathers</a></li>
+                                                <li ng-repeat="breather in breathers">
+                                                <a href = "#/breathers/{{breather._id}}">
+                                                        {{breather.title}}
+                                                </a>
+                                                </li>
+                                            </ul>
+                             	</li>
+				<li ng-show="itenMenuStatus"><a href="" ng-click="closeItems()">Items</a></li>	
 			</ul>
 			<ul class="nav navbar-nav pull-right top-nav">
+				<li class="search" id= "typeahead-bar">
+                                        <input
+                                        type= "text"
+                                        ng-model= "searchText"
+                                        placeholder = "Search for something"
+                                        typeahead = "result.text for result in getSearchResults($viewValue)"
+`                                       typeahead-on-select = "onSelect($item, $model, $label)"
+                                        class = "form-control"
+                                        ></input>
+                                </li>
+				
 				<li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown"></span><span>{{Pcount}}<span class="caret"></span> </a>
                                             <ul class="dropdown-menu">
@@ -69,55 +106,18 @@
 						<li ng-show="Pcount===0">You have no Pending Assignments</li>
                                             </ul>
                                  </li>
-				<li ng-show="isLoggedIn()"><a>{{ currentUser() }}</a></li>
-				<li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" ng-show="isLoggedIn()">{{ currentUser() }}</a>
+						<ul class="dropdown-menu">
+							<li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
+						</ul>
 				<li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
 				<li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
 			</ul>
 		</nav>
 		  
 		<div class="row">
-			<nav class="col-md-2 bs-docs-sidebar" ng-controller="SideNavCtrl">
-				<ul id="sidebar" class="nav nav-stacked navbar-inverse">
-						
-					<li><a href="#/schedule">Schedule</a></li>
-					<li class="dropdown">
-					    <a class="dropdown-toggle" data-toggle="dropdown">Tasks<span class="caret"></span><span class="notify" ng-show="tasks">{{Tcount}}</span></a>
-					    <ul class="dropdown-menu">
-						<li><a href="#/taskshome">Search Tasks</a></li>
-						<li ng-repeat="task in tasks">
-						<a href = "#/tasks/{{task._id}}">
-							{{task.description}}
-						</a>
-						</li>
-					    </ul>
-					</li>
-					<li class="dropdown">
-					    <a class="dropdown-toggle" data-toggle="dropdown">Courses<span class="caret"></span><span class="notify" >{{Ccount}}</span></a>
-					    <ul class="dropdown-menu">
-						<li><a href="#/courseshome">Search Courses</a></li>
-						<li ng-repeat="course in courses">
-						<a href = "#/courses/{{course._id}}">
-							{{course.title}}
-						</a>
-						</li>
-					    </ul>
-					</li>
-					<li class="dropdown">
-					    <a class="dropdown-toggle" data-toggle="dropdown">Breathers<span class="caret"></span><span class="notify">{{Bcount}}</span></a>
-					    <ul class="dropdown-menu">
-						<li><a href="#/breathershome">Search Breathers</a></li>
-						<li ng-repeat="breather in breathers">
-						<a href = "#/breathers/{{breather._id}}">	
-							{{breather.title}}
-						</a>
-						</li>
-					    </ul>
-					</li>
-				</ul>
-			</nav>
-			
-			<div class="col-md-8">
+			<div class="col-md-10 col-md-offset-1">
 				<ui-view></ui-view>
 			</div>
 		</div>

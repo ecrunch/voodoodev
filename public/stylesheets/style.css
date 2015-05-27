@@ -19,6 +19,15 @@ a {
 
 }
 
+.navbar .top-nav .brandTitle>li {
+	text-align: center;
+}
+
+.navbar .top-nav .navbar-brand {
+	font-family: Impact, Charcoal, sans-serif;
+	font-size: 20px;
+}
+
 .navbar .top-nav .search>input{
 	height: 30px;
 	width: 250px;

@@ -2,8 +2,8 @@ var app = angular.module('NavCtrl',[]);
 
 
 app.controller('NavCtrl',
-['$scope', 'auth','$state', 'courses','Task',
-function($scope, auth, $state, courses, Task){
+['$scope', 'auth','$state', 'courses','Task', 'User',
+function($scope, auth, $state, courses, Task, User){
 	
 	
         $scope.isLoggedIn = auth.isLoggedIn;
@@ -14,6 +14,51 @@ function($scope, auth, $state, courses, Task){
 		document.location.reload(true);
 
         };
+	
+	User.initializeTasks().then(
+                // success
+                function(data) {
+                        $scope.tasks    = User.tasks;
+                        $scope.taskIds  = User.taskIds;
+                        $scope.Tcount   = (Object.keys($scope.tasks).length);
+                },
+                // failure
+                function(err) {
+                        console.log(err);
+                }
+        );
+        User.initializeCourses().then(
+                // success
+                function(data) {
+                        $scope.courses          = User.courses;
+                        $scope.courseIds        = User.courseIds;
+                        $scope.Ccount   = (Object.keys($scope.courses).length);
+                },
+                // failure
+                function(err) {
+                        console.log(err);
+                }
+        );
+        User.initializeBreathers().then(
+                // success
+                function(data) {
+                        $scope.breathers        = User.breathers;
+                        $scope.breatherIds      = User.breatherIds;
+                        $scope.Bcount           = (Object.keys($scope.breathers).length);
+                },
+                // failure
+                function(err) {
+                        console.log(err);
+                }
+        );	
+	
+	$scope.clickItems = function() {
+		$scope.itenMenuStatus = true;
+	};
+	
+	$scope.closeItems = function() {
+                $scope.itenMenuStatus = false; 
+        };	
 	
 	$scope.pendingAssignments = [];
 	
