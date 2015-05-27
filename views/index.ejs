@@ -41,10 +41,10 @@
 
 		<nav class="navbar navbar-inverse" ng-controller="NavCtrl">
 			<ul class="nav navbar-nav pull-left top-nav">
-				<li><a href="/#/home" class="navbar-brand">Brainless</a></li>
+				<li><a href="/#/home" class="navbar-brand">BRAINLESS</a></li>
 				<li><a href="#/schedule">Schedule</a></li>
-				<li ng-hide="itenMenuStatus"><a href="" ng-click="clickItems()">Items</a></li>
-				<li ng-show="itenMenuStatus" class="dropdown items">
+				<li ng-mouseover="itenMenuStatus = true"  ng-hide="itenMenuStatus"><a>Items</a></li>
+				<li class="dropdown" ng-mouseover="itenMenuStatus = true" ng-mouseleave="itenMenuStatus = false" ng-show="itenMenuStatus">
                                    	<a class="dropdown-toggle" data-toggle="dropdown">Tasks<span class="caret"></span><span class="notify" ng-show="tasks">{{Tcount}}</span></a>
                                             <ul class="dropdown-menu">
                                                 <li><a href="#/taskshome">Search Tasks</a></li>
@@ -55,7 +55,7 @@
                                                 </li>
                                 	</ul>
                            	</li>
-                               	<li ng-show="itenMenuStatus"  class="dropdown">
+                               	<li class="dropdown" ng-mouseover="itenMenuStatus = true" ng-mouseleave="itenMenuStatus = false" ng-show="itenMenuStatus"  class="dropdown">
                                             <a class="dropdown-toggle" data-toggle="dropdown">Courses<span class="caret"></span><span class="notify" >{{Ccount}}</span></a>
                                             <ul class="dropdown-menu">
                                                 <li><a href="#/courseshome">Search Courses</a></li>
@@ -66,7 +66,7 @@
                                                 </li>
                                             </ul>
                             	</li>
-                       		<li ng-show="itenMenuStatus" class="dropdown">
+                       		<li class="dropdown" ng-mouseover="itenMenuStatus = true" ng-mouseleave="itenMenuStatus = false" ng-show="itenMenuStatus" class="dropdown">
                                             <a class="dropdown-toggle" data-toggle="dropdown">Breathers<span class="caret"></span><span class="notify">{{Bcount}}</span></a>
                                             <ul class="dropdown-menu">
                                                 <li><a href="#/breathershome">Search Breathers</a></li>
@@ -77,7 +77,6 @@
                                                 </li>
                                             </ul>
                              	</li>
-				<li ng-show="itenMenuStatus"><a href="" ng-click="closeItems()">Items</a></li>	
 			</ul>
 			<ul class="nav navbar-nav pull-right top-nav">
 				<li class="search" id= "typeahead-bar">
