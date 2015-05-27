@@ -24,7 +24,6 @@
 		<script src="/javascripts/controllers/CourseCtrl.js"></script> 
 		<script src="/javascripts/controllers/AuthCtrl.js"></script>
 		<script src="/javascripts/controllers/NavCtrl.js"></script>
-		<script src="/javascripts/controllers/SideNavCtrl.js"></script>
 		<script src="/javascripts/services/authService.js"></script> 
 		<script src="/javascripts/services/taskService.js"></script>
 		<script src="/javascripts/services/userService.js"></script>
@@ -45,7 +44,7 @@
 				<li><a href="/#/home" class="navbar-brand">Brainless</a></li>
 				<li><a href="#/schedule">Schedule</a></li>
 				<li ng-hide="itenMenuStatus"><a href="" ng-click="clickItems()">Items</a></li>
-				<li ng-show="itenMenuStatus" class="dropdown">
+				<li ng-show="itenMenuStatus" class="dropdown items">
                                    	<a class="dropdown-toggle" data-toggle="dropdown">Tasks<span class="caret"></span><span class="notify" ng-show="tasks">{{Tcount}}</span></a>
                                             <ul class="dropdown-menu">
                                                 <li><a href="#/taskshome">Search Tasks</a></li>
