@@ -6,30 +6,28 @@ app.controller('ScheduleHomeCtrl', [
 
 		$scope.chosenTasks = [];
 		$scope.chosenBreathers = [];
-		$scope.chosenTasksNames = [];
-                $scope.chosenBreathersNames = [];
 	
 		$scope.addRemoveTask = function(item) {
-			
-	
+				
 			if ($scope.chosenTasks.indexOf(item) >= 0) {
 				$scope.chosenTasks = $scope.chosenTasks.filter(function(d) { return d != item;});	
 			}
 			else {
-				$scope.chosenTasks.push(item._id);
-				$scope.chosenTasksNames.push(item.description)
+				$scope.chosenTasks.push(item);
 			}
+			$scope.reportStatus();
 		};
 		
 		$scope.addRemoveBreather = function(item) {
-			$scope.chosenBreathersNames.push(item.title);
-                        if ($scope.chosenBreathers.indexOf(item) >= 0) {
+                        
+			if ($scope.chosenBreathers.indexOf(item) >= 0) {
                                 $scope.chosenBreathers = $scope.chosenBreathers.filter(function(d) { return d != item;});
                         }
                         else {
-                                $scope.chosenBreathers.push(item._id);
+                                $scope.chosenBreathers.push(item);
         		}	       
 		};	
+
 
 			
 	var time;	
@@ -37,11 +35,19 @@ app.controller('ScheduleHomeCtrl', [
 	var breathers = [];
 	
 	$scope.createMadeSchedule = function(){
-		
-		tasks = $scope.chosenTasks;
-		console.log(tasks);
-		breathers = $scope.chosenBreathers;
+
+		var tasks = [];
+		var breathers = [];
+
+		$scope.chosenTasks.forEach(function(d) {
+			tasks.push(d._id);
+		});
+		$scope.chosenBreathers.forEach(function(d) {
+			breathers.push(d._id);
+		});
+	
 		time = $scope.time; 
+		
 		Schedule.createMade(time, tasks, breathers).then(
 			function(data) {
 				
