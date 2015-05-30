@@ -2,18 +2,31 @@
 	<h2> Pick some stuff for the schedule </h2>
 
 	<div class= "row">
-		<div class= "col-md-5">
+
+		<div class= "col-md-4">
+
 			<h3> Breathers </h3>
 			<div ng-repeat= "breather in breathers">
-				{{breather.title}} <input type= "checkbox" value= "false" ng-click= "addRemoveBreather(breather)"></input>
+				{{breather.title}} <input type= "checkbox" value= "checkedItems[breather.title])" ng-click= "addRemoveBreather(breather)"></input>
 			</div>
 
 			<h3> Tasks </h3>
 			<div ng-repeat= "task in tasks">
-				{{task.description}} <input type= "checkbox" value= "false" ng-click="addRemoveTask(task)"></script>
+				{{task.description}} <input type= "checkbox" value= "checkedItems[task.description]" ng-click="addRemoveTask(task)"></script>
 			</div>
+
+
+			</br></br></br>
+			Select All :
+			<input 
+				type= "checkbox"
+				value= "everythingChecked"
+				ng-click= "addRemoveAll()">
+			</input>
+
 		</div>
-		<div class= "col-md-5">
+
+		<div class= "col-md-4">
 			<button ng-click="createMadeSchedule()">Start</button>
 			<input ng-model=time></input>
 			<br></br>
@@ -30,15 +43,17 @@
 			
 			<br></br>
 
-			<h3> Schedule </h3>
+		</div>
+
+		<div class= "col-md-4">	
+			<h3 ng-show= "scheduleMade"> {{timeLabel}} Hour Schedule </h3>
 			<div ng-repeat="item in items">
 				<span style="font-size:20px;">
 					{{item.number}}.  {{item.details.description}}
 					- {{item.minutes}}
-        			</span>
+				</span>
 			</div>
-
-
 		</div>
+
 	</div>
 </div>
