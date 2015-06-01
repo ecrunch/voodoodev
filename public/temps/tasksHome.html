@@ -1,6 +1,33 @@
 <div class="page-header">
         <h1>Tasks</h1>
+	<body>	
+	<section>
+        	<div>
+            		<div class="row 150%">
+        			<div class="4u 12u$(medium)" ng-repeat = "task in tasks" ng-show="'{{user()}}' == '{{task.userName}}'">
+                                  	<section class="box">
+                                      		<div>
+                                       			<h3>{{task.description}}</h3>
+							<h4>{{task.dueDate}}</h4>
+							<h4>{{task.type}}</h4>
+							<h4>{{task.totalMinutes}}</h4>
+							
+                                                </div>
+                                        </section>
+                     		</div>
+			</div>
+		</div>
+	</section>
+	</body>
+
+
+
+
+
+
+
 </div>
+<!--
 </div>{{user()}}</div>
 
 <table border="3">
@@ -44,5 +71,5 @@
 	</div>
 	<button type="submit" class="btn btn-primary">Post</button>
 </form>
-
+-->
 
