@@ -29,21 +29,22 @@
 						<div class="4u 12u$(medium)">
                                                         <section class="box">
                                                                 <h3 ng-mouseover="itenMenuCourse = true">Courses</h3>
-								<ul class="alt" ng-show="itenMenuCourse">
+								<ul class="alt" ng-show="itenMenuCourse" ng-mouseleave="itenMenuCourse = false" >
 									<li ng-repeat="course in courses">
-										<a href="#/courses/{{course._id}}" ng-mouseleave="itenMenuCourse = false" >
+										<a href="#/courses/{{course._id}}">
 											{{course.title}}
 										</a>
 									</li>
 								</ul>
-								<h3 ng-mouseover="itenMenuStatus = true" ng-mouseleave="itenMenuStatus = false"><a href="#/breathershome">Breather</a></h3>
-                                                                <ul class="alt" ng-show="itenMenuStatus">        
+								<h3 ng-mouseover="itenMenuBreathers = true"><a href="#/breathershome">Breather</a></h3>
+                                                                <ul class="alt" ng-show="itenMenuBreathers" ng-mouseleave="itenMenuBreathers = false">        
                                                                         <li ng-repeat="breather in breathers">              
                                                                                 <a href="#/breathers/{{breathers._id}}">
                                                                                         {{breather.title}}
                                                                                 </a>            
                                                                         </li>           
-                                                                </ul> 		
+                                                                </ul> 	
+								<h3><a href="#/taskshome">Tasks</a></h3>
                                                         </section>
                                                 </div>
 						
