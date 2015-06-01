@@ -111,12 +111,12 @@ module.exports = function(config) {
 								if (breathers.length > 0) {
 									userBreathers = breathers; 
 								}
-
-								var items = schedulerObj.createNew(
-									hours,
-									userTasks,
-									userBreathers
-								);
+								schedulerObj = new SchedulerObj({
+									hours: hours,
+									tasks: userTasks,
+									breathers: userBreathers
+								});		
+								var items = schedulerObj.makeNewSchedule();
 								res.json(items);
 							}
 						}
