@@ -1,10 +1,57 @@
 <html>
 
-	<br></br>
+	
 	<body>
+	
+	<section>
+				<div>
+					<div class="row 150%">
+						<div class="4u 12u$(medium)">
+							<section class="box">
+								<div>
+								<h3>Stats</h3>
+								</div>
+								<p>Fill out this area with a list of users stats</p>
+							</section>
+						</div>
+						
+						<div class="4u 12u$(medium)">
+                                                        <section class="box">
+                                                                <div>
+                                                                <h3>Schedule</h3>
+                                                                </div>
+                                                                <p>Start button and a Create button</p>
+								<a class="button alt big align-center" ng-click="newSchedule()">Start</a>
+								
+                                                        </section>
+                                                </div>
+						
+						<div class="4u 12u$(medium)">
+                                                        <section class="box">
+                                                                <h3 ng-mouseover="itenMenuCourse = true">Courses</h3>
+								<ul class="alt" ng-show="itenMenuCourse">
+									<li ng-repeat="course in courses">
+										<a href="#/courses/{{course._id}}" ng-mouseleave="itenMenuCourse = false" >
+											{{course.title}}
+										</a>
+									</li>
+								</ul>
+								<h3 ng-mouseover="itenMenuStatus = true" ng-mouseleave="itenMenuStatus = false"><a href="#/breathershome">Breather</a></h3>
+                                                                <ul class="alt" ng-show="itenMenuStatus">        
+                                                                        <li ng-repeat="breather in breathers">              
+                                                                                <a href="#/breathers/{{breathers._id}}">
+                                                                                        {{breather.title}}
+                                                                                </a>            
+                                                                        </li>           
+                                                                </ul> 		
+                                                        </section>
+                                                </div>
+						
+                                        </div>
+                                </div>
+			</section>
 
-
-
+	<!--
 	<tabset type="pills">
 		<tab heading= "Schedule">
 			<div ng-include="'temps/home_partials/schedule.html'"></div>
@@ -34,6 +81,8 @@
 				</span>
 			</div>
 		</tab>
-	</tabset>
+</tabset>
+	-->
 	
+	</body>	
 </html>
