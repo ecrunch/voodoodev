@@ -6,81 +6,82 @@ var app = angular.module('ScheduleHomeCtrl', []);
 */
 
 app.controller('ScheduleHomeCtrl', [
-	'$scope','Schedule',
-	function($scope,Schedule) {
+'$scope','Schedule',
 
-		$scope.scheduleMade = false;
-		$scope.chosenTasks = [];
-		$scope.chosenBreathers = [];
+function($scope,Schedule) {
 
-
-		$scope.checkedItems = {};
-		$scope.everythingChecked = false;
-	
-		$scope.tasks.forEach(function(d) {
-			$scope.checkedItems[d.description] = false;
-		});
-		$scope.breathers.forEach(function(d) {
-			$scope.checkedItems[d.title] = false;
-		});
+	$scope.scheduleMade = false;
+	$scope.chosenTasks = [];
+	$scope.chosenBreathers = [];
 
 
-		$scope.addRemoveAll = function() {
+	$scope.checkedItems = {};
+	$scope.everythingChecked = false;
 
-			if ($scope.everythingChecked) {
-				for (var key in $scope.checkedItems) {
-					$scope.checkedItems[key] = false;
-					$scope.everythingChecked = false;
-				}
-				$scope.chosenTasks = [];
-				$scope.choseBreathers = [];
+	$scope.tasks.forEach(function(d) {
+		$scope.checkedItems[d.description] = false;
+	});
+	$scope.breathers.forEach(function(d) {
+		$scope.checkedItems[d.title] = false;
+	});
+
+
+	$scope.addRemoveAll = function() {
+
+		if ($scope.everythingChecked) {
+			for (var key in $scope.checkedItems) {
+				$scope.checkedItems[key] = false;
+				$scope.everythingChecked = false;
 			}
-			else {
-				for (var key in $scope.checkedItems) {
-					$scope.checkedItems[key] = true;
-					$scope.everythingChecked = true;
-				}
-				$scope.tasks.forEach(function(d) {
-					$scope.chosenTasks.push[d];
-				});	
-				$scope.breathers.forEach(function(d) {
-					$scope.chosenBreathers.push[d];
-				});	
-			}
-			return;
-
+			$scope.chosenTasks = [];
+			$scope.choseBreathers = [];
 		}
-
-	
-		$scope.addRemoveTask = function(item) {
-				
-			if ($scope.checkedItems[item.description]) {
-				$scope.checkedItems[item.description] = false;
-				$scope.chosenTasks = $scope.chosenTasks.filter(function(d) { return d != item;});	
+		else {
+			for (var key in $scope.checkedItems) {
+				$scope.checkedItems[key] = true;
+				$scope.everythingChecked = true;
 			}
-			else {
-				$scope.checkedItems[item.description] = true;
-				$scope.chosenTasks.push(item);
-			}
-		};
-		
-		$scope.addRemoveBreather = function(item) {
-                        
-			if ($scope.checkedItems[item.title]) {
-				$scope.checkedItems[item.title] = false;
-                                $scope.chosenBreathers = $scope.chosenBreathers.filter(function(d) { return d != item;});
-                        }
-                        else {
-				$scope.checkedItems[item.title] = true;
-                                $scope.chosenBreathers.push(item);
-        		}	       
-		};	
+			$scope.tasks.forEach(function(d) {
+				$scope.chosenTasks.push[d];
+			});	
+			$scope.breathers.forEach(function(d) {
+				$scope.chosenBreathers.push[d];
+			});	
+		}
+		return;
 
+	};
+
+
+	$scope.addRemoveTask = function(item) {
 			
+		if ($scope.checkedItems[item.description]) {
+			$scope.checkedItems[item.description] = false;
+			$scope.chosenTasks = $scope.chosenTasks.filter(function(d) { return d != item;});	
+		}
+		else {
+			$scope.checkedItems[item.description] = true;
+			$scope.chosenTasks.push(item);
+		}
+	};
+	
+	$scope.addRemoveBreather = function(item) {
+		
+		if ($scope.checkedItems[item.title]) {
+			$scope.checkedItems[item.title] = false;
+			$scope.chosenBreathers = $scope.chosenBreathers.filter(function(d) { return d != item;});
+		}
+		else {
+			$scope.checkedItems[item.title] = true;
+			$scope.chosenBreathers.push(item);
+		}	       
+	};	
+
+		
 	var time;	
 	var tasks = [];
 	var breathers = [];
-	
+
 	$scope.createMadeSchedule = function(){
 
 		if ($scope.chosenTasks.length == 0) {
@@ -118,5 +119,6 @@ app.controller('ScheduleHomeCtrl', [
 			}
 		);		
 
-	 };
+	};  // end of create made func
+
 }]);

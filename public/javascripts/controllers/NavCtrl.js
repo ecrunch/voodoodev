@@ -60,7 +60,6 @@ function($scope, auth, $state, courses, Task){
                 function(data) {
                         $scope.pendings = data.data;
                         $scope.pendingAssignments = data;
-			console.log($scope.pendings); 
                		$scope.Pcount =(Object.keys($scope.pendings).length);
 		},
                 // error

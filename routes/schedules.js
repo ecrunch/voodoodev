@@ -62,7 +62,6 @@ module.exports = function(config) {
                 );
         });     // end of nightmarish callback route from hell
 				
-	
 		
 	router.post('/new_schedule/:time', auth, function(req, res, next) {
 		//var userTasks = mockTasks();

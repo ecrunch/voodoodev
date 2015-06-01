@@ -101,14 +101,6 @@ Scheduler.prototype.determineTaskPriorities = function(tasks, scoreData) {
 		}
 		 
 	}
-/*
-	for (var key in taskPriorities) {
-		var bucket = taskPriorities[key];
-		console.log("bucket: " + key);
-		bucket.forEach(function(d){
-			console.log("name: " + d.description + ", score: " + d.getScore());
-		}); 
-	}*/ 
 	return taskPriorities;
 };
 
