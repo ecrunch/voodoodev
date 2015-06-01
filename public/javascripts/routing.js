@@ -111,7 +111,14 @@ function($stateProvider, $urlRouterProvider) {
                 templateUrl: 'temps/schedule.html',
                 controller: 'ScheduleCtrl'
         })
-
+	
+	.state('makeSchedule', {
+                url: '/makeSchedule',
+                templateUrl: 'temps/home_partials/schedule.html',
+                controller: 'ScheduleHomeCtrl'
+        })	
+	
+	
 	.state('userHomePage', {
 
 		url: '/userHomePage',
