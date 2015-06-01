@@ -2,8 +2,8 @@ var app = angular.module('NavCtrl',[]);
 
 
 app.controller('NavCtrl',
-['$scope', 'auth','$state', 'courses','Task', 'User',
-function($scope, auth, $state, courses, Task, User){
+['$scope', 'auth','$state', 'courses','Task',
+function($scope, auth, $state, courses, Task){
 	
 	
         $scope.isLoggedIn = auth.isLoggedIn;
@@ -14,43 +14,15 @@ function($scope, auth, $state, courses, Task, User){
 		document.location.reload(true);
 
         };
-	
-	User.initializeTasks().then(
-                // success
-                function(data) {
-                        $scope.tasks    = User.tasks;
-                        $scope.taskIds  = User.taskIds;
+
+	$scope.$watch('initialized', function(val) {
+		console.log('user initialized: ' + val);
+		if (val) {
                         $scope.Tcount   = (Object.keys($scope.tasks).length);
-                },
-                // failure
-                function(err) {
-                        console.log(err);
-                }
-        );
-        User.initializeCourses().then(
-                // success
-                function(data) {
-                        $scope.courses          = User.courses;
-                        $scope.courseIds        = User.courseIds;
                         $scope.Ccount   = (Object.keys($scope.courses).length);
-                },
-                // failure
-                function(err) {
-                        console.log(err);
-                }
-        );
-        User.initializeBreathers().then(
-                // success
-                function(data) {
-                        $scope.breathers        = User.breathers;
-                        $scope.breatherIds      = User.breatherIds;
-                        $scope.Bcount           = (Object.keys($scope.breathers).length);
-                },
-                // failure
-                function(err) {
-                        console.log(err);
-                }
-        );	
+                        $scope.Bcount	= (Object.keys($scope.breathers).length);
+		}
+	});
 	
 	$scope.clickItems = function() {
 		$scope.itenMenuStatus = true;
@@ -65,12 +37,12 @@ function($scope, auth, $state, courses, Task, User){
 	        $scope.getPendingAssignments = function() {
                 return courses.getPendingAssignments();
         };
+
         $scope.joined = function(assId){
-                courses.joined(assId);
-                };
+		courses.joined(assId);
+	};
 
         $scope.joinAssignment = function(pending) {
-                console.log('called');
 		Task.create({
                         description:    pending.name,
                         dueDate:        pending.dueDate,

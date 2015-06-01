@@ -1,5 +1,10 @@
 var app = angular.module('ScheduleHomeCtrl', []);
 
+/*
+*	TODO : I think we are assuming the existence of tasks/breathers
+*	here, need to make some methods to grab them
+*/
+
 app.controller('ScheduleHomeCtrl', [
 	'$scope','Schedule',
 	function($scope,Schedule) {

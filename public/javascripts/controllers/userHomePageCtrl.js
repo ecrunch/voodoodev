@@ -1,13 +1,8 @@
 var app = angular.module('userHomePageCtrl', []);
 
 app.controller('userHomePageCtrl', [
-'$scope', 'auth', 'User','Task','courses', '$location',
-function($scope, auth, User, Task, courses, $location) {
-
-        $scope.loadAll = true;
-        //$scope.loadAll = false;
-
-        $scope.tasks = [];
+'$scope', 'auth', 'Task', 'courses', '$location',
+function($scope, auth, Task, courses, $location) {
 
         $scope.pendingAssignments = [];
 
@@ -16,48 +11,13 @@ function($scope, auth, User, Task, courses, $location) {
 	};
 
 
-	User.initializeTasks().then(
-		// success
-		function(data) {
-			$scope.tasks 	= User.tasks;
-			$scope.taskIds 	= User.taskIds;
-		},
-		// failure
-		function(err) {
-			console.log(err);
-		}
-	);
-	User.initializeBreathers().then(
-		// success
-		function(data) {
-			$scope.breathers 	= User.breathers;
-			$scope.breatherIds 	= User.breatherIds;
-		},
-		// failure
-		function(err) {
-			console.log(err);
-		}
-	);
-	User.initializeCourses().then(
-		// success
-		function(data) {
-			$scope.courses 		= User.courses;
-			$scope.courseIds 	= User.courseIds;
-		},
-		// failure
-		function(err) {
-			console.log(err);
-		}
-	);
-
-
         // returns a promise or some shit
         $scope.getPendingAssignments = function() {
                 return courses.getPendingAssignments();
         };
         $scope.joined = function(assId){
-                courses.joined(assId);
-                };
+		courses.joined(assId);
+	};
 
         $scope.joinAssignment = function(assId) {
                 Task.create({

@@ -17,6 +17,7 @@ var app = angular.module('courseInput',
 		'userService',
 		'scheduleService',
 		'breatherService',
+		'sessionService',
 		'courseRouting'
 	]
 );
