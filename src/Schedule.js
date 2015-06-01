@@ -5,12 +5,45 @@
 */
 
 
+var Task 	= require('./Task.js');
+var Breather 	= require('./Breather.js');
+
 
 function Scheduler(init) {
-	this.hours 	= init.hours || 4;
-	this.tasks 	= init.tasks || [];
-	this.breathers 	= init.breathers || [];
-}
+	
+	var _tasks 	  = init.tasks || [];
+	var _breathers = init.breathers || [];
+
+	this.hours 	  = init.hours || 4;	
+	this.tasks = [];
+	this.breathers = [];
+
+	var config;
+	for(var i = 0; i < _tasks.length; i++) {
+		
+		config = {
+			id:		_tasks[i]._id,
+			description:	_tasks[i].description,
+			userId:		_tasks[i].userId,
+			userName:	_tasks[i].userName,
+			dueDate:	_tasks[i].dueDate,
+			type:		_tasks[i].type,
+			totalMinutes:	_tasks[i].totalMinutes
+			
+		};
+		this.tasks.push(new Task(config));
+	}
+
+	for(var i = 0; i < _breathers.length; i++) {
+		config = {
+			id: _breathers[i]._id,
+			description: _breathers[i].title,
+		};
+		this.breathers.push(new Breather(config));
+	}
+
+
+}  // end of constructor
 
 
 function getRandomInt(min, max) {

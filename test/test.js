@@ -1,8 +1,8 @@
 
 var assert 		= require("assert");
-var Task 		= require('../models/src/Task.js');
-var Scheduler 		= require('../models/src/Scheduler.js');
-var Mock 		= require('../models/src/Mocks.js');
+var Task 		= require('..//src/Task.js');
+var Scheduler 		= require('../src/Schedule.js');
+var Mock 		= require('../src/Mocks.js');
 
 
 /*

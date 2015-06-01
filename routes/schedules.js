@@ -1,4 +1,8 @@
 
+// TODO : possibly refactor to be only funcs
+var SchedulerObj = require('../src/Schedule.js');
+
+
 module.exports = function(config) {
 
 
@@ -6,17 +10,25 @@ module.exports = function(config) {
 	var router 	= config.router;
 	var auth 	= config.auth;
 
+	// TODO : consider factoring out the Schedule code if we aren't saving
 	var Schedule 	= config.Schedule;
 	var Task 	= config.Task;
 	var Breather 	= config.Breather;
 
-	
+
+	// TODO : this might not be a thing anymore if we get rid
+	// of the objects
+	var schedulerObj;
+
+	// accepts a comma separated string	
 	router.post('/new_schedule/:time/:tasks/:breathers', auth, function(req, res, next) {
-		var userTasks = [];
-                var userBreathers = [];
-		var madeTasks = req.params.tasks.split(",") ;
-		var madeBreathers =	req.params.breathers.split(",");
-		var hours = req.params.time;
+		
+		var userTasks 		= [];
+                var userBreathers 	= [];
+
+		var madeTasks 		= req.params.tasks.split(",") ;
+		var madeBreathers 	= req.params.breathers.split(",");
+		var hours 		= req.params.time;
 		
 		
 		Task.find({ '_id':{ $in:
@@ -46,13 +58,13 @@ module.exports = function(config) {
                                                                 if (breathers.length > 0) {
                                                                         userBreathers = breathers;
                                                                 }
-					
-								var schedule = new Schedule();
-                                                                var items = schedule.createNew(
-                                                                        hours,
-                                                                        userTasks,
-                                                                        userBreathers
-                                                                );
+			
+								schedulerObj = new SchedulerObj({
+									hours: hours,
+									tasks: userTasks,
+									breathers: userBreathers
+								});		
+                                                                var items = schedulerObj.makeNewSchedule();
                                                                 res.json(items);
                                                         }
                                                 }
@@ -64,13 +76,12 @@ module.exports = function(config) {
 				
 		
 	router.post('/new_schedule/:time', auth, function(req, res, next) {
-		//var userTasks = mockTasks();
-		var userTasks = [];
-		var userBreathers = [];
-		//var userBreathers = mockBreathers();
-		var hours = req.params.time;
+		
+		var userTasks 		= [];
+		var userBreathers	= [];
 
-		var userId = req.payload.id;
+		var hours 		= req.params.time;
+		var userId 		= req.payload.id;
 
 		Task.find(
 			{
@@ -101,9 +112,7 @@ module.exports = function(config) {
 									userBreathers = breathers; 
 								}
 
-
-								var schedule = new Schedule();
-								var items = schedule.createNew(
+								var items = schedulerObj.createNew(
 									hours,
 									userTasks,
 									userBreathers
