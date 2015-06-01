@@ -1,5 +1,14 @@
 
-module.exports = function(router, Task, auth, Comment, User) {
+module.exports = function(config) {
+
+
+	// TODO : error handling
+	var router 	= config.router;
+	var auth 	= config.auth;
+
+	var Task	= config.Task;
+	var Comment	= config.Comment;
+	var User	= config.User;
 
 	router.get('/tasks', function(req, res, next) {
 		Task.find(function(err, tasks){

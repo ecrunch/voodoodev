@@ -1,5 +1,15 @@
 
-module.exports = function(router, Schedule, Task, Breather, auth) {
+module.exports = function(config) {
+
+
+	// TODO : error handling
+	var router 	= config.router;
+	var auth 	= config.auth;
+
+	var Schedule 	= config.Schedule;
+	var Task 	= config.Task;
+	var Breather 	= config.Breather;
+
 	
 	router.post('/new_schedule/:time/:tasks/:breathers', auth, function(req, res, next) {
 		var userTasks = [];

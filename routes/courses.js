@@ -1,5 +1,16 @@
 
-module.exports = function(router, Course, auth, Assignment, User, Post, Comment) {
+module.exports = function(config) {
+
+
+	// TODO : error handling
+	var router 	= config.router;
+	var auth 	= config.auth;
+
+	var Course 	= config.Course;
+	var Assignment 	= config.Assignment;
+	var User 	= config.User;
+	var Post 	= config.Post;
+	var Comment 	= config.Comment;
 
 
 	router.post('/courses/:course/assignments', auth, function(req, res, next) {

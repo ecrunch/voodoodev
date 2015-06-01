@@ -1,6 +1,19 @@
 
 
-module.exports = function(router, User, passport, Breather, Course, Task, Comment, auth) {
+module.exports = function(config) {
+
+
+	// TODO : error handling
+	var router 	= config.router;
+	var auth 	= config.auth;
+	var passport	= config.passport;
+
+	var User 	= config.User;
+	var Breather 	= config.Breather;
+	var Course 	= config.Course;
+	var Task 	= config.Task;
+	var Comment 	= config.Comment;
+
 
 	/* GET home page. */
 	router.get('/', function(req, res, next) {

@@ -1,6 +1,16 @@
 
 
-module.exports = function(router, Breather, auth, Link, User) {
+module.exports = function(config) {
+
+
+	// TODO : error handling
+	var router 	= config.router;
+	var auth 	= config.auth;
+
+	var Breather 	= config.Breather;
+	var User 	= config.User;
+	var Link 	= config.Link;
+
 
 	router.get('/breathers', function(req, res, next) {
 		Breather.find(function(err, breathers){

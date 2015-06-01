@@ -1,5 +1,11 @@
 
-module.exports = function(router, Assignment, auth) {
+module.exports = function(config) {
+
+	var router 	= config.router;
+	var auth	= config.auth;
+
+	var Assignment	= config.Assignment;
+
 
 	router.post('/assignments/:assignment/join', auth, function(req, res, next) {
 

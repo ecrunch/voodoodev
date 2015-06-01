@@ -1,47 +1,34 @@
 
 //import all of the routers into one mega router
 
-var express 	= require('express');
 var jwt 	= require('express-jwt');
 var mongoose 	= require('mongoose');
+var router 	= require('express').Router();
 var passport	= require('passport');
 
-var router 	= express.Router();
-var auth	= jwt({secret: 'SECRET', userProperty: 'payload'});
+var config = {
+	router: 	router,
+	auth:		jwt({secret: 'SECRET', userProperty: 'payload'}),
+	passport:	passport,
 
-var Course = mongoose.model('Course');
-var Comment = mongoose.model('Comment');
-var Task =  mongoose.model('Task');
-var Breather = mongoose.model('Breather');	
-var User = mongoose.model('User'); 
-var Schedule = mongoose.model('Schedule');
-var Assignment = mongoose.model('Assignment');
-var Post = mongoose.model('Post');
-var Link = mongoose.model('Link');
+	Course: 	mongoose.model('Course'),
+	Comment: 	mongoose.model('Comment'),
+	Task: 		mongoose.model('Task'),
+	Breather: 	mongoose.model('Breather'),
+	User: 		mongoose.model('User'),
+	Schedule: 	mongoose.model('Schedule'),
+	Assignment: 	mongoose.model('Assignment'),
+	Post: 		mongoose.model('Post'),
+	Link: 		mongoose.model('Link')
+};
 
-//TODO : make these dictionaries or something easier
-// to deal with
 
-// at least standardize the order shit is in
-
-require('./index.js')(
-	router, User, passport, Breather, Course, Task, Comment, auth
-);
-require('./tasks.js')(
-	router, Task, auth, Comment, User
-);
-require('./assignments.js')(
-	router, Assignment, auth
-);
-require('./schedules.js')(
-	router, Schedule, Task, Breather, auth
-);
-require('./breathers.js')(
-	router, Breather, auth, Link, User
-);
-require('./courses.js')(
-	router, Course, auth, Assignment, User, Post, Comment
-);
+require('./index.js')(config);
+require('./tasks.js')(config);
+require('./assignments.js')(config);
+require('./schedules.js')(config);
+require('./breathers.js')(config);
+require('./courses.js')(config);
  
 
 module.exports = router;
