@@ -24,6 +24,7 @@
 		<script src="/javascripts/controllers/CourseCtrl.js"></script> 
 		<script src="/javascripts/controllers/AuthCtrl.js"></script>
 		<script src="/javascripts/controllers/NavCtrl.js"></script>
+		<script src="/javascripts/controllers/SearchCtrl.js"></script>
 		<script src="/javascripts/services/authService.js"></script> 
 		<script src="/javascripts/services/taskService.js"></script>
 		<script src="/javascripts/services/userService.js"></script>
@@ -80,7 +81,7 @@
                              	</li>
 			</ul>
 			<ul class="nav navbar-nav pull-right top-nav">
-				<li class="search" id= "typeahead-bar">
+				<li ng-controller= "SearchCtrl" class="search" id= "typeahead-bar">
                                         <input
                                         type= "text"
                                         ng-model= "searchText"
