@@ -1,11 +1,16 @@
 
+<!-- task subsection of the site user homepage-->
 
-
-<h4> Hello from task land </h4>
-<div ng-repeat= "task in tasks">
-	<!--<a href= "#/tasks/{{task._id}}">-->
-	<p>
-		{{task.description}}
-	</p>
-	<!--</a>-->	
+<div ng-controller= "TaskHomeCtrl" class= "row">
+	</br>
+	<div class= "col-md-3">
+		<h2> Click to learn more </h2>
+		<div ng-repeat= "task in tasks">
+			<p ng-click= "makeSelected(task)">
+				{{task.description}}
+			</p>
+		</div>
+	</div>
+	<task class= "col-md-4"></task>
 </div>
+

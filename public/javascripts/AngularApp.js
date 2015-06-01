@@ -6,6 +6,7 @@ var app = angular.module('courseInput',
 		'ScheduleHomeCtrl',
 		'BreatherCtrl',
 		'TaskCtrl',
+		'TaskHomeCtrl',
 		'CourseCtrl',
 		'AuthCtrl',
 		'NavCtrl',
@@ -19,6 +20,7 @@ var app = angular.module('courseInput',
 		'scheduleService',
 		'breatherService',
 		'sessionService',
-		'courseRouting'
+		'courseRouting',
+		'taskDirective'
 	]
 );
