@@ -21,6 +21,8 @@ var app = angular.module('courseInput',
 		'breatherService',
 		'sessionService',
 		'courseRouting',
-		'taskDirective'
+		'taskDirective',
+		'youtubeDirective'
+
 	]
 );

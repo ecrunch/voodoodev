@@ -12,6 +12,7 @@ function($scope, $stateParams, breathers, breather, auth){
                  breathers.addLink(breather._id, {
                         title: $scope.title,
                         link: $scope.link,
+			source: ($scope.link.slice(-11)),
                         author: 'user',
                 }).success(function(link) {
                         $scope.breather.links.push(link);

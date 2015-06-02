@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var LinkSchema = new mongoose.Schema({
         title: String,
         link: String,
+	source: String,
         author: String,
         upvotes: {type: Number, default: 0},
         comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
