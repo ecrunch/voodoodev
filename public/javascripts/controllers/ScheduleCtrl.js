@@ -21,16 +21,18 @@ function($scope, $stateParams, Schedule, $interval) {
 	}
 
 	var currentIndex = 0;
+        var stop;
 
 
 	$scope.items = [];	
  
-	var CREATE_NEW_SCHEDULE = 0;
-	var SCHEDULE_STARTED = 1;
-	var SCHEDULE_STOPPED = 2;
+	var SELECT_HOURS = 0;
+	var BEGIN_SCHEDULE = 1;
+	var SCHEDULE_RUNNING = 2;
+	var SCHEDULE_PAUSED = 3;
 
 
-	$scope.timerStatus = CREATE_NEW_SCHEDULE;
+	$scope.timerStatus = SELECT_HOURS;
 
 	$scope.skippedTasks = [];
 	$scope.skippedTaskStatus = false;
@@ -53,7 +55,7 @@ function($scope, $stateParams, Schedule, $interval) {
 				
 				currentIndex 			= 0;
 				$scope.timeLeft 		= 0;
-				$scope.timerStatus 		= SCHEDULE_STARTED;
+				$scope.timerStatus 		= BEGIN_SCHEDULE;
 				$scope.skippedTaskStatus 	= false;
 														
 			},
@@ -77,7 +79,7 @@ function($scope, $stateParams, Schedule, $interval) {
         };
 
 
-        $scope.scheduleTimer = function(){
+        $scope.startTimer = function(){
         	//prevents it going to the next item if it is already going and not done
 		if ( angular.isDefined(stop) ) return;        	
 		$scope.pass();
@@ -88,14 +90,13 @@ function($scope, $stateParams, Schedule, $interval) {
 		var timeLeft 		= (item.minutes)*60000;
                 $scope.timeLeft 	= timeLeft;
                 $scope.totalTime 	= timeLeft;
-                $scope.timerStatus	= SCHEDULE_STOPPED;
+                $scope.timerStatus	= SCHEDULE_RUNNING;
                 $scope.display 		= item.details.description;
                 $scope.id 		= item.details.id;
                 $scope.timer(); 
 	};
 
 
-        var stop;
 
         $scope.timer = function(){
         	
@@ -107,7 +108,7 @@ function($scope, $stateParams, Schedule, $interval) {
                 	} else {
 				$scope.storeTime();
 				$scope.removeItem(currentIndex);
-                        	$scope.timerStatus = SCHEDULE_STARTED;
+                        	$scope.timerStatus = SCHEDULE_PAUSED;
                         	$scope.stopTimer();
                 	}
         	}, 1000);
@@ -115,15 +116,17 @@ function($scope, $stateParams, Schedule, $interval) {
         };
 
         $scope.stopTimer = function() {
+		console.log("Stopping timer");
                 if (angular.isDefined(stop)) {
-                        $scope.timerStatus = SCHEDULE_STOPPED;
+                        $scope.timerStatus = SCHEDULE_PAUSED;
 			$interval.cancel(stop);
                         stop = undefined;
                 }
         };
 
-        $scope.startTime = function(){
-                $scope.timerStatus = SCHEDULE_STARTED;
+        $scope.resumeTimer = function(){
+		console.log("Starting timer");
+                $scope.timerStatus = SCHEDULE_RUNNING;
 		$scope.timer();
         };
 
@@ -134,14 +137,14 @@ function($scope, $stateParams, Schedule, $interval) {
                 $scope.storeTime();
 		$scope.display='';
                 $scope.timeLeft ='';
-                $scope.timerStatus = SCHEDULE_STARTED;
+                $scope.timerStatus = SCHEDULE_RUNNING;
 
 		// TODO : figure out how to do minutes worked on
 		var skipped = $scope.items[currentIndex];
 		$scope.skippedTasks.push(skipped);
 		
 		$scope.remoteItem(currentIndex);
-		$scope.scheduleTimer();
+		$scope.startTimer();   // TODO : should be resume but had to make it work
 		
         };
 

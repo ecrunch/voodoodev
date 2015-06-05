@@ -19,8 +19,8 @@
 
 		<input type="button" ng-click="newSchedule()" value="New Schedule" ng-show = '(timerStatus < 2)'>
 		<input type"text" placeholder="Time" ng-model = "userTime" ng-show = '(timerStatus === 0)'>
-		<input type="button" ng-click="scheduleTimer()" value="Start" ng-show='(timerStatus === 1)'>
-		<input type="button" ng-click="startTime()" value="Start" ng-show='(timerStatus === 3)'>
+		<input type="button" ng-click="startTimer()" value="Start" ng-show='(timerStatus === 1)'>
+		<input type="button" ng-click="resumeTimer()" value="Resume" ng-show='(timerStatus === 3)'>
 		<input type="button" ng-click="stopTimer()" value="Stop" ng-show='(timerStatus === 2)'>
 		<input type="button" ng-click="skipTimer()" value="Skip" ng-show='(timerStatus > 1)'>
 		
