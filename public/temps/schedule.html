@@ -1,7 +1,8 @@
 <div class= "page-header">
 	<h3> My Schedule </h3>	
 </div>
-<div class="row">
+<section class="wrapper">
+<div class="row container">
 	<div class="col-md-4">
 		<h4>Description - Time</h4>
 
@@ -17,7 +18,7 @@
 
 	<div class="col-md-4">
 
-		<input type="button" ng-click="newSchedule()" value="New Schedule" ng-show = '(timerStatus < 2)'>
+		<input type="button" ng-click="createSchedule()" value="New Schedule" ng-show = '(timerStatus < 2)'>
 		<input type"text" placeholder="Time" ng-model = "userTime" ng-show = '(timerStatus === 0)'>
 		<input type="button" ng-click="startTimer()" value="Start" ng-show='(timerStatus === 1)'>
 		<input type="button" ng-click="resumeTimer()" value="Resume" ng-show='(timerStatus === 3)'>
@@ -44,14 +45,52 @@
 
 	</div>
 
-	<div class="col-md-4" ng-show= "skippedTaskStatus">
-		<h4>Skipped Tasks</h4>
+	<div class="col-md-4">
+		<div class="row" ng-show= "skippedTaskStatus">
 
-		<!--<div ng-repeat="item in items | orderBy:'item.number'">-->
-		<div ng-repeat="item in skippedTasks">
-			<span style="font-size:20px;">
-				{{item.number}}.  {{item.details.description}}
-        		</span>
+			<h4>Skipped Tasks</h4>
+
+			<!--<div ng-repeat="item in items | orderBy:'item.number'">-->
+			<div ng-repeat="item in skippedTasks">
+				<span style="font-size:20px;">
+					{{item.number}}.  {{item.details.description}}
+        			</span>
+			</div>
+		</div>
+		
+		<div class="10u 12u$(medium)">
+
+                        <section class="box">
+                        <h3> Breathers </h3>
+                        <div class="10u 12u$(3)" ng-repeat= "breather in breathers">
+                                <input  type= "checkbox" value= "checkedItems[breather.title])" id= "ng-bind:{{breather.title}}"  ng-click= "addRemoveBreather(breather); scheduleMake()" checked></input>
+				<label for= "ng-bind:{{breather.title}}" >{{breather.title}}</label>
+                        </div>
+			</section>
+
+			<section class="box">
+                        <h3> Tasks </h3>
+                        <div class="10u 12u$(3)" ng-repeat= "task in tasks">
+                             	<input type= "checkbox" value= "checkedItems[task.description]" id= "ng-bind:{{task.description}}"  ng-click="addRemoveTask(task); scheduleMake()" checked></input>
+                        	 <label for= "ng-bind:{{task.description}}" >{{task.description}}</label>
+			</div>
+			</section>
+
+                        </br></br></br>
+                        Select All :
+                        <input
+                                type= "checkbox"
+                                value= "everythingChecked"
+                                ng-click= "addRemoveAll()">
+                        </input>
+			
+			 <button ng-click="createMadeSchedule();">Start</button>
+                </div>
+
+			
+			
 		</div>
 	</div>
 </div>
+
+</section>
