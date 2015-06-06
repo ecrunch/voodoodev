@@ -16,7 +16,7 @@
 	</div>
 
 
-	<div class="col-md-4">
+	<div class="col-md-4" ng-controller="TimerCtrl">
 
 		<input type="button" ng-click="createSchedule()" value="New Schedule" ng-show = '(timerStatus < 2)'>
 		<input type"text" placeholder="Time" ng-model = "userTime" ng-show = '(timerStatus === 0)'>
@@ -84,7 +84,7 @@
                                 ng-click= "addRemoveAll()">
                         </input>
 			
-			 <button ng-click="createMadeSchedule();">Start</button>
+			 <button ng-click="createCustomSchedule();">Start</button>
                 </div>
 
 			
