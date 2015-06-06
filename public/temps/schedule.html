@@ -63,7 +63,7 @@
                         <section class="box">
                         <h3> Breathers </h3>
                         <div class="10u 12u$(3)" ng-repeat= "breather in breathers">
-                                <input  type= "checkbox" value= "checkedItems[breather.title])" id= "ng-bind:{{breather.title}}"  ng-click= "addRemoveBreather(breather); scheduleMake()" checked></input>
+                                <input  type= "checkbox" value= "checkedItems[breather._id])" id= "ng-bind:{{breather.title}}"  ng-click= "addRemoveBreather(breather); scheduleMake()" checked></input>
 				<label for= "ng-bind:{{breather.title}}" >{{breather.title}}</label>
                         </div>
 			</section>
@@ -71,8 +71,8 @@
 			<section class="box">
                         <h3> Tasks </h3>
                         <div class="10u 12u$(3)" ng-repeat= "task in tasks">
-                             	<input type= "checkbox" value= "checkedItems[task.description]" id= "ng-bind:{{task.description}}"  ng-click="addRemoveTask(task); scheduleMake()" checked></input>
-                        	 <label for= "ng-bind:{{task.description}}" >{{task.description}}</label>
+                             	<input type= "checkbox" value= "checkedItems[task._id]" id= "ng-bind:{{task._id}}"  ng-click="addRemoveTask(task); scheduleMake()" checked></input>
+                        	 <label for= "ng-bind:{{task._id}}" >{{task.description}}</label>
 			</div>
 			</section>
 

@@ -4,6 +4,8 @@ var app = angular.module('ScheduleCtrl',['angularMoment']);
 app.controller('ScheduleCtrl', [
 '$scope', '$stateParams', 'Schedule', '$interval',
 function($scope, $stateParams, Schedule, $interval) {
+
+
         
 	var defaultHours = 4;
 
@@ -31,6 +33,19 @@ function($scope, $stateParams, Schedule, $interval) {
 	var BEGIN_SCHEDULE = 1;
 	var SCHEDULE_RUNNING = 2;
 	var SCHEDULE_PAUSED = 3;
+
+
+	$scope.init = function() {
+		$scope.tasks.forEach(function(d) {
+			$scope.checkedItems[d._id] = true;
+			$scope.chosenTasks.push(d);
+		});
+		$scope.breathers.forEach(function(d) {
+			$scope.checkedItems[d._id] = true;
+			$scope.chosenBreathers.push(d);
+		});
+	};
+
 	
 	$scope.scheduleMake = function(){
                 $scope.scheduleStatus= "MAKE_SCHEDULE";
@@ -38,7 +53,7 @@ function($scope, $stateParams, Schedule, $interval) {
 	
 	$scope.createSchedule = function(){
 		
-		if ($scope.scheduleStatus = "MAKE_SCHEDULE") {
+		if ($scope.scheduleStatus == "MAKE_SCHEDULE") {
 			$scope.createMadeSchedule();
 		}
 		else {
@@ -167,20 +182,13 @@ function($scope, $stateParams, Schedule, $interval) {
 		$scope.stopTimer();
 	});
 
-	 $scope.scheduleMade = false;
+	$scope.scheduleMade = false;
         $scope.chosenTasks = [];
         $scope.chosenBreathers = [];
 
 
         $scope.checkedItems = {};
-        $scope.everythingChecked = false;
-
-        $scope.tasks.forEach(function(d) {
-                $scope.checkedItems[d.description] = false;
-        });
-        $scope.breathers.forEach(function(d) {
-                $scope.checkedItems[d.title] = false;
-        });
+        $scope.everythingChecked = true;
 
 
         $scope.addRemoveAll = function() {
@@ -211,29 +219,35 @@ function($scope, $stateParams, Schedule, $interval) {
 	
 	 $scope.addRemoveTask = function(item) {
 
-                if ($scope.checkedItems[item.description]) {
-                        $scope.checkedItems[item.description] = false;
-                        $scope.chosenTasks = $scope.chosenTasks.filter(function(d) { return d != item;});
+                if ($scope.checkedItems[item._id]) {
+                        $scope.checkedItems[item._id] = false;
+                        $scope.chosenTasks = $scope.chosenTasks.filter(function(d) {
+				return d._id != item._id;
+			});
                 }
                 else {
-                        $scope.checkedItems[item.description] = true;
+                        $scope.checkedItems[item._id] = true;
                         $scope.chosenTasks.push(item);
                 }
+
+
         };
 
         $scope.addRemoveBreather = function(item) {
 
-                if ($scope.checkedItems[item.title]) {
-                        $scope.checkedItems[item.title] = false;
-                        $scope.chosenBreathers = $scope.chosenBreathers.filter(function(d) { return d != item;});
+                if ($scope.checkedItems[item._id]) {
+                        $scope.checkedItems[item._id] = false;
+                        $scope.chosenBreathers = $scope.chosenBreathers.filter(function(d) { 
+				return d._id != item._id;
+			});
                 }
                 else {
-                        $scope.checkedItems[item.title] = true;
+                        $scope.checkedItems[item._id] = true;
                         $scope.chosenBreathers.push(item);
                 }
         };
 	
-	 var time;
+	var time;
         var tasks = [];
         var breathers = [];
 
@@ -274,5 +288,13 @@ function($scope, $stateParams, Schedule, $interval) {
                 );
 
         };  // end of create made func
+
+
+	// wait for the tasks/breathers to be loaded in
+	$scope.$watch('initialized', function(val) {
+		if(val) {
+			$scope.init();
+		}
+	});
 
 }]);

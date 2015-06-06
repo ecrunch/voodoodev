@@ -31,7 +31,31 @@ function($scope, courses, $location, breathers, Session){
 				$scope.taskIds 		= Session.taskIds;
 				$scope.breatherIds	= Session.breatherIds;
 				$scope.courseIds	= Session.courseIds;
+
+
+				var seen = {};
+				// TODO : We should not be passing dupes to the front end
+				$scope.tasks = $scope.tasks.filter(function(d) {
+					if (! seen[d._id]) {
+						seen[d._id] = d;
+						return true;
+					}
+					else {
+						return false;
+					}
+				});
+				$scope.breathers = $scope.breathers.filter(function(d) {
+					if (! seen[d._id]) {
+						seen[d._id] = d;
+						return true;
+					}
+					else {
+						return false;
+					}
+				});
+	
 				$scope.initialized	= true;
+
 			},
 			function(err) {
 				console.log(err);
