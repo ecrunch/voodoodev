@@ -31,32 +31,35 @@
 	</div>
 
 
-	<div class="col-md-4" ng-controller="TimerCtrl">
-
+	<div class="col-md-4">
+		
 		<input type="button" ng-click="createSchedule()" value="New Schedule" ng-show = '(timerStatus < 2)'>
 		<input type"text" placeholder="Time" ng-model = "userTime" ng-show = '(timerStatus === 0)'>
-		<input type="button" ng-click="startTimer()" value="Start" ng-show='(timerStatus === 1)'>
-		<input type="button" ng-click="resumeTimer()" value="Resume" ng-show='(timerStatus === 3)'>
-		<input type="button" ng-click="stopTimer()" value="Stop" ng-show='(timerStatus === 2)'>
-		<input type="button" ng-click="skipTimer()" value="Skip" ng-show='(timerStatus > 1)'>
 		
-		<div class="row">
-			<div class="col-md-5">
-				<span style="font-size:30px;">{{display}}</span>
+		<div ng-controller= "TimerCtrl">
+			<input type="button" ng-click="startTimer()" value="Start" ng-show='(timerStatus === 1)'>
+			<input type="button" ng-click="resumeTimer()" value="Resume" ng-show='(timerStatus === 3)'>
+			<input type="button" ng-click="stopTimer()" value="Stop" ng-show='(timerStatus === 2)'>
+			<input type="button" ng-click="skipTimer()" value="Skip" ng-show='(timerStatus > 1)'>
+			
+			<div class="row">
+				<div class="col-md-5">
+					<span style="font-size:30px;">{{display}}</span>
+				</div>
 			</div>
-		</div>
 
-		<div class="row">
-			<div class="col-md-5" ng-show='(timerStatus > 1)'>
-				<span style="font-size:60px;">{{timerTimem}}</span><span>minutes</span>
+			<div class="row">
+				<div class="col-md-5" ng-show='(timerStatus > 1)'>
+					<span style="font-size:60px;">{{timerTimem}}</span><span>minutes</span>
+				</div>
 			</div>
-		</div>
 
-		<div class="row">
-			<div class="col-md-5" ng-show='(timerStatus > 1)'>
-				<span style="font-size:30px;">{{timerTimes}}</span><span>seconds</span>
+			<div class="row">
+				<div class="col-md-5" ng-show='(timerStatus > 1)'>
+					<span style="font-size:30px;">{{timerTimes}}</span><span>seconds</span>
+				</div>
 			</div>
-		</div>
+		</div> <!-- end of timer ctrl -->
 
 	</div>
 
@@ -78,7 +81,7 @@
                         <section class="box">
                         <h3> Breathers </h3>
                         <div class="10u 12u$(3)" ng-repeat= "breather in breathers">
-                                <input  type= "checkbox" value= "checkedItems[breather._id])" id= "ng-bind:{{breather.title}}"  ng-click= "addRemoveBreather(breather); scheduleMake()" checked></input>
+                                <input  type= "checkbox" value= "checkedItems[breather._id])" id= "ng-bind:{{breather.title}}"  ng-click= "addRemoveBreather(breather)" checked></input>
 				<label for= "ng-bind:{{breather.title}}" >{{breather.title}}</label>
                         </div>
 			</section>
@@ -86,20 +89,11 @@
 			<section class="box">
                         <h3> Tasks </h3>
                         <div class="10u 12u$(3)" ng-repeat= "task in tasks">
-                             	<input type= "checkbox" value= "checkedItems[task._id]" id= "ng-bind:{{task._id}}"  ng-click="addRemoveTask(task); scheduleMake()" checked></input>
+                             	<input type= "checkbox" value= "checkedItems[task._id]" id= "ng-bind:{{task._id}}"  ng-click="addRemoveTask(task)" checked></input>
                         	 <label for= "ng-bind:{{task._id}}" >{{task.description}}</label>
 			</div>
 			</section>
-
-                        </br></br></br>
-                        Select All :
-                        <input
-                                type= "checkbox"
-                                value= "everythingChecked"
-                                ng-click= "addRemoveAll()">
-                        </input>
-			
-			 <button ng-click="createMadeSchedule();">Start</button>
+	
                 </div>
 
 			

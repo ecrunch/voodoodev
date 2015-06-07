@@ -24,6 +24,8 @@ function($scope, $stateParams, Schedule, $interval) {
         $scope.chosenBreathers = [];
         $scope.checkedItems = {};
         $scope.everythingChecked = true;
+	$scope.userTime;
+
 
 	$scope.init = function() {
 		
@@ -50,9 +52,7 @@ function($scope, $stateParams, Schedule, $interval) {
 	};
 
 	$scope.skipTask = function(index) {
-	
-		console.log($scope.items);
-	
+		
 		$scope.skippedTaskStatus = true;
 		var skipped = $scope.items[index];
 
@@ -65,16 +65,12 @@ function($scope, $stateParams, Schedule, $interval) {
         }
 	
 	$scope.createSchedule = function(){
-	
-		$scope.scheduleStatus == "CUSTOM_SCHEDULE" ?
-			$scope.createCustomSchedule() :
-			$scope.createAutoSchedule();
-	
-	}
+		$scope.createCustomSchedule();
+	};
 	
 	$scope.resetSchedule = function() {
 		$scope.items = [];
-	}
+	};
 	
 	$scope.removeItem = function(slot) {
 		console.log("Removing at slot: " + slot);
@@ -152,6 +148,10 @@ function($scope, $stateParams, Schedule, $interval) {
 		}
 	}
 
+	$scope.setTimerStatus = function(code) {
+		$scope.timerStatus = code;	
+	};
+
         $scope.createCustomSchedule = function(){
 
                 if ($scope.chosenTasks.length == 0) {
@@ -172,13 +172,13 @@ function($scope, $stateParams, Schedule, $interval) {
                 $scope.chosenBreathers.forEach(function(d) {
                         breathers.push(d._id);
                 });
-		
-		var numHours = validateTime($scope.time) ? $scope.time : DEFAULT_HOURS;
+
+		var numHours = validateTime($scope.userTime) ? $scope.userTime : DEFAULT_HOURS;
 
                 Schedule.createMade(numHours, tasks, breathers).then(
                         function(data) {
                                 $scope.items = data.data;
-                                $scope.timeLabel = $scope.time;
+                                $scope.timeLabel = $scope.userTime;
 				$scope.timerStatus = BEGIN_SCHEDULE;
                                 $scope.scheduleMade = true;
                         },
@@ -189,28 +189,6 @@ function($scope, $stateParams, Schedule, $interval) {
 
         };  // end of create made func
 	
-	$scope.createAutoSchedule = function() {
-
-		$scope.resetSchedule();
-		var numHours = validateTime($scope.userTime) ? $scope.userTime : DEFAULT_HOURS;
-		
-		Schedule.createNew(numHours).then(
-			function(data) {
-				
-				$scope.items = data.data;
-				
-				currentIndex 			= 0;
-				$scope.timeLeft 		= 0;
-				$scope.timerStatus 		= BEGIN_SCHEDULE;
-				$scope.skippedTaskStatus 	= false;
-														
-			},
-			function(err) {
-				console.log(err);
-			}
-		);
-	}
-
 
 	// wait for the tasks/breathers to be loaded in
 	// TODO : we should do this by broadcasting events rather than

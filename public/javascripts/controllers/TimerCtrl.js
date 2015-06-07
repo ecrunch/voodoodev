@@ -33,13 +33,12 @@ function($scope, $interval, Schedule) {
 
         $scope.pass = function(){
 
-		console.log("Inside pass function");
 
                 var item 		= $scope.items[currentIndex];
 		var timeLeft 		= (item.minutes)*60000;
                 $scope.timeLeft 	= timeLeft;
                 $scope.totalTime 	= timeLeft;
-                $scope.timerStatus	= SCHEDULE_RUNNING;
+                $scope.setTimerStatus(SCHEDULE_RUNNING);
                 $scope.display 		= item.details.description;
                 $scope.id 		= item.details.id;
                 $scope.timer(); 
@@ -47,7 +46,6 @@ function($scope, $interval, Schedule) {
 
         $scope.timer = function(){
         
-		console.log("Inside timer function");
 	
 		stop = $interval(function() {
                 	if ($scope.timeLeft > 0) {
@@ -57,7 +55,7 @@ function($scope, $interval, Schedule) {
                 	} else {
 				$scope.storeTime();
 				$scope.removeItem(currentIndex);
-                        	$scope.timerStatus = SCHEDULE_PAUSED;
+                        	$scope.setTimerStatus(SCHEDULE_PAUSED);
                         	$scope.stopTimer();
 				$scope.endBeeper();
 				$scope.pass();
@@ -79,17 +77,15 @@ function($scope, $interval, Schedule) {
 	};
 
         $scope.stopTimer = function() {
-		console.log("Stopping timer");
                 if (angular.isDefined(stop)) {
-                        $scope.timerStatus = SCHEDULE_PAUSED;
+                        $scope.setTimerStatus(SCHEDULE_PAUSED);
 			$interval.cancel(stop);
                         stop = undefined;
                 }
         };
 
         $scope.resumeTimer = function(){
-		console.log("Starting timer");
-                $scope.timerStatus = SCHEDULE_RUNNING;
+                $scope.setTimerStatus(SCHEDULE_RUNNING);
 		$scope.timer();
         };
 
@@ -99,7 +95,7 @@ function($scope, $interval, Schedule) {
                 $scope.storeTime();
 		$scope.display='';
                 $scope.timeLeft ='';
-                $scope.timerStatus = SCHEDULE_RUNNING;
+                $scope.setTimerStatus(SCHEDULE_RUNNING);
 		
 		$scope.skipTask(currentIndex);
 	
