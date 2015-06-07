@@ -4,15 +4,30 @@
 <section class="wrapper">
 <div class="row container">
 	<div class="col-md-4">
-		<h4>Description - Time</h4>
+		
+		<section class = "box">
+			
+			<span style="font-size:20px;" >
+                                Time
+                        </span>
+			
+			<span style="font-size:20px; margin-left: 100;">
+                                 Description
+                        </span>
+		
+
+		</section>
 
 		<!--<div ng-repeat="item in items | orderBy:'item.number'">-->
-		<div ng-repeat="item in items">
-			<span style="font-size:20px;">
-				{{item.number}}.  {{item.details.description}}
-				- {{item.minutes}}
+		<section class = "box" ng-repeat="item in items" style = "margin-bottom: .5em;">
+			<span style="font-size:40px;" >
+				{{item.minutes}}
+			</span>
+		
+			<span style="font-size:20px; margin-left: 100;">
+				  {{item.details.description}}
         		</span>
-		</div>
+		</section>
 	</div>
 
 
@@ -84,7 +99,7 @@
                                 ng-click= "addRemoveAll()">
                         </input>
 			
-			 <button ng-click="createCustomSchedule();">Start</button>
+			 <button ng-click="createMadeSchedule();">Start</button>
                 </div>
 
 			

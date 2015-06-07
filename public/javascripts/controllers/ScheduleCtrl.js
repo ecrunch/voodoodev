@@ -57,7 +57,7 @@ function($scope, $stateParams, Schedule, $interval) {
 		var skipped = $scope.items[index];
 
 		$scope.skippedTasks.push(skipped);
-		$scope.remoteItem(index);
+		$scope.removeItem(index);
 	};
 	
 	$scope.scheduleMake = function(){
@@ -76,7 +76,7 @@ function($scope, $stateParams, Schedule, $interval) {
 		$scope.items = [];
 	}
 	
-	$scope.remoteItem = function(slot) {
+	$scope.removeItem = function(slot) {
 		console.log("Removing at slot: " + slot);
 		$scope.items.splice(slot, 1);
 	};

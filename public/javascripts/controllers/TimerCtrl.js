@@ -6,6 +6,13 @@ app.controller('TimerCtrl', [
 function($scope, $interval, Schedule) {
 
 	console.log("Timer controller");
+	
+	var aud = new Audio('Audio/beep-07.mp3');
+	$scope.playAudio = function(){
+		console.log('first');
+		aud.play();
+		console.log('Here');	
+	};
 
 	var stop;	
 	var SELECT_HOURS = 0;
@@ -50,10 +57,23 @@ function($scope, $interval, Schedule) {
 				$scope.removeItem(currentIndex);
                         	$scope.timerStatus = SCHEDULE_PAUSED;
                         	$scope.stopTimer();
+				$scope.endBeeper();
                 	}
         	}, 1000);
 
         };
+	
+	$scope.endBeeper =function() {
+		$scope.threeBeeps = 3;
+		beeper = $interval(function() {
+				if ($scope.threeBeeps > 0) {
+					$scope.playAudio()
+					$scope.threeBeeps = $scope.threeBeeps - 1;
+				} else {
+				$interval.cancel(beeper);
+				}
+		}, 1000);
+	};
 
         $scope.stopTimer = function() {
 		console.log("Stopping timer");
