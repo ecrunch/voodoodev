@@ -5,13 +5,10 @@ app.controller('TimerCtrl', [
 '$scope', '$interval', 'Schedule',
 function($scope, $interval, Schedule) {
 
-	console.log("Timer controller");
 	
 	var aud = new Audio('Audio/beep-07.mp3');
 	$scope.playAudio = function(){
-		console.log('first');
 		aud.play();
-		console.log('Here');	
 	};
 
 	var stop;	
@@ -35,6 +32,9 @@ function($scope, $interval, Schedule) {
         };
 
         $scope.pass = function(){
+
+		console.log("Inside pass function");
+
                 var item 		= $scope.items[currentIndex];
 		var timeLeft 		= (item.minutes)*60000;
                 $scope.timeLeft 	= timeLeft;
@@ -46,7 +46,9 @@ function($scope, $interval, Schedule) {
 	};
 
         $scope.timer = function(){
-        	
+        
+		console.log("Inside timer function");
+	
 		stop = $interval(function() {
                 	if ($scope.timeLeft > 0) {
                         	$scope.timerTimes = moment.duration($scope.timeLeft).seconds();
@@ -58,6 +60,7 @@ function($scope, $interval, Schedule) {
                         	$scope.timerStatus = SCHEDULE_PAUSED;
                         	$scope.stopTimer();
 				$scope.endBeeper();
+				$scope.pass();
                 	}
         	}, 1000);
 
