@@ -25,6 +25,8 @@ function($scope, $stateParams, Schedule, $interval) {
         $scope.checkedItems = {};
         $scope.everythingChecked = true;
 	$scope.userTime;
+	$scope.scheduleCreated = false;
+	$scope.chosenItem = null;
 
 
 	$scope.init = function() {
@@ -75,6 +77,7 @@ function($scope, $stateParams, Schedule, $interval) {
 	$scope.removeItem = function(slot) {
 		console.log("Removing at slot: " + slot);
 		$scope.items.splice(slot, 1);
+		$scope.chosenItem = $scope.items[0] || null;
 	};
 
 
@@ -181,6 +184,8 @@ function($scope, $stateParams, Schedule, $interval) {
                                 $scope.timeLabel = $scope.userTime;
 				$scope.timerStatus = BEGIN_SCHEDULE;
                                 $scope.scheduleMade = true;
+				$scope.scheduleCreated = true;
+				$scope.chosenItem = $scope.items[0];
                         },
                         function(err) {
                                 console.log(err);

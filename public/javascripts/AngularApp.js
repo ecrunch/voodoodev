@@ -11,8 +11,10 @@ var app = angular.module('courseInput',
 		'AuthCtrl',
 		'NavCtrl',
 		'SearchCtrl',
+
 		'ui.router',
 		'angularMoment',
+
 		'courseService',
 		'authService',
 		'taskService',
@@ -20,9 +22,12 @@ var app = angular.module('courseInput',
 		'scheduleService',
 		'breatherService',
 		'sessionService',
+
 		'courseRouting',
+
 		'taskDirective',
-		'youtubeDirective'
+		'youtubeDirective',
+		'scheduleItemDirective'
 
 	]
 );
