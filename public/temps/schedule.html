@@ -5,7 +5,7 @@
 <div class="row container">
 	<div class="col-md-4">
 	
-		<section class = "box">
+		<section class = "box" style = "margin-bottom: .5em;">
 			
 			<span style="font-size:20px;" >
                                 Time
@@ -19,12 +19,12 @@
 		</section>
 
 		<!--<div ng-repeat="item in items | orderBy:'item.number'">-->
-		<section class = "box" ng-repeat="item in items" style = "margin-bottom: .5em;">
+		<section class = "box" ng-repeat="item in items" style = "margin-bottom: .5em; padding: .25em">
 			<span style="font-size:40px;" >
 				{{item.minutes}}
 			</span>
 		
-			<span style="font-size:20px; margin-left: 100;">
+			<span style="font-size:40px; margin-left: 20;">
 				  {{item.details.description}}
         		</span>
 		</section>
@@ -32,34 +32,33 @@
 
 
 	<div class="col-md-4">
-	
+
+		<section class = "box">	
 		<div class= "row">	
 			<input type="button" ng-click="createSchedule()" value="New Schedule" ng-show = '(timerStatus < 2)'>
 			<input type"text" placeholder="Time" ng-model = "userTime" ng-show = '(timerStatus === 0)'>
 		</div>		
 
 		<div class= "row" ng-controller= "TimerCtrl">
-			<input type="button" ng-click="startTimer()" value="Start" ng-show='(timerStatus === 1)'>
-			<input type="button" ng-click="resumeTimer()" value="Resume" ng-show='(timerStatus === 3)'>
-			<input type="button" ng-click="stopTimer()" value="Stop" ng-show='(timerStatus === 2)'>
-			<input type="button" ng-click="skipTimer()" value="Skip" ng-show='(timerStatus > 1)'>
 			
 			<div class="row">
-				<div class="col-md-5" ng-show='(timerStatus > 1)'>
-					<span style="font-size:60px;">{{timerTimem}}</span><span>minutes</span>
-				</div>
-			</div>
+                                <div class="col-md-5" ng-show='(timerStatus > 1)'>
+                                        <span style="font-size:60px;">{{timerTimem}}.{{timerTimes}}</span><span>minutes</span>
+                                </div>
+                        </div>
 
-			<div class="row">
-				<div class="col-md-5" ng-show='(timerStatus > 1)'>
-					<span style="font-size:30px;">{{timerTimes}}</span><span>seconds</span>
-				</div>
+			<div class= "row" ng-if= "scheduleCreated">
+                        	<schedule-item item="chosenItem"></schedule-item>
+                	</div>
+			<div>
+				<input type="button" ng-click="startTimer()" value="Start" ng-show='(timerStatus === 1)'>
+				<input type="button" ng-click="resumeTimer()" value="Resume" ng-show='(timerStatus === 3)'>
+				<input type="button" ng-click="stopTimer()" value="Stop" ng-show='(timerStatus === 2)'>
+				<input type="button" ng-click="skipTimer()" value="Skip" ng-show='(timerStatus > 1)'>
 			</div>
 		</div> <!-- end of timer ctrl -->
 
-		<div class= "row" ng-if= "scheduleCreated">
-			<schedule-item item="chosenItem"></schedule-item>
-		</div>
+		</section>
 
 	</div>
 
