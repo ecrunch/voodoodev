@@ -102,11 +102,11 @@ function($scope, $interval, Schedule) {
 		$scope.startTimer();   // TODO : should be resume but had to make it work
 		
         };
-        
+	/*        
 	$scope.$on('$destroy', function() {
 		// Make sure that the interval is destroyed too
 		$scope.stopTimer();
 	});
-
+	*/
 }]);
 

@@ -27,6 +27,7 @@ var app = angular.module('courseInput',
 
 		'taskDirective',
 		'youtubeDirective',
+		'taskListDirective',
 		'scheduleItemDirective'
 
 	]
