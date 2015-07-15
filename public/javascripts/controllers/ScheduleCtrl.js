@@ -67,6 +67,7 @@ function($scope, $stateParams, Schedule, $interval) {
         }
 	
 	$scope.createSchedule = function(){
+        console.log("in controller")
 		$scope.createCustomSchedule();
 	};
 	

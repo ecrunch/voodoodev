@@ -72,22 +72,21 @@
 		
 
 		<header id="header">
-		<h1><a href="/#/home">BRAINLESS</a></h1>
-		
-		<nav id="nav" ng-controller="NavCtrl">
+		<h1 ng-controller="ScheduleCtrl">
+        <a href="/#/home" ng-show="timerStatus===0">BRAINLESS</a>
+        <schedule-item item="chosenItem"></schedule-item>
+        <span ng-controller="TimerCtrl">
+        <input ng-show="timerStatus===0" style="margin-left:275px; height: 1em; line-height: .2em; padding: .2em;" type="button"  ng-click="createSchedule(); startTimer();" value="Start"></input>        
+        <span ng-show="timerStatus > 1" style=" margin-left:350px" >{{timerTimem}}.{{timerTimes}}</span>
+        <span ng-show="timerStatus > 1">minutes</span>
+        <input style=" height: 1em; line-height: .2em; padding: .2em;" type="button" ng-click="resumeTimer()" value="Resume" ng-show='(timerStatus === 3)'>
+        <input  style=" height: 1em; line-height: .2em; padding: .2em;" type="button" type="button" ng-click="stopTimer()" value="Stop" ng-show='(timerStatus === 2)'>
+        <input  style=" height: 1em; line-height: .2em; padding: .2em;" type="button" type="button" ng-click="skipTimer()" value="Skip" ng-show='(timerStatus > 1)'>
+        
+        </span>
+		</h1>
+        <nav id="nav" ng-controller="NavCtrl">
 			<ul>
-				<li><a href="#/schedule">Schedule</a></li>
-				<li ng-controller= "SearchCtrl" id= "typeahead-bar">
-                                        <input
-                                        type= "text"
-                                        ng-model= "searchText"
-                                        placeholder = "Search for something"
-                                        typeahead = "result.text for result in getSearchResults($viewValue)"
-`                                       typeahead-on-select = "onSelect($item, $model, $label)"
-                                        class = "form-control"
-                                        ></input>
-                                </li>
-				
 				<li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown"></span><span>{{Pcount}}<span class="caret"></span> </a>
                                             <ul class="dropdown-menu">

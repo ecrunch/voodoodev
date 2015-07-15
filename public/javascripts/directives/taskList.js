@@ -10,20 +10,6 @@ function($scope, Task, auth, breathers, courses) {
 	$scope.breathers = breathers.breathers;
 	$scope.courses = courses.courses;
 	
-	$scope.addTask = function() {
-		console.log('Here');
-                if ($scope.newTaskDescription === '') {
-                        return;
-                }
-                Task.create({
-                        description: $scope.newTaskDescription,
-                        dueDate: $scope.newTaskDueDate,
-                        type:   $scope.newTaskType
-                });
-                $scope.newTaskDescription = '';
-                $scope.newTaskDueDate = '';
-                $scope.newTaskType = '';
-        };
 }]);	
 
 app.directive('taskList', function() {
@@ -34,11 +20,9 @@ app.directive('taskList', function() {
 			breathers: '=',
 			courses: '=',
 			statustype: '=',
-			addtask: '='
 		},
 		templateUrl: 'temps/directive_partials/taskListDirective.html',
 		link : function(scope, element, attrs) {
-			console.log(scope.tasks);
 		}
 	};
 });

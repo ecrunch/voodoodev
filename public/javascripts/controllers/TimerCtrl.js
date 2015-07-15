@@ -24,15 +24,23 @@ function($scope, $interval, Schedule) {
                 Schedule.storeTime(id, trackedTime);
 
         };
-
+        var item;
+        var delay;
         $scope.startTimer = function(){
         	//prevents it going to the next item if it is already going and not done
-		if ( angular.isDefined(stop) ) return;        	
-		$scope.pass();
+		if ( angular.isDefined(delay) ) return;        	
+		delay = $interval( function(){
+            if ( angular.isDefined(item)){
+                console.log("waiting");
+            } else {
+                $scope.pass();
+                $interval.cancel(delay);
+                delay = undefined;
+            }
+        },1000);
         };
 
         $scope.pass = function(){
-
 
                 var item 		= $scope.items[currentIndex];
 		var timeLeft 		= (item.minutes)*60000;
@@ -52,7 +60,7 @@ function($scope, $interval, Schedule) {
                         	$scope.timerTimes = moment.duration($scope.timeLeft).seconds();
                         	$scope.timerTimem = moment.duration($scope.timeLeft).minutes();
                         	$scope.timeLeft = $scope.timeLeft - 1000;
-                	} else {
+                    } else {
 				$scope.storeTime();
 				$scope.removeItem(currentIndex);
                         	$scope.setTimerStatus(SCHEDULE_PAUSED);
