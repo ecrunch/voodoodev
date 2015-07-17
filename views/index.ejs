@@ -73,21 +73,22 @@
 
 		<header id="header">
 		<h1 ng-controller="ScheduleCtrl">
-        <a href="/#/home" ng-show="timerStatus===0">BRAINLESS</a>
-        <schedule-item item="chosenItem"></schedule-item>
         <span ng-controller="TimerCtrl">
+        <a href="/#/home"><i class="fa fa-home"  ng-show="timerStatus > 1"></i></a>
+        <a href="/#/home" ng-show="timerStatus===0">BRAINLESS</a>
+        <schedule-item item="chosenItem" ng-show='(timerStatus > 1)'></schedule-item>
         <input ng-show="timerStatus===0" style="margin-left:275px; height: 1em; line-height: .2em; padding: .2em;" type="button"  ng-click="createSchedule(); startTimer();" value="Start"></input>        
-        <span ng-show="timerStatus > 1" style=" margin-left:350px" >{{timerTimem}}.{{timerTimes}}</span>
+        <span ng-show="timerStatus > 1" >{{timerTimem}}.{{timerTimes}}</span>
         <span ng-show="timerStatus > 1">minutes</span>
-        <input style=" height: 1em; line-height: .2em; padding: .2em;" type="button" ng-click="resumeTimer()" value="Resume" ng-show='(timerStatus === 3)'>
-        <input  style=" height: 1em; line-height: .2em; padding: .2em;" type="button" type="button" ng-click="stopTimer()" value="Stop" ng-show='(timerStatus === 2)'>
-        <input  style=" height: 1em; line-height: .2em; padding: .2em;" type="button" type="button" ng-click="skipTimer()" value="Skip" ng-show='(timerStatus > 1)'>
-        
+        <i class="fa fa-play"  ng-click="resumeTimer()" ng-show='(timerStatus === 3)' style=" height: 1em; line-height: .2em; padding: .2em;"></i>
+        <i class="fa fa-pause" ng-click="stopTimer()" ng-show='(timerStatus === 2)'  style=" height: 1em; line-height: .2em; padding: .2em;"></i>
+        <i class="fa fa-share" style=" height: 1em; line-height: .2em; padding: .2em;" ng-click="skipTimer()"  ng-show='(timerStatus > 1)'></i>
+        <i class="fa fa-stop" style=" height: 1em; line-height: .2em; padding: .2em;" ng-show='(timerStatus > 1)' ng-click="resetSchedule(); timerStatus=0; timeLeft=0"; stopTimer();></i> 
         </span>
 		</h1>
         <nav id="nav" ng-controller="NavCtrl">
 			<ul>
-				<li class="dropdown">
+                <li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown"></span><span>{{Pcount}}<span class="caret"></span> </a>
                                             <ul class="dropdown-menu">
                                                 <li class="dropdown-header">Pending Assignments</li>

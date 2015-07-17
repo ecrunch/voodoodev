@@ -60,6 +60,7 @@ function($scope, $interval, Schedule) {
                         	$scope.timerTimes = moment.duration($scope.timeLeft).seconds();
                         	$scope.timerTimem = moment.duration($scope.timeLeft).minutes();
                         	$scope.timeLeft = $scope.timeLeft - 1000;
+                            console.log("counting")
                     } else {
 				$scope.storeTime();
 				$scope.removeItem(currentIndex);
