@@ -74,7 +74,7 @@ function($stateProvider, $urlRouterProvider) {
         .state('tasks', {
                 url: '/tasks/{id}',
                 templateUrl: 'temps/tasks.html',
-                controller: 'SubTaskCtrl',
+                controller: 'TaskCtrl',
                 resolve: {
                         task: ['$stateParams', 'tasks', function($stateParams, tasks) {
                                 return tasks.get($stateParams.id);
@@ -130,10 +130,22 @@ function($stateProvider, $urlRouterProvider) {
                 url: '/test',
                 templateUrl: 'temps/test.html',
                 controller: 'TimeCtrl'
-        });
+        })
+    
+    .state('activeItem', {
+            url: '/activeItem',
+            templateUrl: 'temps/activeItem.html'
+    })
 
+    .state('create', {
+            url: '/create',
+            templateUrl: 'temps/create.html'
+     })
 	
-	
+    .state('taskWall', {
+            url:'/taskWall/{id}',
+            templateUrl: 'temps/taskWall.html'
+    });
 
 
   $urlRouterProvider.otherwise('home');

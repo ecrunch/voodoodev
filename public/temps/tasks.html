@@ -1,56 +1,5 @@
 <div class="page-header">
 	<h3>
-		<span>{{task.title}}</span>
+		<span>{{task.description}}</span>
 	</h3>
-</div>
-<div class="row">
-	<div class="col-md-6"> 	
-	<div ng-repeat="subTask in task.subTasks | orderBy:'-dueDate'">
-		<span style="font-size:20px; margin-left:10px;">
-			<div>{{subTask.name}}
-			created by {{subTask.author}}</div> 
-		 <div>Due {{subTask.dueDate| date:'shortDate' }}</div>
-		</span>
-	</div>
-        <form ng-submit="addSubTask()"
-         style="margin-top:30px;">
-        	 <h3>Add a new Sub Task</h3>
-
-	<div class="form-group">
-		<input type="text"
-			class="form-control"
-			placeholder="Task"
-			ng-model="name"></input>
-		<input type="date"
-			class="form-control"
-			placeholder="Date"
-			ng-model="dueDate"></input>
-	</div>
-
-	<button type="submit" class="btn btn-primary">Post</button>
-	</form>
-	</div>
-
-	<div class="col-md-6">
-	<div ng-repeat="comment in task.comments | orderBy:'-upvotes'">
-		<span class="glyphicon glyphicon-thumbs-up"
-		ng-click="incrementUpvotes(comment)"></span>
-			{{comment.upvotes}} - by {{comment.author}}
-		<span style="font-size:20px; margin-left:10px;">
-			{{comment.body}}
-		</span>
-	</div>
-	<form ng-submit="addComment()"
-		style="margin-top:30px;">
-		<h3>Add a new comment</h3>
-
-	<div class="form-group">
-		<input type="text"
-		class="form-control"
-		placeholder="Comment"
-		ng-model="body"></input>
-	</div>
-	<button type="submit" class="btn btn-primary">Post</button>
-	</form>
-	</div>
 </div>

@@ -9,6 +9,7 @@ module.exports = function(config) {
 	var Task	= config.Task;
 	var Comment	= config.Comment;
 	var User	= config.User;
+    var TaskWall= config.TaskWall;
 
 	router.get('/tasks', function(req, res, next) {
 		Task.find(function(err, tasks){
@@ -54,7 +55,28 @@ module.exports = function(config) {
 						if(err) {
 							console.log(err);
 						}
-						res.json(task);
+                        else {
+                            var taskWall = new TaskWall({
+                                description:    task.description,
+                                dueDate:        task.dueDate,
+                                type:           task.type,
+                                tasks:          task._id,
+                                userIds:         task.userId,
+                            });
+                            console.log(taskWall)
+                            
+                            taskWall.save(function(err, taskWall) {
+                                if(err) {
+                                    console.log("Had trouble saving taskwall");
+                                    return next(err);
+                                }
+                                else{
+                                task.taskWall = taskWall._id;                
+                                console.log(task);
+						        res.json(task);
+                                }
+                            })
+                        }
 					});
 				});
 

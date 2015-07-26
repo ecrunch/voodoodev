@@ -3,7 +3,7 @@
 
 var jwt 	= require('express-jwt');
 var mongoose 	= require('mongoose');
-var router 	= require('express').Router();
+var router 	=   require('express').Router();
 var passport	= require('passport');
 
 var config = {
@@ -14,10 +14,11 @@ var config = {
 	Course: 	mongoose.model('Course'),
 	Comment: 	mongoose.model('Comment'),
 	Task: 		mongoose.model('Task'),
-	Breather: 	mongoose.model('Breather'),
+    TaskWall:   mongoose.model('TaskWall'),
+    Breather: 	mongoose.model('Breather'),
 	User: 		mongoose.model('User'),
 	Schedule: 	mongoose.model('Schedule'),
-	Assignment: 	mongoose.model('Assignment'),
+	Assignment: mongoose.model('Assignment'),
 	Post: 		mongoose.model('Post'),
 	Link: 		mongoose.model('Link')
 };

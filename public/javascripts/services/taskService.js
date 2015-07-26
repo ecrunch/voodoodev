@@ -3,7 +3,8 @@ var app = angular.module('taskService',[]);
 app.factory('Task',['$http', 'auth', function($http, auth){
 
         var service = {
-                tasks:[]
+                tasks:[],
+                taskWall:[]
         };
 
         service.getAll = function() {
@@ -12,6 +13,14 @@ app.factory('Task',['$http', 'auth', function($http, auth){
                                 angular.copy(data, service.tasks);
                         }
                 );
+        };
+
+        service.get = function(id) {
+            return $http.get('/taskWall/' + id).then(
+                function(res){
+                    return res.data;
+                }
+            );
         };
 
         service.get = function(id) {
@@ -42,13 +51,6 @@ app.factory('Task',['$http', 'auth', function($http, auth){
                 });
         };
 
-        service.addSubTask = function(id, subTask) {
-                return $http.post('/tasks/' + id + '/subTasks', subTask, {
-                        headers: {
-                                Authorization: 'Bearer '+auth.getToken()
-                        }
-                });                                                             
-        };
 
         service.upvote = function(task) {
                 return $http.put('/tasks/' + task._id + '/upvote', null, {

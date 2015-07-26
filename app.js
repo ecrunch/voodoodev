@@ -11,6 +11,8 @@ require('./models/Courses');
 require('./models/Comments');
 require('./models/Tasks');
 require('./models/Users');
+require('./models/TaskWall');
+require('./models/Community')
 require('./models/Breathers');
 require('./config/passport');
 require('./models/Schedules');
