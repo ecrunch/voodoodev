@@ -25,12 +25,13 @@ function Scheduler(init) {
 			id:		_tasks[i]._id,
 			description:	_tasks[i].description,
 			userId:		_tasks[i].userId,
-			userName:	_tasks[i].userName,
 			dueDate:	_tasks[i].dueDate,
 			type:		_tasks[i].type,
-			totalMinutes:	_tasks[i].totalMinutes
+			totalMinutes:	_tasks[i].totalMinutes,
+            taskWall:   _tasks[i].taskWall
 			
 		};
+        console.log(config);
 		this.tasks.push(new Task(config));
 	}
 
@@ -253,7 +254,8 @@ Scheduler.prototype.makeSchedule = function(timeSlots, scoredTasks, breathers, r
 				{
 					"number": 	number,
 					"minutes": 	minutesToAdd,
-					"details":	{"description": itemToAdd["description"]},
+					"details":	{"description": itemToAdd["description"],
+                                 "id":  itemToAdd["id"]},
 					"type":		"breather"
 				}
 			);			
@@ -292,7 +294,8 @@ Scheduler.prototype.makeSchedule = function(timeSlots, scoredTasks, breathers, r
 					"minutes":	minutesToAdd,
 					"details":	{
 						"description":	itemToAdd["description"],
-						"id":		itemToAdd["id"]
+						"id":		itemToAdd["id"],
+                        "taskWall": itemToAdd["taskWall"]
 					},
 					"type":		"task"
 				}
@@ -302,7 +305,8 @@ Scheduler.prototype.makeSchedule = function(timeSlots, scoredTasks, breathers, r
 
 		number += 1;
 
-	} //end of time slot for loop	
+	} //end of time slot for loop
+    console.log(schedule);
 	return schedule;
 };
 

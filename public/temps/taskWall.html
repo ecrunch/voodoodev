@@ -1,0 +1,68 @@
+
+<h2>{{taskWall.description}}</h2>
+<h2>{{taskWall.dueDate}}</h2>
+
+<section>
+    <div>
+        <div class="row 150%">
+            <div class="4u 12u$(medium)">
+                <section class="box">
+                     <form ng-submit="addPost()" style="margin-top:30px;">
+                         <h3>Add a new Post</h3>
+                         <div class="form-group">
+                             <input type="text"
+                             class="form-control"
+                             placeholder="Title"
+                             ng-model="title"></input>
+
+                             <input type="text-area"
+                             class="form-control"
+                             placeholder="Body"
+                             ng-model="pBody"></input>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" ng-click="postCreateToggle = false">Submit</button>
+
+                    </form>
+                <section>
+                <section class="box" ng-repeat="post in taskWall.posts">
+                    <h4>{{post.title}}</h4>
+                    <p>{{post.pBody}}</h4>
+                <section>
+        </div>
+        <div class="4u 12u$(medium)">
+            <section class="box">
+                <form ng-submit="addLink()"
+                    style="margin-top:30px;">
+                    <h3>Add a new Video</h3>
+                    
+                    <div class="form-group">
+
+                        <input type="text"
+                        class="form-control"
+                        placeholder="Title"
+                        ng-model="videoName"></input>
+
+                        <input type="text"
+                        class="form-control"
+                        placeholder="link"
+                        ng-model="link"></input>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Post</button>
+                </form>
+            </section>
+            <section class="box" ng-repeat="link in taskWall.links">
+                <span class="glyphicon glyphicon-thumbs-up"
+                    ng-click="incrementUpvotes(link)"></span>
+                    {{link.upvotes}} - by {{link.author}}
+                <span style="font-size:20px; margin-left:10px;">
+                    {{link.title}} - {{link.link}}
+                </span>
+                <my-youtube source="link.source"></my-youtube>
+            </section>
+        </div>
+    </div>
+</section>
+

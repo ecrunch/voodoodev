@@ -20,7 +20,7 @@ require('./models/Assignments');
 require('./models/Posts');
 require('./models/Links');
 
-mongoose.connect('mongodb://localhost/prototypedb');
+mongoose.connect('mongodb://localhost/brainlessdb');
 
 var app = express();
 

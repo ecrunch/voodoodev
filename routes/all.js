@@ -26,6 +26,7 @@ var config = {
 
 require('./index.js')(config);
 require('./tasks.js')(config);
+require('./taskWalls.js')(config);
 require('./assignments.js')(config);
 require('./schedules.js')(config);
 require('./breathers.js')(config);

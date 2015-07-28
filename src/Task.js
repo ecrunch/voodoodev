@@ -30,7 +30,7 @@ function Task(init){
 	this.description	= init.description;
 	this.userId		= init.userId;
 	this.userName		= init.userName;
-
+    this.taskWall       = init.taskWall;
 	init.currentDate ?
 		this.currentDate = new Date(init.currentDate) : this.currentDate = new Date();
 

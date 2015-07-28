@@ -144,8 +144,14 @@ function($stateProvider, $urlRouterProvider) {
 	
     .state('taskWall', {
             url:'/taskWall/{id}',
-            templateUrl: 'temps/taskWall.html'
-    });
+            templateUrl: 'temps/taskWall.html',
+            controller: 'TaskWallCtrl',
+            resolve: { 
+                taskWall: ['$stateParams', 'TaskWalls', function($stateParams, TaskWalls) {
+                    return TaskWalls.get($stateParams.id); 
+                    }]
+            }
+                });
 
 
   $urlRouterProvider.otherwise('home');

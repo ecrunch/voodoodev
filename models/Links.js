@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var LinkSchema = new mongoose.Schema({
-        title: String,
+        videoName: String,
         link: String,
 	source: String,
         author: String,

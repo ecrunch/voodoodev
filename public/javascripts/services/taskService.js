@@ -4,7 +4,6 @@ app.factory('Task',['$http', 'auth', function($http, auth){
 
         var service = {
                 tasks:[],
-                taskWall:[]
         };
 
         service.getAll = function() {
@@ -15,13 +14,6 @@ app.factory('Task',['$http', 'auth', function($http, auth){
                 );
         };
 
-        service.get = function(id) {
-            return $http.get('/taskWall/' + id).then(
-                function(res){
-                    return res.data;
-                }
-            );
-        };
 
         service.get = function(id) {
                 return $http.get('/tasks/' + id).then(

@@ -19,7 +19,7 @@ module.exports = function(config) {
 			res.json(tasks);
   		});
 	});
-
+    
 
 	router.post('/tasks', auth, function(req, res, next) {
 
@@ -61,7 +61,7 @@ module.exports = function(config) {
                                 dueDate:        task.dueDate,
                                 type:           task.type,
                                 tasks:          task._id,
-                                userIds:         task.userId,
+                                userIds:        task.userId,
                             });
                             console.log(taskWall)
                             
@@ -71,9 +71,17 @@ module.exports = function(config) {
                                     return next(err);
                                 }
                                 else{
-                                task.taskWall = taskWall._id;                
-                                console.log(task);
-						        res.json(task);
+                                task.taskWall = taskWall._id;
+                                task.save(function(err, task){
+                                    if(err) {
+                                        console.log("Had trouble saving task");
+                                        return next(err);
+                                    }
+                                    else{
+                                    console.log(task);
+						            res.json(task);
+                                    }
+                                })
                                 }
                             })
                         }
@@ -108,8 +116,7 @@ module.exports = function(config) {
 			res.json(req.task);
        		});
 	});
-
-
+    
 	router.put('/tasks/:task/upvote', auth, function(req, res, next) {
 		req.task.upvote(function(err, task){
 			if (err) {

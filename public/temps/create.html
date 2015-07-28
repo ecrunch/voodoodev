@@ -36,6 +36,45 @@
                     </form>
                 </section>
             </div>
+            <div class="4u 12u$(medium)">
+                <section class="box" ng-controller="BreatherMainCtrl">
+                    <h3>Add a new Breather </h3>
+                    <form ng-submit="addBreather()"
+                        style="margin-top:30px;">
+                            <div class="form-group">
+
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Title"
+                                ng-model="title"></input>
+                            
+                                <br></br>
+
+                                <input type="text"
+                                class="form-control"
+                                placeholder="Link"
+                                ng-model="link"></input>
+                            </div>
+
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </form>
+                </section>
+                <section class="box" ng-controller="BreatherMainCtrl"
+                    ng-repeat="breather in breathers | orderBy:'-upvotes'" >
+                    <span class="glyphicon glyphicon-thumbs-up"
+                        ng-click="incrementUpvotes(breather)"></span>
+                    <span style="font-size:20px; margin-left:10px;">
+                        <a  href="#/breathers/{{breather._id}}">
+                            {{breather.title}}
+                        </a>
+                    </span>
+                    <span class="glyphicon glyphicon-plus"
+                        ng-click="joinB(breather)">
+                    </span>
+                </section>
+            </div>
+
+
         </div>
     </section>
 </body>

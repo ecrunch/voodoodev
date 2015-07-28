@@ -2,8 +2,8 @@
 var app = angular.module('TimerCtrl', ['angularMoment']);
 
 app.controller('TimerCtrl', [
-'$scope', '$interval', 'Schedule',
-function($scope, $interval, Schedule) {
+'$scope', '$interval', 'Schedule','$window',
+function($scope, $interval, Schedule, $window) {
 
 	
 	var aud = new Audio('Audio/beep-07.mp3');
@@ -43,19 +43,26 @@ function($scope, $interval, Schedule) {
         $scope.pass = function(){
 
                 var item 		= $scope.items[currentIndex];
-		var timeLeft 		= (item.minutes)*60000;
+		        var timeLeft 		= (item.minutes)*60000;
                 $scope.timeLeft 	= timeLeft;
                 $scope.totalTime 	= timeLeft;
                 $scope.setTimerStatus(SCHEDULE_RUNNING);
                 $scope.display 		= item.details.description;
                 $scope.id 		= item.details.id;
+                if (item.type === "task"){
+                    console.log("task")
+                    $window.location.href='/#/taskWall/' +  item.details.taskWall;
+                } if (item.type === "breather"){
+                    console.log("breather")
+                    $window.location.href='/#/breathers/' + item.details.id;}
                 $scope.timer(); 
-	};
+	    };
 
         $scope.timer = function(){
         
+            
 	
-		stop = $interval(function() {
+		    stop = $interval(function() {
                 	if ($scope.timeLeft > 0) {
                         	$scope.timerTimes = moment.duration($scope.timeLeft).seconds();
                         	$scope.timerTimem = moment.duration($scope.timeLeft).minutes();

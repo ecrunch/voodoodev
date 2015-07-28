@@ -56,6 +56,7 @@ function($http, auth){
                 }).then(
                         // success
                         function(data){
+                            console.log(data);
                                 return data;
                         },
 
