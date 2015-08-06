@@ -8,10 +8,8 @@ app.factory('Session', [
 function($http, auth) {
 
 	var service = {
-		tasks: 		[],
-		taskIds:	[],
-		courses: 	[],
-		courseIds:	[],
+		progressTrackers: 		[],
+		progressTrackerIds:	[],
 		breathers: 	[],
 		breatherIds:	[]
 	};
@@ -19,18 +17,17 @@ function($http, auth) {
 
 	// TODO : make a route function that grabs everything
 	service.initializeEverything = function() {
-		return service.initializeTasks().then(function() {
+		return service.initializeProgressTrackers().then(function() {
 			return service.initializeBreathers().then(function() {
-				return service.initializeCourses().then(function() {
 					return;
 				});
 			});
-		});
-	};
+		};
+	
 
 
-	service.initializeTasks = function() {
-		return $http.post('/user/tasks/', null, {
+	service.initializeProgressTrackers = function() {
+		return $http.post('/user/progressTrackers/', null, {
 			headers: {
 				Authorization: 'Bearer ' + auth.getToken()
 			}
@@ -38,9 +35,10 @@ function($http, auth) {
 		.then(	
 			// success
 			function(data) {
-				service.tasks 	= data.data.tasks;
-				service.taskIds = data.data.taskIds;
-				return data;
+				service.progressTrackers 	= data.data.progressTrackers;
+				service.progressTrackerIds = data.data.progressTrackerIds;
+                console.log(data);
+                return data;
 			},
 			//fail
 			function(err) {
@@ -71,26 +69,6 @@ function($http, auth) {
 		);
 	};
 
-	service.initializeCourses = function() {
-		return $http.post('/user/courses/', null, {
-			headers: {
-				Authorization: 'Bearer ' + auth.getToken()
-			}
-		})
-		.then(	
-			// success
-			function(data) {
-				service.courses = data.data.courses;
-				service.courseIds = data.data.courseIds;
-				return data;
-			},
-			//fail
-			function(err) {
-				console.log(err);
-				return;
-			}
-		);
-	};
 
 
 

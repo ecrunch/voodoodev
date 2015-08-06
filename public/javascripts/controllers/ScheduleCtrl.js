@@ -2,8 +2,8 @@ var app = angular.module('ScheduleCtrl',['angularMoment']);
 
 
 app.controller('ScheduleCtrl', [
-'$scope', '$stateParams', 'Schedule', '$interval',
-function($scope, $stateParams, Schedule, $interval) {
+'$scope', '$stateParams', 'Schedule', '$interval','progressTracker',
+function($scope, $stateParams, Schedule, $interval, progressTracker) {
  
 	var DEFAULT_HOURS = 4;
 
@@ -12,7 +12,7 @@ function($scope, $stateParams, Schedule, $interval) {
 	var SCHEDULE_RUNNING = 2;
 	var SCHEDULE_PAUSED = 3;
 	var currentIndex = 0;
-        var stop;
+    var stop;
 	
 	$scope.scheduleStatus = "AUTO";
 	$scope.items = [];	
@@ -20,10 +20,10 @@ function($scope, $stateParams, Schedule, $interval) {
 	$scope.skippedTasks = [];
 	$scope.skippedTaskStatus = false;
 	$scope.scheduleMade = false;
-        $scope.chosenTasks = [];
-        $scope.chosenBreathers = [];
-        $scope.checkedItems = {};
-        $scope.everythingChecked = true;
+    $scope.chosenTasks = [];
+    $scope.chosenBreathers = [];
+    $scope.checkedItems = {};
+    $scope.everythingChecked = true;
 	$scope.userTime;
 	$scope.scheduleCreated = false;
 	$scope.chosenItem = null;
@@ -35,7 +35,7 @@ function($scope, $stateParams, Schedule, $interval) {
 		$scope.chosenBreathers = [];
 		$scope.checkedItems = {};
 		
-		$scope.tasks.forEach(function(d) {
+		$scope.progressTrackers.forEach(function(d) {
 			$scope.checkedItems[d._id] = true;
 			$scope.chosenTasks.push(d);
 		});
@@ -167,11 +167,11 @@ function($scope, $stateParams, Schedule, $interval) {
                         return;
                 }
 
-                var tasks = [];
+                var progressTrackers = [];
                 var breathers = [];
 
                 $scope.chosenTasks.forEach(function(d) {
-                        tasks.push(d._id);
+                        progressTrackers.push(d._id);
                 });
                 $scope.chosenBreathers.forEach(function(d) {
                         breathers.push(d._id);
@@ -179,7 +179,7 @@ function($scope, $stateParams, Schedule, $interval) {
 
 		var numHours = validateTime($scope.userTime) ? $scope.userTime : DEFAULT_HOURS;
 
-                Schedule.createMade(numHours, tasks, breathers).then(
+                Schedule.createMade(numHours, progressTrackers, breathers).then(
                         function(data) {
                                 $scope.items = data.data;
                                 $scope.timeLabel = $scope.userTime;

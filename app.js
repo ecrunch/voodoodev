@@ -7,20 +7,18 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 
-require('./models/Courses');
 require('./models/Comments');
-require('./models/Tasks');
+require('./models/ProgressTrackers');
 require('./models/Users');
 require('./models/TaskWall');
 require('./models/Community')
 require('./models/Breathers');
 require('./config/passport');
 require('./models/Schedules');
-require('./models/Assignments');
 require('./models/Posts');
 require('./models/Links');
 
-mongoose.connect('mongodb://localhost/brainlessdb');
+mongoose.connect('mongodb://localhost/brainless2db');
 
 var app = express();
 

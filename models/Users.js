@@ -8,7 +8,7 @@ var UserSchema = new mongoose.Schema({
 	salt: String,
 	myBreathers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Breather' }],
 	myCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }],
-	myTasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }]
+	myProgressTrackers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ProgressTracker' }]
 
 
 });
@@ -18,14 +18,9 @@ UserSchema.methods.joinBreather = function(breather){
 	this.myBreathers.push(breather);
 };
 
-UserSchema.methods.joinCourse = function(course){
+UserSchema.methods.joinProgressTracker = function(progressTracker){
 
-        this.myCourses.push(course);
-};
-
-UserSchema.methods.joinTask = function(task){
-
-        this.myTasks.push(task);
+        this.myProgressTrackers.push(progressTracker);
 };
 
 UserSchema.methods.setPassword = function(password){

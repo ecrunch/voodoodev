@@ -48,8 +48,8 @@ function($http, auth){
                 );
         };
 	
-	 service.createMade = function(time, tasks, breathers) {
-		return $http.post('/new_schedule/' + time + '/' + tasks + '/' + breathers, null, {
+	 service.createMade = function(time, progressTrackers, breathers) {
+		return $http.post('/new_schedule/' + time + '/' + progressTrackers + '/' + breathers, null, {
                         headers: {
                                 Authorization: 'Bearer '+auth.getToken()
                         }

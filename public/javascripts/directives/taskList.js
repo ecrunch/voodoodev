@@ -1,14 +1,13 @@
 var app = angular.module('taskListDirective',[]);
 
 app.controller('taskListCtrl', [
-'$scope', 'Task','auth','breathers', 'courses',
-function($scope, Task, auth, breathers, courses) {
+'$scope', 'Task','auth','breathers', 
+function($scope, Task, auth, breathers) {
 	
 	$scope.user = auth.currentUser;
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.tasks = Task.tasks ;
 	$scope.breathers = breathers.breathers;
-	$scope.courses = courses.courses;
 	
 }]);	
 
@@ -18,7 +17,6 @@ app.directive('taskList', function() {
 		scope: {
 			tasks: '=',
 			breathers: '=',
-			courses: '=',
 			statustype: '=',
 		},
 		templateUrl: 'temps/directive_partials/taskListDirective.html',

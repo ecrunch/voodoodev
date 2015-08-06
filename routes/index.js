@@ -10,8 +10,7 @@ module.exports = function(config) {
 
 	var User 	= config.User;
 	var Breather 	= config.Breather;
-	var Course 	= config.Course;
-	var Task 	= config.Task;
+	var ProgressTracker 	= config.ProgressTracker;
 	var Comment 	= config.Comment;
 
 
@@ -74,7 +73,7 @@ module.exports = function(config) {
 	// between them
 
 
-	router.post('/user/tasks', auth, function(req, res, next) {
+	router.post('/user/progressTrackers', auth, function(req, res, next) {
 
 		var userId = req.payload.id;
 
@@ -86,25 +85,25 @@ module.exports = function(config) {
 			else {
 
 				// TODO figure out why I did this in the first place  ..? weeird
-				var taskIds = user.myTasks.filter(function(item, pos) {
-					return user.myTasks.indexOf(item) == pos;
+				var progressTrackerIds = user.myProgressTrackers.filter(function(item, pos) {
+					return user.myProgressTrackers.indexOf(item) == pos;
 				});
 
 
-				Task.find({
+				ProgressTracker.find({
 					'_id': {
-						$in: taskIds
+						$in: progressTrackerIds
 					}
 				},
-				function(err, tasks) {
+				function(err, progressTrackers) {
 					
 					if (err) {
 						next(err);
 					}
 					else {
 						res.json({
-							taskIds: taskIds,
-							tasks: tasks
+							progressTrackerIds: progressTrackerIds,
+							progressTrackers: progressTrackers
 						});
 					}
 				});  // end of task callback
@@ -156,46 +155,6 @@ module.exports = function(config) {
 
 	});
 
-
-	router.post('/user/courses', auth, function(req, res, next) {
-
-		var userId = req.payload.id;
-
-		User.findById(userId, function(err, user) {
-			
-			if (err) {
-				next(err);
-			}
-			else {
-
-				// TODO figure out why I did this in the first place  ..? weeird
-				var courseIds = user.myCourses.filter(function(item, pos) {
-					return user.myCourses.indexOf(item) == pos;
-				});
-
-				Course.find({
-					'_id': {
-						$in: courseIds
-					}
-				},
-				function(err, courses) {
-				
-					if (err) {
-						next(err);
-					}
-					else {
-						res.json({
-							courseIds: courseIds,
-							courses: courses
-						});
-					}	
-				});  // end of courses callback
-
-			}
-		});
-
-
-	});
 
 
 	router.param('comment', function(req, res, next, id) {

@@ -8,16 +8,14 @@ var app = angular.module('MainCtrl', ['ui.bootstrap']);
 
 app.controller('MainCtrl', [
 
-'$scope', 'courses',  '$location', 'breathers', 'Session', 
+'$scope',  '$location', 'breathers','progressTracker', 'Session', 
 
-function($scope, courses, $location, breathers, Session){ 
+function($scope, $location, breathers, progressTracker, Session){ 
 
-	$scope.tasks = [];
+	$scope.progressTrackers = [];
 	$scope.breathers = [];
-	$scope.courses = [];
-	$scope.tasksIds = [];
+	$scope.progressTrackerIds = [];
 	$scope.breatherIds = [];
-	$scope.courseIds = [];
 
 	$scope.initialized = false;
 
@@ -25,17 +23,15 @@ function($scope, courses, $location, breathers, Session){
 		Session.initializeEverything().then(
 			function() {
 				console.log("Initializing user");
-				$scope.tasks 		= Session.tasks;
+				$scope.progressTrackers 		= Session.progressTrackers;
 				$scope.breathers 	= Session.breathers;
-				$scope.courses 		= Session.courses;
-				$scope.taskIds 		= Session.taskIds;
+				$scope.progressTrackerIds 		= Session.progressTrackerIds;
 				$scope.breatherIds	= Session.breatherIds;
-				$scope.courseIds	= Session.courseIds;
 
 
 				var seen = {};
 				// TODO : We should not be passing dupes to the front end
-				$scope.tasks = $scope.tasks.filter(function(d) {
+				$scope.progressTrackers = $scope.progressTrackers.filter(function(d) {
 					if (! seen[d._id]) {
 						seen[d._id] = d;
 						return true;
@@ -44,6 +40,7 @@ function($scope, courses, $location, breathers, Session){
 						return false;
 					}
 				});
+                console.log($scope.progressTrackers);
 				$scope.breathers = $scope.breathers.filter(function(d) {
 					if (! seen[d._id]) {
 						seen[d._id] = d;

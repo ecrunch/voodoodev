@@ -1,6 +1,5 @@
 <ul class="nav nav-tabs" style="padding-bottom:20px">
 	<li class="active"><a data-toggle="tab" href="#task">Tasks</a></li>
-	<li><a data-toggle="tab" href="#course">Courses</a></li>
 	<li><a data-toggle="tab" href="#breather">Breathers</a></li>	
 </ul>
 <div class="tab-content">
@@ -20,13 +19,6 @@
 		<li ng-repeat='breather in breathers'>
         		<a href="#/breathers/{{breather._id}}">{{breather.title}}</a>
         	</li>
-	</ul>
-</div>
-<div  id="course" class="tab-pane fade">
-	<ul class='alt'>
-		<li ng-repeat='course in courses'>
-        		<a  href="#/courses/{{course._id}}">{{course.title}}</a>
-       	 	</li>
 	</ul>
 </div>
 </div>
