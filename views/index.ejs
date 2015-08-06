@@ -49,6 +49,7 @@
 		<script src="/javascripts/controllers/NavCtrl.js"></script>
 		<script src="/javascripts/controllers/SearchCtrl.js"></script>
         <script src="/javascripts/controllers/TaskWallCtrl.js"></script>
+        <script src="/javascripts/controllers/UploadCtrl.js"></script>
 		
 		<!-- services -->
 		<script src="/javascripts/services/authService.js"></script> 
@@ -65,6 +66,12 @@
 		<script src="/javascripts/directives/youtube.js"></script>
 		<script src="/javascripts/directives/scheduleItem.js"></script>
 		<style> .glyphicon-thumbs-up { cursor:pointer } </style>
+
+        <!-- file uploading shit -->
+        <!-- might need the shim for IE -->
+        <script src="/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+
+
 
 
 	</head>
@@ -121,15 +128,16 @@
 			</div>
 			</section>
 		<script type="text/ng-template" id="/home.html"  ></script>  
+        <script type="text/ng-template" id="/upload.html"></script>
 		<script type="text/ng-tempalte" id="/tasks.html" ></script> 
 		<script type="text/ng-template" id="/tasksHome.html" ></script>
 		<script type="text/ng-template" id="/schedule.html" ></script>
 		<script type="text/ng-template" id="/userHomePage.html" > </script>
 		<script type="text/ng-template" id="/breathersHome.html" ></script>
 		<script type="text/ng-template" id="/breathers.html" ></script>
-		<script type="text/ng-template" id="/test.html"><script>
-		<script type="text/ng-template" id="/register.html"><script>
-		<script type="text/ng-template" id="/login.html"><script>
+		<script type="text/ng-template" id="/test.html"></script>
+		<script type="text/ng-template" id="/register.html"></script>
+		<script type="text/ng-template" id="/login.html"></script>
 
 	</body>
 </html>

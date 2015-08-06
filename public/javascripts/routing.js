@@ -9,11 +9,14 @@ function($stateProvider, $urlRouterProvider) {
         .state('home', {
                 url: '/home',
                 templateUrl: 'temps/userHomePage.html',
-                controller: 'userHomePageCtrl',
-                        
+                controller: 'userHomePageCtrl'
+        })
 
-                }
-        )
+        .state('upload', {
+            url: '/upload',
+            templateUrl: 'temps/upload.html',
+            controller: 'UploadCtrl'
+        })
 	
 	.state('login', {
 		url: '/login',

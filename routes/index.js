@@ -72,7 +72,7 @@ module.exports = function(config) {
 	// figure out how to use get requests or at least the difference
 	// between them
 
-
+    /*
 	router.post('/user/progressTrackers', auth, function(req, res, next) {
 
 		var userId = req.payload.id;
@@ -113,7 +113,9 @@ module.exports = function(config) {
 
 
 	});
+    */
 
+    /*
 	router.post('/user/breathers', auth, function(req, res, next) {
 
 		var userId = req.payload.id;
@@ -154,7 +156,7 @@ module.exports = function(config) {
 
 
 	});
-
+    */
 
 
 	router.param('comment', function(req, res, next, id) {

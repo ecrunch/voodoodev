@@ -11,6 +11,7 @@ var app = angular.module('courseInput',
 		'AuthCtrl',
 		'NavCtrl',
 		'SearchCtrl',
+        'UploadCtrl',
 
 		'ui.router',
 		'angularMoment',

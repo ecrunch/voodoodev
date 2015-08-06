@@ -27,6 +27,7 @@ require('./progressTrackers.js')(config);
 require('./taskWalls.js')(config);
 require('./schedules.js')(config);
 require('./breathers.js')(config);
+require('./upload.js')(config);
  
 
 module.exports = router;
