@@ -5,34 +5,34 @@
 */
 
 
-var Task 	= require('./Task.js');
+var ProgressTracker 	= require('./ProgressTracker.js');
 var Breather 	= require('./Breather.js');
 
 
 function Scheduler(init) {
 	
-	var _tasks 	  = init.tasks || [];
+	var _progressTrackers 	  = init.progressTrackers || [];
 	var _breathers = init.breathers || [];
 
 	this.hours 	  = init.hours || 4;	
-	this.tasks = [];
+	this.progressTrackers = [];
 	this.breathers = [];
 
 	var config;
-	for(var i = 0; i < _tasks.length; i++) {
+	for(var i = 0; i < _progressTrackers.length; i++) {
 		
 		config = {
-			id:		_tasks[i]._id,
-			description:	_tasks[i].description,
-			userId:		_tasks[i].userId,
-			dueDate:	_tasks[i].dueDate,
-			type:		_tasks[i].type,
-			totalMinutes:	_tasks[i].totalMinutes,
-            taskWall:   _tasks[i].taskWall
+			id:		_progressTrackers[i]._id,
+			description:	_progressTrackers[i].description,
+			userId:		_progressTrackers[i].userId,
+			dueDate:	_progressTrackers[i].dueDate,
+			type:		_progressTrackers[i].type,
+			totalMinutes:	_progressTrackers[i].totalMinutes,
+            taskWall:   _progressTrackers[i].taskWall
 			
 		};
         console.log(config);
-		this.tasks.push(new Task(config));
+		this.progressTrackers.push(new ProgressTracker(config));
 	}
 
 	for(var i = 0; i < _breathers.length; i++) {
@@ -81,7 +81,7 @@ function getStd(scoreData) {
 	return std;
 }
 
-Scheduler.prototype.getScoreData = function(tasks) {
+Scheduler.prototype.getScoreData = function(progressTrackers) {
 
 	var scoreData = {
 		"total":	0,
@@ -92,8 +92,8 @@ Scheduler.prototype.getScoreData = function(tasks) {
 	};
 	
 	var score;
-	for(var i = 0; i < tasks.length; i++) {		
-		score = tasks[i].getScore();
+	for(var i = 0; i < progressTrackers.length; i++) {		
+		score = progressTrackers[i].getScore();
 		scoreData["total"] += score;
 		scoreData["list"].push(score);
 	}
@@ -104,38 +104,38 @@ Scheduler.prototype.getScoreData = function(tasks) {
 
 };
 
-Scheduler.prototype.determineTaskPriorities = function(tasks, scoreData) {
+Scheduler.prototype.determineProgressTrackerPriorities = function(progressTrackers, scoreData) {
 
-	var taskPriorities = {
-		"eTasks": 	[],
-		"nTasks": 	[],
-		"ntTasks": 	[]
+	var progressTrackerPriorities = {
+		"eProgressTrackers": 	[],
+		"nProgressTrackers": 	[],
+		"ntProgressTrackers": 	[]
 	};
 
-	var taskScore, zScore;
+	var progressTrackerScore, zScore;
 	var mean 	= scoreData["mean"];
 	var stdDev 	= scoreData["stdDev"];
 	
-	for(var i = 0; i < tasks.length; i++) {
+	for(var i = 0; i < progressTrackers.length; i++) {
 		
-		taskScore	= tasks[i].getScore();
+		progressTrackerScore	= progressTrackers[i].getScore();
 		//taskScore	= getRandomInt(1, 10);
-		zScore		= (taskScore - mean)/stdDev;
+		zScore		= (progressTrackerScore - mean)/stdDev;
 
 		if (zScore >= 0.8416) {
-			taskPriorities["eTasks"].push(tasks[i]);
+			progressTrackerPriorities["eProgressTrackers"].push(progressTrackers[i]);
 		}
 
 		else if(zScore >= -0.2533) {
-			taskPriorities["nTasks"].push(tasks[i]);
+			progressTrackerPriorities["nProgressTrackers"].push(progressTrackers[i]);
 		}
 
 		else {
-			taskPriorities["ntTasks"].push(tasks[i]);	
+			progressTrackerPriorities["ntProgressTrackers"].push(progressTrackers[i]);	
 		}
-		 
+		
 	}
-	return taskPriorities;
+	return progressTrackerPriorities;
 };
 
 
@@ -225,7 +225,7 @@ Scheduler.prototype.generateTimeSlots = function(hours) {
 };
 
 
-Scheduler.prototype.makeSchedule = function(timeSlots, scoredTasks, breathers, repeatItems) {
+Scheduler.prototype.makeSchedule = function(timeSlots, scoredProgressTrackers, breathers, repeatItems) {
 
 	console.log(breathers);
 
@@ -261,18 +261,18 @@ Scheduler.prototype.makeSchedule = function(timeSlots, scoredTasks, breathers, r
 			);			
 		}
 		else{
-			if (eIndex < scoredTasks["eTasks"].length) {
-				chosenList = scoredTasks["eTasks"];
+			if (eIndex < scoredProgressTrackers["eProgressTrackers"].length) {
+				chosenList = scoredProgressTrackers["eProgressTrackers"];
 				chosenIndex = eIndex;
 				eIndex += 1;
 			}
-			else if(nIndex < scoredTasks["nTasks"].length) {
-				chosenList = scoredTasks["nTasks"];
+			else if(nIndex < scoredProgressTrackers["nProgressTrackers"].length) {
+				chosenList = scoredProgressTrackers["nProgressTrackers"];
 				chosenIndex = nIndex;
 				nIndex += 1;	
 			}
-			else if(ntIndex < scoredTasks["ntTasks"].length) {
-				chosenList = scoredTasks["ntTasks"];
+			else if(ntIndex < scoredProgressTrackers["ntProgressTrackers"].length) {
+				chosenList = scoredProgressTrackers["ntProgressTrackers"];
 				chosenIndex = ntIndex;
 				ntIndex += 1;
 			}
@@ -314,11 +314,11 @@ Scheduler.prototype.makeSchedule = function(timeSlots, scoredTasks, breathers, r
 Scheduler.prototype.makeNewSchedule = function() {
 
 	var repeatItems 	= true;
-	var scoreData 		= this.getScoreData(this.tasks);
-	var scoredTasks 	= this.determineTaskPriorities(this.tasks, scoreData);
+	var scoreData 		= this.getScoreData(this.progressTrackers);
+	var scoredProgressTrackers 	= this.determineProgressTrackerPriorities(this.progressTrackers, scoreData);
 	var timeSlots 		= this.generateTimeSlots(this.hours);
 
-	var schedule = this.makeSchedule(timeSlots, scoredTasks, this.breathers, repeatItems);
+	var schedule = this.makeSchedule(timeSlots, scoredProgressTrackers, this.breathers, repeatItems);
 
 	return schedule;
 

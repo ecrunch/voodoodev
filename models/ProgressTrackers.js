@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 
-var TaskSchema = new mongoose.Schema({
+var ProgressTrackerSchema = new mongoose.Schema({
 	description: 	String,
 	dueDate:	    Date,
 	type:		    String,
@@ -10,9 +10,9 @@ var TaskSchema = new mongoose.Schema({
     taskWall:       {type: mongoose.Schema.Types.ObjectId, ref: 'TaskWall'}
 });
 
-TaskSchema.methods.addTime = function(track) {
+ProgressTrackerSchema.methods.addTime = function(track) {
 	this.totalMinutes = Number(this.totalMinutes) + Number(track);
 };
 
 
-mongoose.model('Task', TaskSchema);
+mongoose.model('ProgressTracker', ProgressTrackerSchema);

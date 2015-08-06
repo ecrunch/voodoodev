@@ -24,7 +24,7 @@ function getRandomInt(min, max) {
 }
 
 
-function Task(init){
+function ProgressTracker(init){
 
 	this.id			= init.id;
 	this.description	= init.description;
@@ -42,7 +42,7 @@ function Task(init){
 }
 
 
-Task.prototype.getDaysRemaining = function() {	
+ProgressTracker.prototype.getDaysRemaining = function() {	
 
 	var MS_PER_DAY = 1000*60*60*24;
 
@@ -58,7 +58,7 @@ Task.prototype.getDaysRemaining = function() {
 };
 
 
-Task.prototype.getScore = function() {
+ProgressTracker.prototype.getScore = function() {
 
 	var daysRemaining = this.getDaysRemaining();
 	
@@ -72,7 +72,7 @@ Task.prototype.getScore = function() {
 };
 
 
-module.exports = Task;
+module.exports = ProgressTracker;
 
 
 

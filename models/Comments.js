@@ -4,7 +4,6 @@ var CommentSchema = new mongoose.Schema({
 	body: String,
 	author: String,
 	upvotes: {type: Number, default: 0},
-	course: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' }
 });
 
 CommentSchema.methods.upvote = function(cb) {

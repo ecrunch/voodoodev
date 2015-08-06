@@ -1,18 +1,18 @@
-var app = angular.module('TaskCtrl',[]);
+var app = angular.module('ProgressTrackerCtrl',[]);
 
-app.controller('TaskMainCtrl', [
-'$scope', 'Task','auth',
-function($scope, Task, auth){
+app.controller('ProgressTrackerCtrl', [
+'$scope', 'progressTracker','auth',
+function($scope, progressTracker, auth){
 
         $scope.user = auth.currentUser;
         $scope.isLoggedIn = auth.isLoggedIn;
-        $scope.tasks = Task.tasks ;
+        $scope.progressTrackers = progressTracker.progressTrackers ;
 
         $scope.addTask = function() {
                 if ($scope.title === '') {
                         return;
                 }
-                Task.create({
+                progressTracker.create({
                         description: $scope.newTaskDescription,
                         dueDate: $scope.newTaskDueDate,
                         type:   $scope.newTaskType
@@ -22,11 +22,4 @@ function($scope, Task, auth){
                 $scope.newTaskType = '';
         };
 
-        $scope.incrementUpvotes = function(task) {
-                Task.upvote(task);
-        };
-
-        $scope.joinT = function(task){
-                Task.joinTask(task);
-        };
 }]);

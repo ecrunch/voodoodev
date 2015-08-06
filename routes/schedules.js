@@ -12,7 +12,7 @@ module.exports = function(config) {
 
 	// TODO : consider factoring out the Schedule code if we aren't saving
 	var Schedule 	= config.Schedule;
-	var Task 	= config.Task;
+	var ProgressTracker 	= config.ProgressTracker;
 	var Breather 	= config.Breather;
 
 
@@ -21,30 +21,30 @@ module.exports = function(config) {
 	var schedulerObj;
 
 	// accepts a comma separated string	
-	router.post('/new_schedule/:time/:tasks/:breathers', auth, function(req, res, next) {
+	router.post('/new_schedule/:time/:progressTrackers/:breathers', auth, function(req, res, next) {
 		
-		var userTasks 		= [];
-                var userBreathers 	= [];
+		var userProgressTrackers 		= [];
+        var userBreathers 	= [];
 
-		var madeTasks 		= req.params.tasks.split(",") ;
-		var madeBreathers 	= req.params.breathers.split(",");
+		var madeProgressTrackers 		= req.params.progressTrackers.split(",") ;
+
+        var madeBreathers 	= req.params.breathers.split(",");
 		var hours 		= req.params.time;
 		
 		
-		Task.find({ '_id':{ $in:
-				madeTasks
+		ProgressTracker.find({ '_id':{ $in:
+				madeProgressTrackers
 				}
 			},
-                        function(err, tasks) {
+                        function(err, progressTrackers) {
                                 if(err) {
                                         console.log("Could not load tasks");
                                         return next(err);
                                 }
                                 else {
-                                        if(tasks.length > 0) {
-                                                userTasks = tasks;
+                                        if(progressTrackers.length > 0) {
+                                                userProgressTrackers = progressTrackers;
                                         }
-					
 					Breather.find({ '_id':{ $in:
 							 madeBreathers
 							}
@@ -61,7 +61,7 @@ module.exports = function(config) {
 			
 								schedulerObj = new SchedulerObj({
 									hours: hours,
-									tasks: userTasks,
+									progressTrackers: userProgressTrackers,
 									breathers: userBreathers
 								});		
                                                                 var items = schedulerObj.makeNewSchedule();
@@ -75,55 +75,5 @@ module.exports = function(config) {
         });     // end of nightmarish callback route from hell
 				
 		
-	router.post('/new_schedule/:time', auth, function(req, res, next) {
-		
-		var userTasks 		= [];
-		var userBreathers	= [];
-
-		var hours 		= req.params.time;
-		var userId 		= req.payload.id;
-
-		Task.find(
-			{
-				'userId': userId
-			},
-			function(err, tasks) {
-				if(err) {
-					console.log("Could not load tasks");
-					return next(err);
-				}
-				else {
-
-					if(tasks.length > 0) {
-						userTasks = tasks;
-					}
-
-					Breather.find(
-						{
-							'userId': userId
-						},
-						function(err, breathers) {
-						
-							if (err) {
-								return next(err);
-							}
-							else {
-								if (breathers.length > 0) {
-									userBreathers = breathers; 
-								}
-								schedulerObj = new SchedulerObj({
-									hours: hours,
-									tasks: userTasks,
-									breathers: userBreathers
-								});		
-								var items = schedulerObj.makeNewSchedule();
-								res.json(items);
-							}
-						}
-					);
-				}
-			}
-		);
-	});	// end of nightmarish callback route from hell
 
 };   // end of schedule module
