@@ -1,9 +1,12 @@
+
+
 var app = angular.module('UploadCtrl', ['ngFileUpload']);
 
 app.controller('UploadCtrl',
 ['$scope', 'auth', 'Upload',
     function($scope, auth, Upload) {
 
+        /*
         $scope.$watch('file', function(file) {
             $scope.upload($scope.file);
         });
@@ -11,7 +14,8 @@ app.controller('UploadCtrl',
         $scope.upload = function(file) {
             Upload.upload({
                 url: '/upload_file',
-                file: file
+                file: file,
+                method: 'POST'
             }).progress(function(evt) {
                 console.log(evt);
                 var progressPercentage = 
@@ -21,9 +25,10 @@ app.controller('UploadCtrl',
             }).success(function(data, status, headers, config) {
                 console.log('file ' + config.file.name + ' uploaded. ' + 
                     'Response: ' + data);
-            }).error(function(error, status, headers, config) {
-                console.log('error status: ' + error);
+            }).error(function(data, status, headers, config) {
+                console.log('error status: ' + status);
             });
         };
+        */
     }
 ]);

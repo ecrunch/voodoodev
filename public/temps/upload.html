@@ -1,9 +1,25 @@
 <html>
     <body>
+
         <h1> upload shit</h1>
 
+        <!--
         Upload this shit <input 
             type="file"
             ngf-select ng-model="file"></input>
+        -->
+
+        <form id= "uploadForm"
+            enctype = "multipart/form-data"
+            action = "/upload_file"
+            method = "post"
+        >
+            <input type= "file" name="userUpload"/>
+            <input type= "submit" value= "Upload"
+                name= "submit"/>
+
+        </form>
+
+
     </body>
 </html>

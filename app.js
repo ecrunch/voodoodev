@@ -26,6 +26,32 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
+// configure the multer (file uploads)
+var multer = require('multer');
+var done = false;
+
+app.use(multer({dest: './uploads/',
+    rename: function(fieldname, filename) {
+        return filename + Date.now();
+    },
+    onFileUploadStart: function(file) {
+        console.log(file.originalname + ' is starting...');
+    },
+    onFileUploadComplete: function(file) {
+        console.log(file.fieldname + ' uploaded to ' + file.path);
+        done = true;
+    }
+}));
+
+app.post('/upload_file', function(req, res) {
+    if (done == true) {
+        console.log(req.files);
+        res.end('File uploaded');
+    }
+});
+
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
