@@ -39,9 +39,20 @@ module.exports = function(config) {
 		breather.save(function(err, task) {
 			if(err) {
 				return next(err);
-			}
-			res.json(breather);
-		});
+			} else {
+                User.findById(userId, function(err, user) {
+                user.joinBreather(breather._id);
+                    user.save(function(err, user) {
+                        if(err) {
+                            console.log(err);
+                        } else {
+			                res.json(breather);
+		                }
+                        
+                    });
+                });
+            }  
+        });            
 	});
 
 
