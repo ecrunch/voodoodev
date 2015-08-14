@@ -30,17 +30,27 @@
 								<a class="button alt big align-center" ng-click="newSchedule()">Start</a>
 								
                                                         </section>
-                                                </div>
+                        </div>
 						
 						<div class="4u 12u$(medium)">
-							<section class="box">
+							<section class="box" ng-controller="MainCtrl">
+                                <h3>Tasks</h3>
+                                <ul ng-repeat="progressTracker in progressTrackers">
+                                    <li><a href="#/taskWall/{{progressTracker.taskWall}}">{{progressTracker.description}}</a></li>
+                                </ul>
 
-								<div task-list tasks="tasks" breathers="breathers" courses="courses" statustype='0'></div>
-							</section>
-                                                </div>
+                            </section>
+                            
+                            <section class="box" ng-controller="MainCtrl">
+                                <h3>Breaks</h3>
+                                <ul ng-repeat="breather in breathers">
+                                     <li><a href="#/breathers/{{breather._id}}">{{breather.title}}</a></li>
+                                </ul>
+                            </section>    
+
+
+                        </div>
 						
-                                        </div>
-                                </div>
 			</section>
 
 	
