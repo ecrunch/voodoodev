@@ -59,9 +59,7 @@ function($scope, $interval, Schedule, $window) {
 	    };
 
         $scope.timer = function(){
-        
             
-	
 		    stop = $interval(function() {
                 	if ($scope.timeLeft > 0) {
                         	$scope.timerTimes = moment.duration($scope.timeLeft).seconds();
@@ -69,12 +67,12 @@ function($scope, $interval, Schedule, $window) {
                         	$scope.timeLeft = $scope.timeLeft - 1000;
                             console.log("counting")
                     } else {
-				$scope.storeTime();
-				$scope.removeItem(currentIndex);
+			            	$scope.storeTime();
+			            	$scope.removeItem(currentIndex);
                         	$scope.setTimerStatus(SCHEDULE_PAUSED);
                         	$scope.stopTimer();
-				$scope.endBeeper();
-				$scope.pass();
+			            	$scope.endBeeper();
+				            $scope.pass();
                 	}
         	}, 1000);
 
@@ -87,7 +85,7 @@ function($scope, $interval, Schedule, $window) {
 					$scope.playAudio()
 					$scope.threeBeeps = $scope.threeBeeps - 1;
 				} else {
-				$interval.cancel(beeper);
+				    $interval.cancel(beeper);
 				}
 		}, 1000);
 	};
@@ -95,21 +93,21 @@ function($scope, $interval, Schedule, $window) {
         $scope.stopTimer = function() {
                 if (angular.isDefined(stop)) {
                         $scope.setTimerStatus(SCHEDULE_PAUSED);
-			$interval.cancel(stop);
+			            $interval.cancel(stop);
                         stop = undefined;
                 }
         };
 
         $scope.resumeTimer = function(){
                 $scope.setTimerStatus(SCHEDULE_RUNNING);
-		$scope.timer();
+		        $scope.timer();
         };
 
         $scope.skipTimer = function(){
 		
                 $scope.stopTimer();
                 $scope.storeTime();
-		$scope.display='';
+		        $scope.display='';
                 $scope.timeLeft ='';
                 $scope.setTimerStatus(SCHEDULE_RUNNING);
 		

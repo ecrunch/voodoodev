@@ -10,7 +10,6 @@ module.exports = function(config) {
     var Post    = config.Post;
 
     router.get('/taskWall', function(req, res, next) {
-        console.log('here4');
         TaskWall.find(function(err, taskWall){
             if(err){
                 return next(err);
@@ -20,7 +19,6 @@ module.exports = function(config) {
     });
 
     router.param('taskWall', function(req, res, next, id) {
-        console.log('here3');
         var query = TaskWall.findById(id);
         query.exec(function (err, taskWall) {
              if (err) {
@@ -30,16 +28,12 @@ module.exports = function(config) {
                  return next(new Error('can\'t find task'));
              }
              req.taskWall = taskWall;
-             console.log(taskWall)
              return next();
         });
     });
 
     router.get('/taskWall/:taskWall', function(req, res) {
-        console.log('here');
         req.taskWall.populate('posts links', function(err, taskWall) {
-            console.log('here2')
-            console.log(taskWall)
             res.json(req.taskWall);
 
         });

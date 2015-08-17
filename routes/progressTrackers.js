@@ -3,13 +3,13 @@ module.exports = function(config) {
 
 
 	// TODO : error handling
-	var router 	= config.router;
-	var auth 	= config.auth;
+	var router 	        = config.router;
+	var auth 	        = config.auth;
 
 	var ProgressTracker	= config.ProgressTracker;
-	var Comment	= config.Comment;
-	var User	= config.User;
-    var TaskWall= config.TaskWall;
+	var Comment	        = config.Comment;
+	var User	        = config.User;
+    var TaskWall        = config.TaskWall;
 
 	router.get('/progressTrackers', function(req, res, next) {
 		ProgressTrackers.find(function(err, progressTrackers){
@@ -50,7 +50,6 @@ module.exports = function(config) {
 
 				User.findById(userId, function(err, user) {	
 					user.joinProgressTracker(progressTracker._id);
-					console.log('here');
 					user.save(function(err, user) {
 						if(err) {
 							console.log(err);
@@ -63,7 +62,6 @@ module.exports = function(config) {
                                 progressTracker:progressTracker._id,
                                 userIds:        progressTracker.userId,
                             });
-                            console.log(taskWall)
                             
                             taskWall.save(function(err, taskWall) {
                                 if(err) {
@@ -78,7 +76,6 @@ module.exports = function(config) {
                                         return next(err);
                                     }
                                     else{
-                                    console.log(progressTracker);
 						            res.json(progressTracker);
                                     }
                                 })

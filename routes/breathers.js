@@ -76,17 +76,16 @@ module.exports = function(config) {
         	link.breather = req.breather;
         	link.author = req.payload.username;
         	link.save(function(err, link){
-                	if(err){
-                        	return next(err);
-                	}
-                	req.breather.links.push(link);
-                	req.breather.save(function(err, breather) {
-                        	if(err){
-                                	return next(err);
-                        	}
-
-                        	res.json(link);
-                	});
+                if(err){
+                        return next(err);
+                }
+                req.breather.links.push(link);
+                req.breather.save(function(err, breather) {
+                    if(err){
+                        return next(err);
+                    }
+                    res.json(link);
+                });
         	});
 	});
 

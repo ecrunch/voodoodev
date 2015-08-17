@@ -7,7 +7,6 @@ app.factory('TaskWalls',['$http', 'auth', function($http, auth){
      };
 
      service.getAll = function() {
-         console.log('here');
          return  $http.get('/taskWall').success(
              function(data){
                  angular.copy(data, service.taskWalls);
@@ -16,10 +15,8 @@ app.factory('TaskWalls',['$http', 'auth', function($http, auth){
      };
 
      service.get = function(id) {
-         console.log('here7');
          return $http.get('/taskWall/' + id).then(
              function(res){
-                console.log(res.data);
                  return res.data;
              }
              );

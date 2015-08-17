@@ -7,7 +7,7 @@ var b = {
 
         b.getAll = function() {
                 return $http.get('/breathers').success(function(data){
-                angular.copy(data, b.breathers);
+                    angular.copy(data, b.breathers);
                 });
         };
 
@@ -20,7 +20,7 @@ var b = {
 
         b.create = function(breather) {
                 return $http.post('/breathers', breather, {
-                headers: {Authorization: 'Bearer '+auth.getToken()}
+                    headers: {Authorization: 'Bearer '+auth.getToken()}
                 }).success(function(data){
                         b.breathers.push(data);
                 });
@@ -29,16 +29,16 @@ var b = {
 
         b.upvote = function(breather) {
                 return $http.put('/breathers/' + breather._id + '/upvote', null, {
-                headers: {Authorization: 'Bearer '+auth.getToken()}
+                    headers: {Authorization: 'Bearer '+auth.getToken()}
                 })
                 .success(function(data){
-                breather.upvotes += 1;
+                    breather.upvotes += 1;
                 });
         };
 
         b.addLink = function(id, link) {
                 return $http.post('/breathers/' + id + '/links', link, {
-                headers: {Authorization: 'Bearer '+auth.getToken()}
+                    headers: {Authorization: 'Bearer '+auth.getToken()}
                 });
         };
 
@@ -60,6 +60,6 @@ var b = {
                 );
 
         };
-return b;
+return;
 }]);
 

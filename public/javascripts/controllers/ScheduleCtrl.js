@@ -183,10 +183,10 @@ function($scope, $stateParams, Schedule, $interval, progressTracker) {
                         function(data) {
                                 $scope.items = data.data;
                                 $scope.timeLabel = $scope.userTime;
-				$scope.timerStatus = BEGIN_SCHEDULE;
+				                $scope.timerStatus = BEGIN_SCHEDULE;
                                 $scope.scheduleMade = true;
-				$scope.scheduleCreated = true;
-				$scope.chosenItem = $scope.items[0];
+				                $scope.scheduleCreated = true;
+				                $scope.chosenItem = $scope.items[0];
                         },
                         function(err) {
                                 console.log(err);

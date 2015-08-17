@@ -4,14 +4,14 @@ module.exports = function(config) {
 
 
 	// TODO : error handling
-	var router 	= config.router;
-	var auth 	= config.auth;
-	var passport	= config.passport;
+	var router 	        = config.router;
+	var auth 	        = config.auth;
+	var passport	    = config.passport;
 
-	var User 	= config.User;
-	var Breather 	= config.Breather;
-	var ProgressTracker 	= config.ProgressTracker;
-	var Comment 	= config.Comment;
+	var User 	        = config.User;
+	var Breather 	    = config.Breather;
+	var ProgressTracker = config.ProgressTracker;
+	var Comment 	    = config.Comment;
 
 
 	/* GET home page. */
