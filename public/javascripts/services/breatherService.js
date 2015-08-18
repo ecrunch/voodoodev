@@ -60,6 +60,6 @@ var b = {
                 );
 
         };
-return;
+return b;
 }]);
 
