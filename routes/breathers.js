@@ -7,10 +7,10 @@ module.exports = function(config) {
 	var router 	= config.router;
 	var auth 	= config.auth;
 
-	var Breather 	= config.Breather;
-	var User 	= config.User;
-	var Link 	= config.Link;
-
+	var Breather    = config.Breather;
+	var User 	    = config.User;
+	var Link 	    = config.Link;
+    var Content     = config.Content; 
 
 	router.get('/breathers', function(req, res, next) {
 		Breather.find(function(err, breathers){
@@ -23,7 +23,7 @@ module.exports = function(config) {
 
 
 	router.get('/breathers/:breather', function(req, res) {
-		req.breather.populate('comments links', function(err, breather) {
+		req.breather.populate('comments links content', function(err, breather) {
 			res.json(req.breather);
         	});
 	});
@@ -88,6 +88,23 @@ module.exports = function(config) {
                 });
         	});
 	});
+    
+    router.post('/breathers/:breather/content', auth, function(req, res, next) {
+        var content = new Content(req.body);
+        content.save(function(err, content){
+            if(err){
+                return next(err);
+            }
+            req.breather.content.push(content);
+            req.breather.save(function(err, breather) {
+                if(err){
+                    return next(err);
+                }
+                console.log('Success')
+                res.json(content);
+            });
+        });
+    });
 
 
 	router.put('/breathers/:breather/upvote', auth, function(req, res, next) {

@@ -42,6 +42,12 @@ var b = {
                 });
         };
 
+        b.addContent = function(id, content) {
+                return $http.post('/breathers/' + id + '/content', content, {
+                    headers: {Authorization: 'Bearer '+auth.getToken()}
+                });
+        };
+
         b.joinBreather = function(breather) {
 
                 return $http.post('/breathers/'+ breather._id+'/joinBreather',null, {

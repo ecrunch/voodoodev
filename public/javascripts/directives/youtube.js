@@ -1,6 +1,6 @@
 
 var app = angular.module('youtubeDirective', []);
-
+/*
 app.directive('myYoutube', function($sce) {
 	return {
 		restrict: 'EA',
@@ -17,6 +17,7 @@ app.directive('myYoutube', function($sce) {
 			});
 		}
 	};
-});	
+
+});*/	
 		
 	

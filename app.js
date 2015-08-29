@@ -17,6 +17,7 @@ require('./config/passport');
 require('./models/Schedules');
 require('./models/Posts');
 require('./models/Links');
+require('./models/Content');
 
 mongoose.connect('mongodb://localhost/brainless2db');
 

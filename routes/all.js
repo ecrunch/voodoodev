@@ -11,14 +11,15 @@ var config = {
 	auth:		jwt({secret: 'SECRET', userProperty: 'payload'}),
 	passport:	passport,
 
-	Comment: 	mongoose.model('Comment'),
+	Comment: 	            mongoose.model('Comment'),
     ProgressTracker: 		mongoose.model('ProgressTracker'),
-    TaskWall:   mongoose.model('TaskWall'),
-    Breather: 	mongoose.model('Breather'),
-	User: 		mongoose.model('User'),
-	Schedule: 	mongoose.model('Schedule'),
-	Post: 		mongoose.model('Post'),
-	Link: 		mongoose.model('Link')
+    TaskWall:               mongoose.model('TaskWall'),
+    Breather: 	            mongoose.model('Breather'),
+	User: 		            mongoose.model('User'),
+	Schedule: 	            mongoose.model('Schedule'),
+	Post: 		            mongoose.model('Post'),
+	Link: 		            mongoose.model('Link'),
+    Content:                mongoose.model('Content')
 };
 
 

@@ -8,42 +8,28 @@
 	<section>
  	<div class="row 50%">
 	<div class="4u 12u$(3)">
-	<section class="box">
-		<form ng-submit="addLink()"
-        		style="margin-top:30px;">
-        		<h3>Add a new Link</h3>
+    <section class="box">
+        <form ng-submit="addContent()">
+            <h3>Add a new Content</h3>
 
-        		<div class="form-group">
+            <div class="form-group">
 
-                	<input type="text"
-                	class="form-control"
-                	placeholder="title"
-                	ng-model="title"></input>
-
-                	<input type="text"
-                	class="form-control"
-                	placeholder="link"
-                	ng-model="link"></input>
-        		</div>
-
-        		<button type="submit" class="btn btn-primary">Post</button>
-		</form>
-	</section>
+                <input type="text" class="form-control" placeholder="name" ng-model="name"></input>
+                <input type="text" class="form-control" placeholder="data" ng-model="data"></input>
+                <select class="form-control" placeholder="contentType" ng-model="contentType">
+                    <option value="post">Post</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="imageUrl">Image</option>
+                    <option value="imgur">Imgur</option>
+                <select>
+            </div>
+            <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+    </section>
 	</div>
-
-	<div class="4u 12u$(3)" ng-repeat="link in breather.links | orderBy:'-upvotes'">
-        <section class="box">
-		<div>
-			<span class="glyphicon glyphicon-thumbs-up"
-        		ng-click="incrementUpvotes(link)"></span>
-                		{{link.upvotes}} - by {{link.author}}
-        		<span style="font-size:20px; margin-left:10px;">
-                		{{link.title}} - {{link.link}}
-        		</span>
-			<my-youtube source="link.source"></my-youtube>
-		</div>
-	</section>
-	</div>
-	</div>
+     <div class="4u 12u$(3)" ng-repeat="item in breather.content">
+        <content-item content="item" source="item.source"></content-item>
+    </div>  
+</div>
 </section>
 
